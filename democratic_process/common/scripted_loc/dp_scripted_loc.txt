@@ -1,0 +1,59 @@
+###############################################
+# Scripted Localization for Democratic Process
+###############################################
+
+# Country Scope
+
+
+# Leader Scope
+defined_text = {
+	name = dpPresWinPlatform
+	text = {
+		trigger = {
+			has_leader_flag = dp_authoritarian_leaning
+		}
+		localization_key = dp_auth_platform
+	}
+	text = {
+		trigger = {
+			has_leader_flag = dp_egalitarian_leaning
+		}
+		localization_key = dp_egal_platform
+	}
+	text = {
+		trigger = {
+			has_leader_flag = dp_spritualist_leaning
+		}
+		localization_key = dp_spir_platform
+	}
+	text = {
+		trigger = {
+			has_leader_flag = dp_materialist_leaning
+		}
+		localization_key = dp_mat_platform
+	}
+	text = {
+		trigger = {
+			has_leader_flag = dp_pacifist_leaning
+		}
+		localization_key = dp_pac_platform
+	}
+	text = {
+		trigger = {
+			has_leader_flag = dp_militarist_leaning
+		}
+		localization_key = dp_mil_platform
+	}
+	text = {
+		trigger = {
+			has_leader_flag = dp_xenophile_leaning
+		}
+		localization_key = dp_phile_platform
+	}
+	text = {
+		trigger = {
+			has_leader_flag = dp_xenophobe_leaning
+		}
+		localization_key = dp_phobe_platform
+	}
+}

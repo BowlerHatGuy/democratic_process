@@ -1,0 +1,57 @@
+#######################################
+# Democratic Process Scripted Triggers
+# Written by: BowlerHatGuy
+#######################################
+
+## POP Scope
+is_citizen_voter_dp = { # Checks if a pop is eligible to vote
+	AND = {
+		OR = {
+			AND = {
+				has_trait = trait_robotic_3
+				owner = { has_policy_flag = ai_full_rights }
+			}
+			is_robot_pop = no
+		}
+		
+		OR = { # Precludes those who have less than full citizenship
+			has_citizenship_type = { type = citizenship_full }
+			has_citizenship_type = { type = citizenship_full_machine }
+			has_citizenship_type = { type = citizenship_caste_system }
+		}
+		
+		is_enslaved = no
+		is_sapient = yes
+	}
+	
+	# from can_vote_in_democratic_election
+	#has_citizenship_rights = yes
+	#is_sapient = yes
+	#is_enslaved = no
+	#is_being_purged = no
+}
+
+# Triggers to check voter leaning
+
+
+## Leader Scope
+is_valid_candidate_dp = { # Checks whether leader is a valid candidate for office,i.e. is an allowed species
+	AND = {
+		# Undesirable flags, some are undoubtably missing
+		NOT = { has_leader_flag = marauder_merc_leader }
+		NOT = { has_leader_flag = captured_queen }
+		
+		OR = { # Precludes those who have less than full citizenship
+			has_citizenship_type = { type = citizenship_full }
+			has_citizenship_type = { type = citizenship_full_machine }
+			has_citizenship_type = { type = citizenship_caste_system }
+		}
+		
+		# Checks for term limits
+		check_variable = { which = "dp_ruler_terms_served" value <= 1 } # TODO: Replace when term limits implemented
+	}
+}
+
+## Country Scope
+
+
