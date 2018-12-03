@@ -1,0 +1,220 @@
+# No scope, like on_game_start
+on_monthly_pulse = {
+	events = {
+		unrest.162
+		unrest.164
+		syndaw.100 # servitor morale
+		marauder.511 # Great Khan Dies
+		#marauder.11 # Marauder infighting - commented out for now
+		crisis.120 # Feral Prethoryn
+		crisis.123 # Feral Prethoryn infighting
+		marauder.113
+		leviathans.170
+		leviathans.172
+		leviathans.174
+		action.85 # flip planets to starbase owner
+		marauder.150 # AI hires Marauder raids
+		marauder.151 # AI hires Marauder mercs
+		action.92 # make sure the swarm infests
+		action.93 # make sure extradimensionals have no planets
+		action.90 # rebuild outpost for orphaned colonies
+		unrest.166
+		apoc.301
+		distar.1082
+		distar.5014
+		distar.5001
+		distar.301
+		dpelection.3001
+	}
+}
+
+# No scope, like on_game_start
+on_yearly_pulse = {
+	events = {
+		leviathans.10	
+		pirate.4
+		crisis.204
+		crisis.205
+		crisis.208
+		crisis.240 # Prethoryn army reinforcements
+		crisis.1254
+		crisis.2080
+		crisis.2310
+		action.64 # species assimilation
+		marauder.100
+		crisis.122
+		marauder.85
+		marauder.160
+		marauder.699
+		# dpelection.3000
+	}
+}
+
+# Triggers when the game starts
+on_game_start = {
+	events = {
+		game_start.1
+		game_start.2
+		game_start.3
+		game_start.5
+		game_start.31
+		distar.290 # Spawn Sealed System
+		distar.252 # Phaseshifting Planet
+		distar.295 # Connect Ratling Systems to one another
+		distar.8000 # Randomize L-Cluster outcome
+		# dpelection.3001
+	}
+}
+
+on_game_start_country = {
+	events = {
+		game_start.33
+		game_start.10
+		syndaw.101 # servitor morale
+		game_start.32
+		game_start.34
+	}
+}
+# Pop is enslaved
+# This = Pop scope
+# owner_species = { (species)
+# owner = { owner_species = { (empire main species)
+# owner = { (empire)
+on_pop_enslaved = {
+	events = {
+	}
+}
+
+
+# Pop is released from slavery
+# This = Pop scope
+# owner_species = { (species)
+# owner = { owner_species = { (empire main species)
+# owner = { (empire)
+on_pop_emancipated = {
+	events = {
+	}
+}
+
+# Executed as a leader has died
+# This = Country
+# From = Leader
+on_leader_death = {
+	events = {
+		pretender.1
+		mandate.21
+		akx.9330
+		marauder.70
+	}
+}
+
+# Executed as new ruler has been set
+# This = Country
+on_ruler_set = {
+	events = {
+		action.47	# Remove election-filler leaders when ruler is set
+		mandate.1	# "ruler X elected, check situation log for their mandate"=
+	}
+}
+
+# Executed when a ruler has been removed
+# From = Previous Ruler
+# This = Country
+on_ruler_removed = {
+	events = {
+	}
+}
+
+# Executed when the ruler is ousted and goes back to their pre-ruler class
+# From = Previous Ruler, already has the new class
+# This = Country
+on_ruler_back_to_pre_ruler_class = {
+	events = {
+		utopia.2511	# leader gets cyborg trait for their normal leader class
+		utopia.2561	# leader gets synthetic trait for their normal leader class
+		utopia.2653	# leader gets psionic trait for their normal leader class
+	}
+}
+
+# Executes after a policy has been changed
+# use last_changed_policy to identify which policy it was
+# This = Country
+on_policy_changed = {
+	events = {
+		action.35
+		syndaw.1300 # banning AI can cause Uprising
+		syndaw.1305 # banning bot workers can cause Uprising
+		leader.30 # banning AI will remove AI-dependent traits from leaders
+		action.80 # banning AI will remove existing Synthetic Armies
+	}
+}
+
+# A ship has been built
+# Root = Ship
+# From = Planet
+on_ship_built = {
+	events = {
+		tutorial.40
+		tutorial.8
+		tutorial.21
+		tutorial.25
+		mandate.144
+		crisis.2056
+	}
+}
+
+# A war is beginning, executed for every country in the war.
+# Root = Country
+# From = War
+on_war_beginning = {
+	events = {
+		action.41
+		#diplomatic.1002
+		factions.13
+	}
+}
+
+# A war has ended
+# Root = Loser
+# From = Main Winner
+on_war_ended = {
+	events = {
+		fallen_empires.14
+	}
+}
+
+# A country has increased the level of a tech, use last_increased_tech trigger to check tech and level.
+# This = Country
+on_tech_increased = {
+	events = {
+		tutorial.6
+		tutorial.64
+		tutorial.73
+		#crisis.2190
+		anomaly.1193
+		action.55
+		apoc.300
+		distar.12000
+		distar.1085
+		distar.10903
+	}
+}
+
+# We changed a species right
+# This = pop
+on_pop_rights_change = {
+	events = {
+		utopia.90 # remove withdrawal when blissed
+		utopia.91 # add withdrawal after bliss
+	}
+}
+
+# Called when an election starts
+# scope: country
+on_election_started = {
+}
+
+# Called when an election ends
+# scope: country
+on_election_ended = {
+}
