@@ -271,6 +271,68 @@ dp_single_transferable_vote = {
 	}
 }
 
+dp_pres_election_update_situation_log = {
+	if = { # Kills and re-inits chain to spam situation log updated aural message
+		limit = {
+			has_event_chain = dp_presidential_election_chain
+		}
+		end_event_chain = dp_presidential_election_chain
+	}
+	begin_event_chain = {
+		event_chain = "dp_presidential_election_chain"
+		target = this
+	}
+
+	while = { # Tallies votes for candidate 1
+		limit = {
+			check_variable = { which = dp_elec_issue_01_votes value > 0 }
+		}
+		change_variable = { which = dp_elec_issue_01_votes value = -1 }
+		
+		add_event_chain_counter = {
+			event_chain = dp_presidential_election_chain
+			counter = votes_candidate_01
+			amount = 1
+		}
+	}
+	while = { # Tallies votes for candidate 2
+		limit = {
+			check_variable = { which = dp_elec_issue_02_votes value > 0 }
+		}
+		change_variable = { which = dp_elec_issue_02_votes value = -1 }
+		
+		add_event_chain_counter = {
+			event_chain = dp_presidential_election_chain
+			counter = votes_candidate_02
+			amount = 1
+		}
+	}
+	while = { # Tallies votes for candidate 3
+		limit = {
+			check_variable = { which = dp_elec_issue_03_votes value > 0 }
+		}
+		change_variable = { which = dp_elec_issue_03_votes value = -1 }
+		
+		add_event_chain_counter = {
+			event_chain = dp_presidential_election_chain
+			counter = votes_candidate_03
+			amount = 1
+		}
+	}
+	while = { # Tallies votes for candidate 4
+		limit = {
+			check_variable = { which = dp_elec_issue_04_votes value > 0 }
+		}
+		change_variable = { which = dp_elec_issue_04_votes value = -1 }
+		
+		add_event_chain_counter = {
+			event_chain = dp_presidential_election_chain
+			counter = votes_candidate_04
+			amount = 1
+		}
+	}
+}
+
 # Leader Scope
 dp_assign_candidate_number = {
 	if = {
@@ -314,11 +376,21 @@ dp_assign_candidate_number = {
 
 dp_set_leader_ethic_flag = { 
 	if = {
-		limit = { leader_of_faction = totalitarian }
+		limit = { 
+			OR = {
+				leader_of_faction = totalitarian
+				has_trait = trait_dp_ruler_authoritarian
+			}
+		}			
 		set_leader_flag = dp_authoritarian_leaning
 	}
 	if = {
-		limit = { leader_of_faction = imperialist }
+		limit = { 
+			OR = {
+				leader_of_faction = imperialist
+				has_trait = trait_dp_ruler_militarist
+			}
+		}
 		set_leader_flag = dp_militarist_leaning
 	}
 	if = {
@@ -326,28 +398,54 @@ dp_set_leader_ethic_flag = {
 			OR = {
 				leader_of_faction = supremacist
 				leader_of_faction = isolationist
+				has_trait = trait_dp_ruler_xenophobe
 			}
 		}
 		set_leader_flag = dp_xenophobe_leaning
 	}
 	if = {
-		limit = { leader_of_faction = progressive }
+		limit = { 
+			OR = {
+				leader_of_faction = progressive
+				has_trait = trait_dp_ruler_egalitarian
+			}
+		}
 		set_leader_flag = dp_egalitarian_leaning
 	}
 	if = {
-		limit = { leader_of_faction = technologist }
+		limit = { 
+			OR = {
+				leader_of_faction = technologist
+				has_trait = trait_dp_ruler_materialist
+			}
+		}
 		set_leader_flag = dp_materialist_leaning
 	}
 	if = {
-		limit = { leader_of_faction = xenoist }
+		limit = { 
+			OR = {
+				leader_of_faction = xenoist
+				has_trait = trait_dp_ruler_xenophile
+			}
+		}
 		set_leader_flag = dp_xenophile_leaning
 	}
 	if = {
-		limit = { leader_of_faction = traditionalist }
+		limit = { 
+			OR = {
+				leader_of_faction = traditionalist
+				has_trait = trait_dp_ruler_spiritualist
+			}
+		}
 		set_leader_flag = dp_spiritualist_leaning
 	}
 	if = {
-		limit = { leader_of_faction = prosperity }
+		limit = { 
+			OR = {
+				leader_of_faction = prosperity
+				has_trait = trait_dp_ruler_pacifist
+			}
+		}
 		set_leader_flag = dp_pacifist_leaning
 	}
 	

@@ -6,22 +6,7 @@
 namespace = dpelection
 
 ### POP Events (dpelection.1XXX)
-# Determines if a pop is a voter (HIDDEN)
-#pop_event = { # Event seems unnecessary. Could just call dp_is_citizen_voter
-#	id = dpelection.1000
-#	hide_window = yes
-#	
-#	is_triggered_only = yes
-#	
-#	immediate = {
-#		if = {
-#			limit = {
-#				dp_is_citizen_voter = yes
-#			}
-#			set_pop_flag = dp_pop_is_voter
-#		}
-#	}
-#}
+
 
 ### Leader Events (dpelection.2XXX)
 # Select a pool of leaders to enter election. Note: Current ruler and Chosen One gets priority (HIDDEN)
@@ -233,7 +218,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 			last_created_leader = { # Marks leader as disposible and sets ethical alignment
 				dp_assign_candidate_number = yes
 				dp_set_leader_ethic_flag_pop = yes
-				set_leader_flag = temp_election_leader
+				set_leader_flag = temp_election_leader # FIXME
 			}
 			
 			#country_leader_cap = 1 # Temporary cap increase to accomodate leader
@@ -265,8 +250,7 @@ event = {
 			if  = {
 				limit = { check_variable = { which = dp_presidential_election_yearly_countdown value <= 0 } }
 				country_event = { id = dpelection.3100 days = 210 } #FIXME: 212? Note: need to end campaign some time that is not on yearly pulse, i.e. Start of December or end of January
-				#change_variable = { which = dp_presidential_election_yearly_countdown value = 9 } # Check this, to be replaced when term length policy is implemented
-				change_variable = { which = dp_presidential_election_yearly_countdown value = 2 } # Debug Value
+				change_variable = { which = dp_presidential_election_yearly_countdown value = 2 } # FIXME: Debug Value, should be term length + 1
 			}
 		}
 	}
@@ -312,16 +296,17 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 			}
 			remove_country_flag = dp_is_democracy
 			
-			# Event to let player know that they will no longer have elections?
+			# Event to let player know that they will no longer have elections
 			# Need event to cancel ongoing elections if auth changes.
 		}
 		
-		every_country = { # Monthly events to update election progress
+		every_country = { # Monthly events to update Presidential election progress
 			limit = {
 				has_country_flag = dp_is_democracy
 				has_country_flag = dp_ongoing_presidential_election
 				is_country_type = default
 			}
+
 			country_event = { id = dpelection.3002 } # Updates polling numbers
 			country_event = { id = dpelection.3003 } # Finalizes election and declares a winner
 		}
@@ -351,65 +336,12 @@ country_event = { # FIXME
 	
 	after = {
 		change_variable = { which = dp_presidential_election_monthly_countdown value = -1 } # Tick down monthly calandar
-	
-		end_event_chain = dp_presidential_election_chain
-		begin_event_chain = {
-			event_chain = "dp_presidential_election_chain"
-			target = this
-		}
 		
-		while = { # Tallies votes for candidate 1
-			limit = {
-				check_variable = { which = dp_elec_issue_01_votes value > 0 }
-			}
-			change_variable = { which = dp_elec_issue_01_votes value = -1 }
-			
-			add_event_chain_counter = {
-				event_chain = dp_presidential_election_chain
-				counter = votes_candidate_01
-				amount = 1
-			}
-		}
-		while = { # Tallies votes for candidate 2
-			limit = {
-				check_variable = { which = dp_elec_issue_02_votes value > 0 }
-			}
-			change_variable = { which = dp_elec_issue_02_votes value = -1 }
-			
-			add_event_chain_counter = {
-				event_chain = dp_presidential_election_chain
-				counter = votes_candidate_02
-				amount = 1
-			}
-		}
-		while = { # Tallies votes for candidate 3
-			limit = {
-				check_variable = { which = dp_elec_issue_03_votes value > 0 }
-			}
-			change_variable = { which = dp_elec_issue_03_votes value = -1 }
-			
-			add_event_chain_counter = {
-				event_chain = dp_presidential_election_chain
-				counter = votes_candidate_03
-				amount = 1
-			}
-		}
-		while = { # Tallies votes for candidate 4
-			limit = {
-				check_variable = { which = dp_elec_issue_04_votes value > 0 }
-			}
-			change_variable = { which = dp_elec_issue_04_votes value = -1 }
-			
-			add_event_chain_counter = {
-				event_chain = dp_presidential_election_chain
-				counter = votes_candidate_04
-				amount = 1
-			}
-		}
+		dp_pres_election_update_situation_log = yes				
 	}
 }
 
-# Determines a winner and installs them as ruler of the country (HIDDEN)
+# Determines a winner and fires an event to inform the player and install them as ruler (HIDDEN)
 country_event = {
 	id = dpelection.3003
 	hide_window = yes
@@ -422,7 +354,7 @@ country_event = {
 	}
 	
 	immediate = {
-		# Temporarily re-assign leaders as event targets
+		# Temporarily assign leaders as event targets
 		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
 		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
 		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
@@ -431,38 +363,43 @@ country_event = {
 	}
 	
 	after = {
-		# Sets a country flag to cause some effects later
+		# Sets country flags to cause some effects later
 		if = {
 			limit = {
 				event_target:dp_pres_candidate_01 = { has_leader_flag = dp_elec_issue_win }
 			}
 			set_country_flag = dp_pres_candidate_01_win
-			event_target:dp_pres_candidate_01 = { remove_leader_flag = dp_elec_issue_win }
+			event_target:dp_pres_candidate_01 = { save_event_target_as = dp_pres_elect }
 		}
 		else_if = {
 			limit = {
 				event_target:dp_pres_candidate_02 = { has_leader_flag = dp_elec_issue_win }
 			}
 			set_country_flag = dp_pres_candidate_02_win
-			event_target:dp_pres_candidate_02 = { remove_leader_flag = dp_elec_issue_win }
+			event_target:dp_pres_candidate_02 = { save_event_target_as = dp_pres_elect }
 		}
 		else_if = {
 			limit = {
 				event_target:dp_pres_candidate_03 = { has_leader_flag = dp_elec_issue_win }
 			}
 			set_country_flag = dp_pres_candidate_03_win
-			event_target:dp_pres_candidate_03 = { remove_leader_flag = dp_elec_issue_win }
+			event_target:dp_pres_candidate_03 = { save_event_target_as = dp_pres_elect }
 		}
 		else = {
 			set_country_flag = dp_pres_candidate_04_win
-			event_target:dp_pres_candidate_04 = { remove_leader_flag = dp_elec_issue_win }
+			event_target:dp_pres_candidate_04 = { save_event_target_as = dp_pres_elect }
 		}
+
+		event_target:dp_pres_candidate_01 = { remove_leader_flag = dp_defeated }
+		event_target:dp_pres_candidate_02 = { remove_leader_flag = dp_defeated }
+		event_target:dp_pres_candidate_03 = { remove_leader_flag = dp_defeated }
+		event_target:dp_pres_candidate_04 = { remove_leader_flag = dp_defeated }
 
 		country_event = { id = dpelection.3004 }
 	}
 }
 
-# Declare a winner
+# Declare a winner to the player installs them as ruler
 country_event = {
 	id = dpelection.3004
 	title = "dpelection.3004.name"
@@ -473,80 +410,28 @@ country_event = {
 	is_triggered_only = yes
 	
 	immediate = {
-		if = {
-			limit = {
-				has_country_flag = dp_pres_candidate_01_win
-			}
-			event_target:dp_pres_candidate_01 = { 
-				set_leader_flag = dp_pres_elect
-				save_event_target_as = dp_pres_elect
-				if = {
-					limit = {
-						check_variable = { which = dp_ruler_terms_served value = 0 }
-					}
-					set_variable = { which = "dp_ruler_terms_served" value = 0 }
+		event_target:dp_pres_elect = { 
+			if = {
+				limit = {
+					check_variable = { which = dp_ruler_terms_served value = 0 }
 				}
-				change_variable = { which = dp_ruler_terms_served value = 1 }
+				set_variable = { which = "dp_ruler_terms_served" value = 0 }
 			}
-			assign_leader = event_target:dp_pres_candidate_01 # TODO: Implement as an heir?
+			change_variable = { which = dp_ruler_terms_served value = 1 }
+
+			remove_leader_flag = dp_elec_issue_win
 		}
-		else_if = {
-			limit = {
-				has_country_flag = dp_pres_candidate_02_win
-			}
-			event_target:dp_pres_candidate_02 = { 
-				set_leader_flag = dp_pres_elect
-				save_event_target_as = dp_pres_elect
-				if = {
-					limit = {
-						check_variable = { which = dp_ruler_terms_served value = 0 }
-					}
-					set_variable = { which = "dp_ruler_terms_served" value = 0 }
-				}
-				change_variable = { which = dp_ruler_terms_served value = 1 }
-			}
-			assign_leader = event_target:dp_pres_candidate_02 # TODO: Implement as an heir?
-		}
-		else_if = {
-			limit = {
-				has_country_flag = dp_pres_candidate_03_win
-			}
-			event_target:dp_pres_candidate_03 = { 
-				set_leader_flag = dp_pres_elect
-				save_event_target_as = dp_pres_elect
-				if = {
-					limit = {
-						check_variable = { which = dp_ruler_terms_served value = 0 }
-					}
-					set_variable = { which = "dp_ruler_terms_served" value = 0 }
-				}
-				change_variable = { which = dp_ruler_terms_served value = 1 }
-			}
-			assign_leader = event_target:dp_pres_candidate_03 # TODO: Implement as an heir?
-		}
-		else = {
-			event_target:dp_pres_candidate_04 = { 
-				set_leader_flag = dp_pres_elect
-				save_event_target_as = dp_pres_elect
-				if = {
-					limit = {
-						check_variable = { which = dp_ruler_terms_served value = 0 }
-					}
-					set_variable = { which = "dp_ruler_terms_served" value = 0 }
-				}
-				change_variable = { which = dp_ruler_terms_served value = 1 }
-			}
-			assign_leader = event_target:dp_pres_candidate_04 # TODO: Implement as an heir?
-		}
+		assign_leader = event_target:dp_pres_elect # TODO: Implement as an heir?
 	}
 	
+	# Imagine a world where you didn't spend 300 lines on button localization...
 	option = { # Opposite ideology winner
 		trigger = { #FIXME
 			OR = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_authoritarian_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_egalitarian
@@ -556,7 +441,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_egalitarian_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_authoritarian
@@ -566,7 +451,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_xenophile_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_xenophobe
@@ -576,7 +461,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_xenophobe_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_xenophile
@@ -586,7 +471,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_pacifist_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_militarist
@@ -596,7 +481,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_militarist_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_pacifist
@@ -606,7 +491,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_spiritualist_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_materialist
@@ -616,7 +501,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_materialist_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_spiritualist
@@ -634,7 +519,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_egalitarian_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_egalitarian
@@ -644,7 +529,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_authoritarian_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_authoritarian
@@ -654,7 +539,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_xenophile_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_xenophile
@@ -664,7 +549,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_xenophobe_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_xenophobe
@@ -674,7 +559,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_pacifist_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_pacifist
@@ -684,7 +569,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_militarist_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_militarist
@@ -694,7 +579,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_spiritualist_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_spiritualist
@@ -704,7 +589,7 @@ country_event = {
 				AND = {
 					any_owned_leader = { 
 						has_leader_flag = dp_materialist_leaning
-						has_leader_flag = dp_pres_elect
+						has_leader_flag = dp_elec_issue_win
 					}
 					OR = {
 						has_ethic = ethic_materialist
@@ -724,7 +609,7 @@ country_event = {
 						has_leader_flag = dp_egalitarian_leaning
 						has_leader_flag = dp_authoritarian_leaning
 					}
-					has_leader_flag = dp_pres_elect
+					has_leader_flag = dp_elec_issue_win
 				}
 				OR = {
 					has_ethic = ethic_egalitarian
@@ -739,7 +624,7 @@ country_event = {
 						has_leader_flag = dp_xenophile_leaning
 						has_leader_flag = dp_xenophobe_leaning
 					}
-					has_leader_flag = dp_pres_elect
+					has_leader_flag = dp_elec_issue_win
 				}
 				OR = {
 					has_ethic = ethic_xenophile
@@ -754,7 +639,7 @@ country_event = {
 						has_leader_flag = dp_pacifist_leaning
 						has_leader_flag = dp_militarist_leaning
 					}
-					has_leader_flag = dp_pres_elect
+					has_leader_flag = dp_elec_issue_win
 				}
 				OR = {
 					has_ethic = ethic_pacifist
@@ -769,7 +654,7 @@ country_event = {
 						has_leader_flag = dp_spiritualist_leaning
 						has_leader_flag = dp_materialist_leaning
 					}
-					has_leader_flag = dp_pres_elect
+					has_leader_flag = dp_elec_issue_win
 				}
 				OR = {
 					has_ethic = ethic_spiritualist
@@ -783,25 +668,8 @@ country_event = {
 		custom_tooltip = dpelection.3004.tooltip
 	}
 	
-	after = { # Clears out all the flags to be ready for next cycle
-		remove_country_flag = dp_ongoing_presidential_election
-		remove_country_flag = dp_pres_candidate_01_win
-		remove_country_flag = dp_pres_candidate_02_win
-		remove_country_flag = dp_pres_candidate_03_win
-		remove_country_flag = dp_pres_candidate_04_win
-		
-		every_owned_leader = {
-			remove_leader_flag = dp_pres_candidate_01
-			remove_leader_flag = dp_pres_candidate_02
-			remove_leader_flag = dp_pres_candidate_03
-			remove_leader_flag = dp_pres_candidate_04
-			remove_leader_flag = dp_pres_not_candidate
-			remove_leader_flag = dp_pres_elect
-		}
-		
-		every_owned_pop = {
-			remove_pop_flag = dp_pop_is_voter
-		}
+	after = {
+		country_event = { id = dpelection.3102 }
 	}
 }
 
@@ -823,17 +691,11 @@ country_event = {
 		country_event = { id = dpelection.3101 }
 		
 		# Invisible Events
-#		every_owned_pop = {
-#			pop_event = { id = dpelection.1000 }
-#		}
 		country_event = { id = dpelection.2000 }
 	}
 	
 	after = {
-		every_owned_pop = {
-			limit = { dp_is_citizen_voter = yes }
-			pop_event = { id = dpelection.1001 }
-		}
+		dp_straw_poll = yes
 		change_variable = { which = dp_presidential_election_monthly_countdown value = 6 }
 	}
 }
@@ -858,6 +720,47 @@ country_event = {
 		begin_event_chain = {
 			event_chain = "dp_presidential_election_chain"
 			target = this
+		}
+	}
+}
+
+# Presidential Election cleanup event (HIDDEN)
+# Note: This may have impact on gubernatorial elections which will need to be seperated out
+country_event = { 
+	id = dpelection.3102
+	hide_window = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		remove_country_flag = dp_ongoing_presidential_election
+		remove_country_flag = dp_pres_candidate_01_win
+		remove_country_flag = dp_pres_candidate_02_win
+		remove_country_flag = dp_pres_candidate_03_win
+		remove_country_flag = dp_pres_candidate_04_win
+
+		every_owned_leader = {
+			remove_leader_flag = dp_pres_candidate_01
+			remove_leader_flag = dp_pres_candidate_02
+			remove_leader_flag = dp_pres_candidate_03
+			remove_leader_flag = dp_pres_candidate_04
+			remove_leader_flag = dp_pres_not_candidate
+			remove_leader_flag = dp_authoritarian_leaning
+			remove_leader_flag = dp_egalitarian_leaning
+			remove_leader_flag = dp_militarist_leaning
+			remove_leader_flag = dp_pacifist_leaning
+			remove_leader_flag = dp_materialist_leaning
+			remove_leader_flag = dp_spiritualist_leaning
+			remove_leader_flag = dp_xenophile_leaning
+			remove_leader_flag = dp_xenophobe_leaning
+		}
+
+		every_owned_pop = {
+			remove_pop_flag = dp_issue_pop_vote_01
+			remove_pop_flag = dp_issue_pop_vote_02
+			remove_pop_flag = dp_issue_pop_vote_03
+			remove_pop_flag = dp_issue_pop_vote_04
+			remove_pop_flag = dp_issue_pop_novote
 		}
 	}
 }

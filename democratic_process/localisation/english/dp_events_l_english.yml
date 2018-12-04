@@ -1,10 +1,7 @@
 ﻿l_english:
 
  # Events
- dpelection.3004.name:0 "Election Over"
- dpelection.3004.desc:0 "Voting all across [this.GetName] closed last night as votes were locally tallied, encrypted, and transmitted to central election authorities. After checking, rechecking, and verifying, the results are in: the peoples of [this.GetName] have chosen [this.dpPresWinName] to lead them!\n\n[this.dpPresWinName] campaigned on a platform of [event_target:dp_pres_elect.dpPresWinPlatform].\n\nCritics and supports alike have turned out in droves on [root.GetHomeWorldName] to see the swearing-in and only time will tell if the people make the right choice."
- 
- 
+
  
  
  
