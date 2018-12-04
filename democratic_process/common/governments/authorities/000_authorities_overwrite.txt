@@ -7,7 +7,7 @@ auth_democratic = {
 	re_election_allowed = yes
 	election_type = democratic
 	
-	#has_heir = yes # For vice-presidential system
+	has_heir = yes # For vice-presidential system
 
 	uses_mandates = yes
 	has_agendas = yes

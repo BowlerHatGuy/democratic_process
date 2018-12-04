@@ -46,7 +46,7 @@ on_yearly_pulse = {
 		marauder.85
 		marauder.160
 		marauder.699
-		dpelection.3000
+		# dpelection.3000
 	}
 }
 
@@ -62,6 +62,7 @@ on_game_start = {
 		distar.252 # Phaseshifting Planet
 		distar.295 # Connect Ratling Systems to one another
 		distar.8000 # Randomize L-Cluster outcome
+		# dpelection.3001
 	}
 }
 

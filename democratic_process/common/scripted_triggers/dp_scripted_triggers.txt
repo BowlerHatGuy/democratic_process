@@ -4,7 +4,7 @@
 #######################################
 
 ## POP Scope
-is_citizen_voter_dp = { # Checks if a pop is eligible to vote
+dp_is_citizen_voter = { # Checks if a pop is eligible to vote. Adequate, probably needs expansion
 	AND = {
 		OR = {
 			AND = {
@@ -31,17 +31,15 @@ is_citizen_voter_dp = { # Checks if a pop is eligible to vote
 	#is_being_purged = no
 }
 
-# Triggers to check voter leaning
-
 
 ## Leader Scope
-is_valid_candidate_dp = { # Checks whether leader is a valid candidate for office,i.e. is an allowed species
+dp_is_valid_candidate = { # Checks whether leader is a valid candidate for office,i.e. is an allowed species
 	AND = {
 		# Undesirable flags, some are undoubtably missing
 		NOT = { has_leader_flag = marauder_merc_leader }
 		NOT = { has_leader_flag = captured_queen }
 		
-		OR = { # Precludes those who have less than full citizenship
+		OR = { # Precludes those who have less than full citizenship (Need Species scope?)
 			has_citizenship_type = { type = citizenship_full }
 			has_citizenship_type = { type = citizenship_full_machine }
 			has_citizenship_type = { type = citizenship_caste_system }
@@ -49,6 +47,74 @@ is_valid_candidate_dp = { # Checks whether leader is a valid candidate for offic
 		
 		# Checks for term limits
 		check_variable = { which = "dp_ruler_terms_served" value <= 1 } # TODO: Replace when term limits implemented
+	}
+}
+
+dp_leader_of_pop_faction = {
+	OR = {
+		AND = { # Totalitarian
+			leader_of_faction = totalitarian
+			prev = {
+				exists = pop_faction
+				pop_faction = { is_pop_faction_type = totalitarian }
+			}
+		}
+		AND = { # Imperialist
+			leader_of_faction = imperialist
+			prev = {
+				exists = pop_faction
+				pop_faction = { is_pop_faction_type = imperialist }
+			}
+		}
+		AND = { # Supremacist
+			leader_of_faction = supremacist
+			prev = {
+				exists = pop_faction
+				pop_faction = { is_pop_faction_type = supremacist }
+			}
+		}
+		AND = { # Isolationist
+			leader_of_faction = isolationist
+			prev = {
+				exists = pop_faction
+				pop_faction = { is_pop_faction_type = isolationist }
+			}
+		}
+		AND = { # Progressive
+			leader_of_faction = progressive
+			prev = {
+				exists = pop_faction
+				pop_faction = { is_pop_faction_type = progressive }
+			}
+		}
+		AND = { # Technologist
+			leader_of_faction = technologist
+			prev = {
+				exists = pop_faction
+				pop_faction = { is_pop_faction_type = technologist }
+			}
+		}
+		AND = { # Xenoist
+			leader_of_faction = xenoist
+			prev = {
+				exists = pop_faction
+				pop_faction = { is_pop_faction_type = xenoist }
+			}
+		}
+		AND = { # Traditionalist
+			leader_of_faction = traditionalist
+			prev = {
+				exists = pop_faction
+				pop_faction = { is_pop_faction_type = traditionalist }
+			}
+		}
+		AND = { # Prosperity
+			leader_of_faction = prosperity
+			prev = {
+				exists = pop_faction
+				pop_faction = { is_pop_faction_type = prosperity }
+			}
+		}
 	}
 }
 

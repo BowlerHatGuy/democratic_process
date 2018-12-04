@@ -6,9 +6,9 @@
 trait_dp_ruler_authoritarian = {
 	cost = 0
 	modification = no
-	icon = "gfx/interface/icons/ethics/authoritarian.dds"
+	icon = "gfx/interface/icons/ethics/ethic_authoritarian.dds"
 	modifier = {
-		pop_ethic_authoritarian_attraction = 0.05
+		pop_ethic_authoritarian_attraction_mult = 0.05
 	}
 	leader_trait = yes
 	leader_class = { ruler }
@@ -19,9 +19,9 @@ trait_dp_ruler_authoritarian = {
 trait_dp_ruler_egalitarian = {
 	cost = 0
 	modification = no
-	icon = "gfx/interface/icons/ethics/egalitarian.dds"
+	icon = "gfx/interface/icons/ethics/ethic_egalitarian.dds"
 	modifier = {
-		pop_ethic_egalitarian_attraction = 0.05
+		pop_ethic_egalitarian_attraction_mult = 0.05
 	}
 	leader_trait = yes
 	leader_class = { ruler }
@@ -32,9 +32,9 @@ trait_dp_ruler_egalitarian = {
 trait_dp_ruler_spiritualist = {
 	cost = 0
 	modification = no
-	icon = "gfx/interface/icons/ethics/spiritualist.dds"
+	icon = "gfx/interface/icons/ethics/ethic_spiritualist.dds"
 	modifier = {
-		pop_ethic_spiritualist_attraction = 0.05
+		pop_ethic_spiritualist_attraction_mult = 0.05
 	}
 	leader_trait = yes
 	leader_class = { ruler }
@@ -45,9 +45,9 @@ trait_dp_ruler_spiritualist = {
 trait_dp_ruler_materialist = {
 	cost = 0
 	modification = no
-	icon = "gfx/interface/icons/ethics/materialist.dds"
+	icon = "gfx/interface/icons/ethics/ethic_materialist.dds"
 	modifier = {
-		pop_ethic_materialist_attraction = 0.05
+		pop_ethic_materialist_attraction_mult = 0.05
 	}
 	leader_trait = yes
 	leader_class = { ruler }
@@ -58,9 +58,9 @@ trait_dp_ruler_materialist = {
 trait_dp_ruler_militarist = {
 	cost = 0
 	modification = no
-	icon = "gfx/interface/icons/ethics/militarist.dds"
+	icon = "gfx/interface/icons/ethics/ethic_militarist.dds"
 	modifier = {
-		pop_ethic_militarist_attraction = 0.05
+		pop_ethic_militarist_attraction_mult = 0.05
 	}
 	leader_trait = yes
 	leader_class = { ruler }
@@ -71,9 +71,9 @@ trait_dp_ruler_militarist = {
 trait_dp_ruler_pacifist = {
 	cost = 0
 	modification = no
-	icon = "gfx/interface/icons/ethics/pacifist.dds"
+	icon = "gfx/interface/icons/ethics/ethic_pacifist.dds"
 	modifier = {
-		pop_ethic_pacifist_attraction = 0.05
+		pop_ethic_pacifist_attraction_mult = 0.05
 	}
 	leader_trait = yes
 	leader_class = { ruler }
@@ -84,9 +84,9 @@ trait_dp_ruler_pacifist = {
 trait_dp_ruler_xenophile = {
 	cost = 0
 	modification = no
-	icon = "gfx/interface/icons/ethics/xenophile.dds"
+	icon = "gfx/interface/icons/ethics/ethic_xenophile.dds"
 	modifier = {
-		pop_ethic_spiritualist_attraction = 0.05
+		pop_ethic_spiritualist_attraction_mult = 0.05
 	}
 	leader_trait = yes
 	leader_class = { ruler }
@@ -99,7 +99,7 @@ trait_dp_ruler_xenophobe = {
 	modification = no
 	icon = "gfx/interface/icons/ethics/ethic_xenophobe.dds"
 	modifier = {
-		pop_ethic_xenophobe_attraction = 0.05
+		pop_ethic_xenophobe_attraction_mult = 0.05
 	}
 	leader_trait = yes
 	leader_class = { ruler }

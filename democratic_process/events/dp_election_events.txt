@@ -7,1346 +7,21 @@ namespace = dpelection
 
 ### POP Events (dpelection.1XXX)
 # Determines if a pop is a voter (HIDDEN)
-pop_event = {
-	id = dpelection.1000
-	hide_window = yes
-	
-	is_triggered_only = yes
-	
-	immediate = {
-		if = {
-			limit = {
-				is_citizen_voter_dp = yes
-			}
-			set_pop_flag = dp_pop_is_voter
-		}
-	}
-}
-
-# Determines who a pop will vote for (HIDDEN)
-pop_event = {
-	id = dpelection.1001
-	hide_window = yes
-	
-	is_triggered_only = yes
-	
-	trigger = {
-		has_pop_flag = dp_pop_is_voter
-	}
-	
-	immediate = {
-		random_list = {
-			100 = { # Pop votes for Candidate 1
-				modifier = { # Fanatic Pop Opposite Ethos to Leader
-					OR = {
-						AND = { # Militarist-Pacifist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_fanatic_militarist
-						}
-						AND = { # Pacifist-Militarist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_fanatic_pacifist
-						}
-						AND = { # Spiritualist-Materialist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_fanatic_spiritualist
-						}
-						AND = { # Materialist-Spiritualist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_fanatic_materialist
-						}
-						AND = { # Authoritarian-Egalitarian
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_fanatic_authoritarian
-						}
-						AND = { # Egalitarian-Authoritarian
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_fanatic_egalitarian
-						}
-						AND = { # Xenophile-Xenophobe
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-							has_ethic = ethic_fanatic_xenophile
-						}
-						AND = { # Xenophobe-Xenophile
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-								has_ethic = ethic_fanatic_xenophobe
-						}
-					}
-					factor = 0.05
-				}
-				modifier = { # Pop Opposite Ethos to Leader
-					OR = {
-						AND = { # Militarist-Pacifist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_militarist
-						}
-						AND = { # Pacifist-Militarist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_pacifist
-						}
-						AND = { # Spiritualist-Materialist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_spiritualist
-						}
-						AND = { # Materialist-Spiritualist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_materialist
-						}
-						AND = { # Authoritarian-Egalitarian
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_authoritarian
-						}
-						AND = { # Egalitarian-Authoritarian
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_egalitarian
-						}
-						AND = { # Xenophile-Xenophobe
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-							has_ethic = ethic_xenophile
-						}
-						AND = { # Xenophobe-Xenophile
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-								has_ethic = ethic_xenophobe
-						}
-					}
-					factor = 0.2
-				}
-				modifier = { # Fanatic Pop Same Ethos to Leader
-					OR = {
-						AND = { # Militarist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_fanatic_militarist
-						}
-						AND = { # Pacifist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_fanatic_pacifist
-						}
-						AND = { # Spiritualist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_fanatic_spiritualist
-						}
-						AND = { # Materialist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_fanatic_materialist
-						}
-						AND = { # Authoritarian
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_fanatic_authoritarian
-						}
-						AND = { # Egalitarian
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_fanatic_egalitarian
-						}
-						AND = { # Xenophile
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-							has_ethic = ethic_fanatic_xenophile
-						}
-						AND = { # Xenophobe
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-								has_ethic = ethic_fanatic_xenophobe
-						}
-					}
-					add = 100
-				}
-				modifier = { # Pop Same Ethos to Leader
-					OR = {
-						AND = { # Militarist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_militarist
-						}
-						AND = { # Pacifist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_pacifist
-						}
-						AND = { # Spiritualist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_spiritualist
-						}
-						AND = { # Materialist
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_materialist
-						}
-						AND = { # Authoritarian
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_authoritarian
-						}
-						AND = { # Egalitarian
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_egalitarian
-						}
-						AND = { # Xenophile
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-							has_ethic = ethic_xenophile
-						}
-						AND = { # Xenophobe
-							event_target:dp_pres_candidate_01 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-								has_ethic = ethic_xenophobe
-						}
-					}
-					add = 50
-				}
-				modifier = { # Pop Ethos Aligns Leader Interests
-					OR = {
-						AND = { # Xenophile-Aligned
-							event_target:dp_pres_candidate_01 = {
-								OR = {
-									has_leader_flag = dp_pacifist_leaning
-									has_leader_flag = dp_egalitarian_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_xenophile
-								has_ethic = ethic_fanatic_xenophile
-							}
-						}
-						AND = { # Egalitarian-Aligned
-							event_target:dp_pres_candidate_01 = {
-								OR = {
-									has_leader_flag = dp_xenophile_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_egalitarian
-								has_ethic = ethic_fanatic_egalitarian
-							}
-						}
-						AND = { # Materialist-Aligned
-							event_target:dp_pres_candidate_01 = {
-								OR = {
-									has_leader_flag = dp_pacifist_leaning
-									has_leader_flag = dp_authoritarian_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_materialist
-								has_ethic = ethic_fanatic_materialist
-							}
-						}
-					}
-					add = 20
-				}
-				modifier = { # Pop Belongs to Leader Faction
-					OR = {
-						AND = { # Totalitarian
-							event_target:dp_pres_candidate_01 = {
-								leader_of_faction = totalitarian
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = totalitarian }
-						}
-						AND = { # Imperialist
-							event_target:dp_pres_candidate_01 = {
-								leader_of_faction = Imperialist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = imperialist }
-						}
-						AND = { # Supremacist
-							event_target:dp_pres_candidate_01 = {
-								leader_of_faction = supremacist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = supremacist }
-						}
-						AND = { # Isolationist
-							event_target:dp_pres_candidate_01 = {
-								leader_of_faction = isolationist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = isolationist }
-						}
-						AND = { # Progressive
-							event_target:dp_pres_candidate_01 = {
-								leader_of_faction = progressive
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = progressive }
-						}
-						AND = { # Technologist
-							event_target:dp_pres_candidate_01 = {
-								leader_of_faction = technologist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = technologist }
-						}
-						AND = { # Xenoist
-							event_target:dp_pres_candidate_01 = {
-								leader_of_faction = xenoist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = xenoist }
-						}
-						AND = { # Traditionalist
-							event_target:dp_pres_candidate_01 = {
-								leader_of_faction = traditionalist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = traditionalist }
-						}
-						AND = { # Prosperity
-							event_target:dp_pres_candidate_01 = {
-								leader_of_faction = prosperity
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = prosperity }
-						}
-					}
-					add = 20
-				}
-				# Add additional modifiers here, e.g. pseudo-aligned ethos or mandate/agenda based factors
-				set_pop_flag = dp_pres_pop_vote_01
-				owner = {
-					change_variable = { which = dp_pres_candidate_01_votes value = 1 }
-				}
-			}
-			100 = { # Pop votes for Candidate 2
-				modifier = { # Fanatic Pop Opposite Ethos to Leader
-					OR = {
-						AND = { # Militarist-Pacifist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_fanatic_militarist
-						}
-						AND = { # Pacifist-Militarist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_fanatic_pacifist
-						}
-						AND = { # Spiritualist-Materialist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_fanatic_spiritualist
-						}
-						AND = { # Materialist-Spiritualist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_fanatic_materialist
-						}
-						AND = { # Authoritarian-Egalitarian
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_fanatic_authoritarian
-						}
-						AND = { # Egalitarian-Authoritarian
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_fanatic_egalitarian
-						}
-						AND = { # Xenophile-Xenophobe
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-							has_ethic = ethic_fanatic_xenophile
-						}
-						AND = { # Xenophobe-Xenophile
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-								has_ethic = ethic_fanatic_xenophobe
-						}
-					}
-					factor = 0.05
-				}
-				modifier = { # Pop Opposite Ethos to Leader
-					OR = {
-						AND = { # Militarist-Pacifist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_militarist
-						}
-						AND = { # Pacifist-Militarist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_pacifist
-						}
-						AND = { # Spiritualist-Materialist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_spiritualist
-						}
-						AND = { # Materialist-Spiritualist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_materialist
-						}
-						AND = { # Authoritarian-Egalitarian
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_authoritarian
-						}
-						AND = { # Egalitarian-Authoritarian
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_egalitarian
-						}
-						AND = { # Xenophile-Xenophobe
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-							has_ethic = ethic_xenophile
-						}
-						AND = { # Xenophobe-Xenophile
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-								has_ethic = ethic_xenophobe
-						}
-					}
-					factor = 0.2
-				}
-				modifier = { # Fanatic Pop Same Ethos to Leader
-					OR = {
-						AND = { # Militarist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_fanatic_militarist
-						}
-						AND = { # Pacifist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_fanatic_pacifist
-						}
-						AND = { # Spiritualist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_fanatic_spiritualist
-						}
-						AND = { # Materialist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_fanatic_materialist
-						}
-						AND = { # Authoritarian
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_fanatic_authoritarian
-						}
-						AND = { # Egalitarian
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_fanatic_egalitarian
-						}
-						AND = { # Xenophile
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-							has_ethic = ethic_fanatic_xenophile
-						}
-						AND = { # Xenophobe
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-								has_ethic = ethic_fanatic_xenophobe
-						}
-					}
-					add = 100
-				}
-				modifier = { # Pop Same Ethos to Leader
-					OR = {
-						AND = { # Militarist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_militarist
-						}
-						AND = { # Pacifist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_pacifist
-						}
-						AND = { # Spiritualist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_spiritualist
-						}
-						AND = { # Materialist
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_materialist
-						}
-						AND = { # Authoritarian
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_authoritarian
-						}
-						AND = { # Egalitarian
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_egalitarian
-						}
-						AND = { # Xenophile
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-							has_ethic = ethic_xenophile
-						}
-						AND = { # Xenophobe
-							event_target:dp_pres_candidate_02 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-								has_ethic = ethic_xenophobe
-						}
-					}
-					add = 50
-				}
-				modifier = { # Pop Ethos Aligns Leader Interests
-					OR = {
-						AND = { # Xenophile-Aligned
-							event_target:dp_pres_candidate_02 = {
-								OR = {
-									has_leader_flag = dp_pacifist_leaning
-									has_leader_flag = dp_egalitarian_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_xenophile
-								has_ethic = ethic_fanatic_xenophile
-							}
-						}
-						AND = { # Egalitarian-Aligned
-							event_target:dp_pres_candidate_02 = {
-								OR = {
-									has_leader_flag = dp_xenophile_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_egalitarian
-								has_ethic = ethic_fanatic_egalitarian
-							}
-						}
-						AND = { # Materialist-Aligned
-							event_target:dp_pres_candidate_02 = {
-								OR = {
-									has_leader_flag = dp_pacifist_leaning
-									has_leader_flag = dp_authoritarian_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_materialist
-								has_ethic = ethic_fanatic_materialist
-							}
-						}
-					}
-					add = 20
-				}
-				modifier = { # Pop Belongs to Leader Faction
-					OR = {
-						AND = { # Totalitarian
-							event_target:dp_pres_candidate_02 = {
-								leader_of_faction = totalitarian
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = totalitarian }
-						}
-						AND = { # Imperialist
-							event_target:dp_pres_candidate_02 = {
-								leader_of_faction = Imperialist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = imperialist }
-						}
-						AND = { # Supremacist
-							event_target:dp_pres_candidate_02 = {
-								leader_of_faction = supremacist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = supremacist }
-						}
-						AND = { # Isolationist
-							event_target:dp_pres_candidate_02 = {
-								leader_of_faction = isolationist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = isolationist }
-						}
-						AND = { # Progressive
-							event_target:dp_pres_candidate_02 = {
-								leader_of_faction = progressive
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = progressive }
-						}
-						AND = { # Technologist
-							event_target:dp_pres_candidate_02 = {
-								leader_of_faction = technologist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = technologist }
-						}
-						AND = { # Xenoist
-							event_target:dp_pres_candidate_02 = {
-								leader_of_faction = xenoist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = xenoist }
-						}
-						AND = { # Traditionalist
-							event_target:dp_pres_candidate_02 = {
-								leader_of_faction = traditionalist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = traditionalist }
-						}
-						AND = { # Prosperity
-							event_target:dp_pres_candidate_02 = {
-								leader_of_faction = prosperity
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = prosperity }
-						}
-					}
-					add = 20
-				}
-				# Add additional modifiers here, e.g. pseudo-aligned ethos or mandate/agenda based factors
-				set_pop_flag = dp_pres_pop_vote_02
-				owner = {
-					change_variable = { which = dp_pres_candidate_02_votes value = 1 }
-				}
-			}
-			100 = { # Pop votes for Candidate 3
-				modifier = { # Fanatic Pop Opposite Ethos to Leader
-					OR = {
-						AND = { # Militarist-Pacifist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_fanatic_militarist
-						}
-						AND = { # Pacifist-Militarist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_fanatic_pacifist
-						}
-						AND = { # Spiritualist-Materialist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_fanatic_spiritualist
-						}
-						AND = { # Materialist-Spiritualist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_fanatic_materialist
-						}
-						AND = { # Authoritarian-Egalitarian
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_fanatic_authoritarian
-						}
-						AND = { # Egalitarian-Authoritarian
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_fanatic_egalitarian
-						}
-						AND = { # Xenophile-Xenophobe
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-							has_ethic = ethic_fanatic_xenophile
-						}
-						AND = { # Xenophobe-Xenophile
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-								has_ethic = ethic_fanatic_xenophobe
-						}
-					}
-					factor = 0.05
-				}
-				modifier = { # Pop Opposite Ethos to Leader
-					OR = {
-						AND = { # Militarist-Pacifist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_militarist
-						}
-						AND = { # Pacifist-Militarist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_pacifist
-						}
-						AND = { # Spiritualist-Materialist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_spiritualist
-						}
-						AND = { # Materialist-Spiritualist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_materialist
-						}
-						AND = { # Authoritarian-Egalitarian
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_authoritarian
-						}
-						AND = { # Egalitarian-Authoritarian
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_egalitarian
-						}
-						AND = { # Xenophile-Xenophobe
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-							has_ethic = ethic_xenophile
-						}
-						AND = { # Xenophobe-Xenophile
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-								has_ethic = ethic_xenophobe
-						}
-					}
-					factor = 0.2
-				}
-				modifier = { # Fanatic Pop Same Ethos to Leader
-					OR = {
-						AND = { # Militarist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_fanatic_militarist
-						}
-						AND = { # Pacifist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_fanatic_pacifist
-						}
-						AND = { # Spiritualist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_fanatic_spiritualist
-						}
-						AND = { # Materialist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_fanatic_materialist
-						}
-						AND = { # Authoritarian
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_fanatic_authoritarian
-						}
-						AND = { # Egalitarian
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_fanatic_egalitarian
-						}
-						AND = { # Xenophile
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-							has_ethic = ethic_fanatic_xenophile
-						}
-						AND = { # Xenophobe
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-								has_ethic = ethic_fanatic_xenophobe
-						}
-					}
-					add = 100
-				}
-				modifier = { # Pop Same Ethos to Leader
-					OR = {
-						AND = { # Militarist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_militarist
-						}
-						AND = { # Pacifist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_pacifist
-						}
-						AND = { # Spiritualist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_spiritualist
-						}
-						AND = { # Materialist
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_materialist
-						}
-						AND = { # Authoritarian
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_authoritarian
-						}
-						AND = { # Egalitarian
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_egalitarian
-						}
-						AND = { # Xenophile
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-							has_ethic = ethic_xenophile
-						}
-						AND = { # Xenophobe
-							event_target:dp_pres_candidate_03 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-								has_ethic = ethic_xenophobe
-						}
-					}
-					add = 50
-				}
-				modifier = { # Pop Ethos Aligns Leader Interests
-					OR = {
-						AND = { # Xenophile-Aligned
-							event_target:dp_pres_candidate_03 = {
-								OR = {
-									has_leader_flag = dp_pacifist_leaning
-									has_leader_flag = dp_egalitarian_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_xenophile
-								has_ethic = ethic_fanatic_xenophile
-							}
-						}
-						AND = { # Egalitarian-Aligned
-							event_target:dp_pres_candidate_03 = {
-								OR = {
-									has_leader_flag = dp_xenophile_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_egalitarian
-								has_ethic = ethic_fanatic_egalitarian
-							}
-						}
-						AND = { # Materialist-Aligned
-							event_target:dp_pres_candidate_03 = {
-								OR = {
-									has_leader_flag = dp_pacifist_leaning
-									has_leader_flag = dp_authoritarian_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_materialist
-								has_ethic = ethic_fanatic_materialist
-							}
-						}
-					}
-					add = 20
-				}
-				modifier = { # Pop Belongs to Leader Faction
-					OR = {
-						AND = { # Totalitarian
-							event_target:dp_pres_candidate_03 = {
-								leader_of_faction = totalitarian
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = totalitarian }
-						}
-						AND = { # Imperialist
-							event_target:dp_pres_candidate_03 = {
-								leader_of_faction = Imperialist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = imperialist }
-						}
-						AND = { # Supremacist
-							event_target:dp_pres_candidate_03 = {
-								leader_of_faction = supremacist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = supremacist }
-						}
-						AND = { # Isolationist
-							event_target:dp_pres_candidate_03 = {
-								leader_of_faction = isolationist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = isolationist }
-						}
-						AND = { # Progressive
-							event_target:dp_pres_candidate_03 = {
-								leader_of_faction = progressive
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = progressive }
-						}
-						AND = { # Technologist
-							event_target:dp_pres_candidate_03 = {
-								leader_of_faction = technologist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = technologist }
-						}
-						AND = { # Xenoist
-							event_target:dp_pres_candidate_03 = {
-								leader_of_faction = xenoist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = xenoist }
-						}
-						AND = { # Traditionalist
-							event_target:dp_pres_candidate_03 = {
-								leader_of_faction = traditionalist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = traditionalist }
-						}
-						AND = { # Prosperity
-							event_target:dp_pres_candidate_03 = {
-								leader_of_faction = prosperity
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = prosperity }
-						}
-					}
-					add = 20
-				}
-				# Add additional modifiers here, e.g. pseudo-aligned ethos or mandate/agenda based factors
-				set_pop_flag = dp_pres_pop_vote_03
-				owner = {
-					change_variable = { which = dp_pres_candidate_03_votes value = 1 }
-				}
-			}
-			100 = { # Pop votes for Candidate 4
-				modifier = { # Fanatic Pop Opposite Ethos to Leader
-					OR = {
-						AND = { # Militarist-Pacifist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_fanatic_militarist
-						}
-						AND = { # Pacifist-Militarist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_fanatic_pacifist
-						}
-						AND = { # Spiritualist-Materialist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_fanatic_spiritualist
-						}
-						AND = { # Materialist-Spiritualist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_fanatic_materialist
-						}
-						AND = { # Authoritarian-Egalitarian
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_fanatic_authoritarian
-						}
-						AND = { # Egalitarian-Authoritarian
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_fanatic_egalitarian
-						}
-						AND = { # Xenophile-Xenophobe
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-							has_ethic = ethic_fanatic_xenophile
-						}
-						AND = { # Xenophobe-Xenophile
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-								has_ethic = ethic_fanatic_xenophobe
-						}
-					}
-					factor = 0.05
-				}
-				modifier = { # Pop Opposite Ethos to Leader
-					OR = {
-						AND = { # Militarist-Pacifist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_militarist
-						}
-						AND = { # Pacifist-Militarist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_pacifist
-						}
-						AND = { # Spiritualist-Materialist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_spiritualist
-						}
-						AND = { # Materialist-Spiritualist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_materialist
-						}
-						AND = { # Authoritarian-Egalitarian
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_authoritarian
-						}
-						AND = { # Egalitarian-Authoritarian
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_egalitarian
-						}
-						AND = { # Xenophile-Xenophobe
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-							has_ethic = ethic_xenophile
-						}
-						AND = { # Xenophobe-Xenophile
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-								has_ethic = ethic_xenophobe
-						}
-					}
-					factor = 0.2
-				}
-				modifier = { # Fanatic Pop Same Ethos to Leader
-					OR = {
-						AND = { # Militarist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_fanatic_militarist
-						}
-						AND = { # Pacifist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_fanatic_pacifist
-						}
-						AND = { # Spiritualist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_fanatic_spiritualist
-						}
-						AND = { # Materialist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_fanatic_materialist
-						}
-						AND = { # Authoritarian
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_fanatic_authoritarian
-						}
-						AND = { # Egalitarian
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_fanatic_egalitarian
-						}
-						AND = { # Xenophile
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-							has_ethic = ethic_fanatic_xenophile
-						}
-						AND = { # Xenophobe
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-								has_ethic = ethic_fanatic_xenophobe
-						}
-					}
-					add = 100
-				}
-				modifier = { # Pop Same Ethos to Leader
-					OR = {
-						AND = { # Militarist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_militarist_leaning
-							}
-							has_ethic = ethic_militarist
-						}
-						AND = { # Pacifist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_pacifist_leaning
-							}
-							has_ethic = ethic_pacifist
-						}
-						AND = { # Spiritualist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_spiritualist_leaning
-							}
-							has_ethic = ethic_spiritualist
-						}
-						AND = { # Materialist
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_materialist_leaning
-							}
-							has_ethic = ethic_materialist
-						}
-						AND = { # Authoritarian
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_authoritarian_leaning
-							}
-							has_ethic = ethic_authoritarian
-						}
-						AND = { # Egalitarian
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_egalitarian_leaning
-							}
-							has_ethic = ethic_egalitarian
-						}
-						AND = { # Xenophile
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_xenophile_leaning
-							}
-							has_ethic = ethic_xenophile
-						}
-						AND = { # Xenophobe
-							event_target:dp_pres_candidate_04 = {
-								has_leader_flag = dp_xenophobe_leaning
-							}
-								has_ethic = ethic_xenophobe
-						}
-					}
-					add = 50
-				}
-				modifier = { # Pop Ethos Aligns Leader Interests
-					OR = {
-						AND = { # Xenophile-Aligned
-							event_target:dp_pres_candidate_04 = {
-								OR = {
-									has_leader_flag = dp_pacifist_leaning
-									has_leader_flag = dp_egalitarian_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_xenophile
-								has_ethic = ethic_fanatic_xenophile
-							}
-						}
-						AND = { # Egalitarian-Aligned
-							event_target:dp_pres_candidate_04 = {
-								OR = {
-									has_leader_flag = dp_xenophile_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_egalitarian
-								has_ethic = ethic_fanatic_egalitarian
-							}
-						}
-						AND = { # Materialist-Aligned
-							event_target:dp_pres_candidate_04 = {
-								OR = {
-									has_leader_flag = dp_pacifist_leaning
-									has_leader_flag = dp_authoritarian_leaning
-								}
-							}
-							OR = {
-								has_ethic = ethic_materialist
-								has_ethic = ethic_fanatic_materialist
-							}
-						}
-					}
-					add = 20
-				}
-				modifier = { # Pop Belongs to Leader Faction
-					OR = {
-						AND = { # Totalitarian
-							event_target:dp_pres_candidate_04 = {
-								leader_of_faction = totalitarian
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = totalitarian }
-						}
-						AND = { # Imperialist
-							event_target:dp_pres_candidate_04 = {
-								leader_of_faction = Imperialist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = imperialist }
-						}
-						AND = { # Supremacist
-							event_target:dp_pres_candidate_04 = {
-								leader_of_faction = supremacist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = supremacist }
-						}
-						AND = { # Isolationist
-							event_target:dp_pres_candidate_04 = {
-								leader_of_faction = isolationist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = isolationist }
-						}
-						AND = { # Progressive
-							event_target:dp_pres_candidate_04 = {
-								leader_of_faction = progressive
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = progressive }
-						}
-						AND = { # Technologist
-							event_target:dp_pres_candidate_04 = {
-								leader_of_faction = technologist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = technologist }
-						}
-						AND = { # Xenoist
-							event_target:dp_pres_candidate_04 = {
-								leader_of_faction = xenoist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = xenoist }
-						}
-						AND = { # Traditionalist
-							event_target:dp_pres_candidate_04 = {
-								leader_of_faction = traditionalist
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = traditionalist }
-						}
-						AND = { # Prosperity
-							event_target:dp_pres_candidate_04 = {
-								leader_of_faction = prosperity
-							}
-							exists = pop_faction
-							pop_faction = { is_pop_faction_type = prosperity }
-						}
-					}
-					add = 20
-				}
-				# Add additional modifiers here, e.g. pseudo-aligned ethos or mandate/agenda based factors
-				set_pop_flag = dp_pres_pop_vote_04
-				owner = {
-					change_variable = { which = dp_pres_candidate_04_votes value = 1 }
-				}
-			}
-		}
-	}
-}
+#pop_event = { # Event seems unnecessary. Could just call dp_is_citizen_voter
+#	id = dpelection.1000
+#	hide_window = yes
+#	
+#	is_triggered_only = yes
+#	
+#	immediate = {
+#		if = {
+#			limit = {
+#				dp_is_citizen_voter = yes
+#			}
+#			set_pop_flag = dp_pop_is_voter
+#		}
+#	}
+#}
 
 ### Leader Events (dpelection.2XXX)
 # Select a pool of leaders to enter election. Note: Current ruler and Chosen One gets priority (HIDDEN)
@@ -1361,7 +36,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 			limit = {
 				exists = ruler
 				ruler = { #FIXME
-					is_valid_candidate_dp = yes
+					dp_is_valid_candidate = yes
 				}
 			}
 			random_owned_leader = {
@@ -1385,16 +60,14 @@ country_event = { # To be called on initalization only, vacencies will be filled
 		if = { # Give priority to a Chosen One
 			limit = {
 				any_owned_leader = { 
-					AND = {
-						OR = { # Potentially move to scripted trigger, because this may be cumbersome to carry forward
-							has_trait = leader_trait_admiral_chosen
-							has_trait = leader_trait_general_chosen
-							has_trait = leader_trait_governor_chosen
-							has_trait = leader_trait_scientist_chosen
-						}
-						
-						is_valid_candidate_dp = yes
+					OR = { # Potentially move to scripted trigger, because this may be cumbersome to carry forward
+						has_trait = leader_trait_admiral_chosen
+						has_trait = leader_trait_general_chosen
+						has_trait = leader_trait_governor_chosen
+						has_trait = leader_trait_scientist_chosen
 					}
+					
+					dp_is_valid_candidate = yes
 				}
 			}
 			random_owned_leader = {
@@ -1421,26 +94,24 @@ country_event = { # To be called on initalization only, vacencies will be filled
 		
 		every_owned_leader = { # Prevents assignment of cadidacy to invalid leaders
 			limit = { 
-				is_valid_candidate_dp = no
+				dp_is_valid_candidate = no
 			}
 			set_leader_flag = dp_pres_not_candidate
 		}
 		
 		while = { # Picks leaders at random and gives them a choice to become a leader
 			limit = { 
-				AND = {
-					NAND = { # May be changed to scripted trigger if dynamic candidate number is ever implemented
-						any_owned_leader = { has_leader_flag = dp_pres_candidate_01 }
-						any_owned_leader = { has_leader_flag = dp_pres_candidate_02 }
-						any_owned_leader = { has_leader_flag = dp_pres_candidate_03 }
-						any_owned_leader = { has_leader_flag = dp_pres_candidate_04 }
-					}
-					NOT = { has_country_flag = dp_pres_no_valid_leader }
+				NAND = { # May be changed to scripted trigger if dynamic candidate number is ever implemented
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_01 }
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_02 }
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_03 }
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_04 }
 				}
+				NOT = { has_country_flag = dp_pres_no_valid_leader }
 			}
 			random_owned_leader = {
 				limit = {
-					is_valid_candidate_dp = yes
+					dp_is_valid_candidate = yes
 					NOR = {
 						has_leader_flag = dp_pres_candidate_01
 						has_leader_flag = dp_pres_candidate_02
@@ -1454,58 +125,51 @@ country_event = { # To be called on initalization only, vacencies will be filled
 				random_list = {
 					50 = { # Yes
 						modifier = { # Military Leader in Militarist State
-							AND = {
-								owner = {
-									OR = {
-										has_ethic = ethic_militarist
-										has_ethic = ethic_fanatic_militarist
-										has_civic = civic_police_state
-									}
-								}
+							owner = {
 								OR = {
-									leader_class = general
-									leader_class = admiral
+									has_ethic = ethic_militarist
+									has_ethic = ethic_fanatic_militarist
+									has_civic = civic_police_state
 								}
 							}
+							OR = {
+								leader_class = general
+								leader_class = admiral
+							}
+
 							factor = 3
 						}
 						modifier = { # Military Leader in Pacifist State
-							AND = {
-								owner = {
-									OR = {
-										has_ethic = ethic_pacifist
-										has_ethic = ethic_fanatic_pacifist
-									}
-								}
+							owner = {
 								OR = {
-									leader_class = general
-									leader_class = admiral
+									has_ethic = ethic_pacifist
+									has_ethic = ethic_fanatic_pacifist
 								}
+							}
+							OR = {
+								leader_class = general
+								leader_class = admiral
 							}
 							factor = 0
 						}
 						modifier = { # Science Leader in Materialist State
-							AND = {
-								owner = {
-									OR = {
-										has_ethic = ethic_materialist
-										has_ethic = ethic_fanatic_materialist
-									}
+							owner = {
+								OR = {
+									has_ethic = ethic_materialist
+									has_ethic = ethic_fanatic_materialist
 								}
-								leader_class = scientist
 							}
+							leader_class = scientist
 							factor = 2
 						}
 						modifier = { # Science Leader in Spiritualist State
-							AND = {
-								owner = {
-									OR = {
-										has_ethic = ethic_spiritualist
-										has_ethic = ethic_fanatic_spiritualist
-									}
+							owner = {
+								OR = {
+									has_ethic = ethic_spiritualist
+									has_ethic = ethic_fanatic_spiritualist
 								}
-								leader_class = scientist
 							}
+							leader_class = scientist
 							factor = 0.5
 						}
 						dp_assign_candidate_number = yes
@@ -1550,7 +214,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 			
 			random_owned_pop = { # Sets leader pop/species
 				limit = {
-					is_citizen_voter_dp = yes
+					dp_is_citizen_voter = yes
 				}
 				species = { save_event_target_as = dp_random_pop_species }
 				save_event_target_as = dp_random_pop
@@ -1578,9 +242,9 @@ country_event = { # To be called on initalization only, vacencies will be filled
 	}
 }
 
-country_event = { # Event to replace leader with filler leader (Vice President) in the event of presidential death
-	
-}
+#country_event = { # Event to replace leader with filler leader (Vice President) in the event of presidential death
+#	
+#}
 
 ### Country Events (dpelection.3XXX)
 # Initializing event to check whether a presidential election needs to occur (On Yearly) (HIDDEN)
@@ -1622,15 +286,15 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 				NOT = { has_country_flag = dp_is_democracy }
 				is_country_type = default
 			}
-			set_variable = { which = "dp_presidential_election_yearly_countdown" value = 3 } # DEBUG Value
+			set_variable = { which = "dp_presidential_election_yearly_countdown" value = 3 } # FIXME: DEBUG Value
 			set_variable = { which = "dp_presidential_election_monthly_countdown" value = 0 }
 			set_variable = { which = "dp_presidential_term_limit" value = 1 } # TODO: replace with term limit policy
 			#set_variable = { which = "dp_presidential_temp_leaders" value = 0 }
 			
-			set_variable = { which = "dp_pres_candidate_01_votes" value = 0 }
-			set_variable = { which = "dp_pres_candidate_02_votes" value = 0 }
-			set_variable = { which = "dp_pres_candidate_03_votes" value = 0 }
-			set_variable = { which = "dp_pres_candidate_04_votes" value = 0 }
+			set_variable = { which = "dp_elec_issue_01_votes" value = 0 }
+			set_variable = { which = "dp_elec_issue_02_votes" value = 0 }
+			set_variable = { which = "dp_elec_issue_03_votes" value = 0 }
+			set_variable = { which = "dp_elec_issue_04_votes" value = 0 }
 			
 			set_country_flag = dp_is_democracy
 			
@@ -1647,6 +311,9 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 				is_country_type = default
 			}
 			remove_country_flag = dp_is_democracy
+			
+			# Event to let player know that they will no longer have elections?
+			# Need event to cancel ongoing elections if auth changes.
 		}
 		
 		every_country = { # Monthly events to update election progress
@@ -1662,7 +329,7 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 }
 
 # Monthly Event to update poll numbers (HIDDEN)
-country_event = {
+country_event = { # FIXME
 	id = dpelection.3002
 	hide_window = yes
 	
@@ -1674,10 +341,12 @@ country_event = {
 	}
 	
 	immediate = {
-		every_owned_pop = {
-			limit = { has_pop_flag = dp_pop_is_voter }
-			pop_event = { id = dpelection.1001 }
-		}
+		# Temporarily re-assign leaders as event targets
+		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
+		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
+		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
+		event_target:dp_pres_candidate_04 = { save_event_target_as = dp_elec_issue_04 }
+		dp_straw_poll = yes
 	}
 	
 	after = {
@@ -1688,12 +357,12 @@ country_event = {
 			event_chain = "dp_presidential_election_chain"
 			target = this
 		}
-	
+		
 		while = { # Tallies votes for candidate 1
 			limit = {
-				check_variable = { which = dp_pres_candidate_01_votes value > 0 }
+				check_variable = { which = dp_elec_issue_01_votes value > 0 }
 			}
-			change_variable = { which = dp_pres_candidate_01_votes value = -1 }
+			change_variable = { which = dp_elec_issue_01_votes value = -1 }
 			
 			add_event_chain_counter = {
 				event_chain = dp_presidential_election_chain
@@ -1703,9 +372,9 @@ country_event = {
 		}
 		while = { # Tallies votes for candidate 2
 			limit = {
-				check_variable = { which = dp_pres_candidate_02_votes value > 0 }
+				check_variable = { which = dp_elec_issue_02_votes value > 0 }
 			}
-			change_variable = { which = dp_pres_candidate_02_votes value = -1 }
+			change_variable = { which = dp_elec_issue_02_votes value = -1 }
 			
 			add_event_chain_counter = {
 				event_chain = dp_presidential_election_chain
@@ -1715,9 +384,9 @@ country_event = {
 		}
 		while = { # Tallies votes for candidate 3
 			limit = {
-				check_variable = { which = dp_pres_candidate_03_votes value > 0 }
+				check_variable = { which = dp_elec_issue_03_votes value > 0 }
 			}
-			change_variable = { which = dp_pres_candidate_03_votes value = -1 }
+			change_variable = { which = dp_elec_issue_03_votes value = -1 }
 			
 			add_event_chain_counter = {
 				event_chain = dp_presidential_election_chain
@@ -1727,9 +396,9 @@ country_event = {
 		}
 		while = { # Tallies votes for candidate 4
 			limit = {
-				check_variable = { which = dp_pres_candidate_04_votes value > 0 }
+				check_variable = { which = dp_elec_issue_04_votes value > 0 }
 			}
-			change_variable = { which = dp_pres_candidate_04_votes value = -1 }
+			change_variable = { which = dp_elec_issue_04_votes value = -1 }
 			
 			add_event_chain_counter = {
 				event_chain = dp_presidential_election_chain
@@ -1753,102 +422,43 @@ country_event = {
 	}
 	
 	immediate = {
-		every_owned_pop = {
-			limit = { has_pop_flag = dp_pop_is_voter }
-			pop_event = { id = dpelection.1001 }
-		}
+		# Temporarily re-assign leaders as event targets
+		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
+		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
+		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
+		event_target:dp_pres_candidate_04 = { save_event_target_as = dp_elec_issue_04 }
+		dp_single_transferable_vote = yes
 	}
 	
 	after = {
-		# Block checks the winner FPTP style #TODO: Implement STV style election
-		# FIXME: Implement a better solution to checking
-		set_variable = { which = "dp_pres_win_votes" value = dp_pres_candidate_01_votes }
+		# Sets a country flag to cause some effects later
 		if = {
 			limit = {
-				check_variable = { which = dp_pres_win_votes value < dp_pres_candidate_02_votes }
-			}
-			set_variable = { which = "dp_pres_win_votes" value = dp_pres_candidate_02_votes }
-		}
-		if = {
-			limit = {
-				check_variable = { which = dp_pres_win_votes value < dp_pres_candidate_03_votes }
-			}
-			set_variable = { which = "dp_pres_win_votes" value = dp_pres_candidate_03_votes }
-		}
-		if = {
-			limit = {
-				check_variable = { which = dp_pres_win_votes value < dp_pres_candidate_04_votes }
-			}
-			set_variable = { which = "dp_pres_win_votes" value = dp_pres_candidate_04_votes }
-		}
-		
-		if = {
-			limit = {
-				check_variable = { which = dp_pres_candidate_01_votes value = dp_pres_win_votes }
+				event_target:dp_pres_candidate_01 = { has_leader_flag = dp_elec_issue_win }
 			}
 			set_country_flag = dp_pres_candidate_01_win
+			event_target:dp_pres_candidate_01 = { remove_leader_flag = dp_elec_issue_win }
 		}
-		if = {
+		else_if = {
 			limit = {
-				check_variable = { which = dp_pres_candidate_02_votes value = dp_pres_win_votes }
+				event_target:dp_pres_candidate_02 = { has_leader_flag = dp_elec_issue_win }
 			}
 			set_country_flag = dp_pres_candidate_02_win
+			event_target:dp_pres_candidate_02 = { remove_leader_flag = dp_elec_issue_win }
 		}
-		if = {
+		else_if = {
 			limit = {
-				check_variable = { which = dp_pres_candidate_03_votes value = dp_pres_win_votes }
+				event_target:dp_pres_candidate_03 = { has_leader_flag = dp_elec_issue_win }
 			}
 			set_country_flag = dp_pres_candidate_03_win
+			event_target:dp_pres_candidate_03 = { remove_leader_flag = dp_elec_issue_win }
 		}
-		if = {
-			limit = {
-				check_variable = { which = dp_pres_candidate_04_votes value = dp_pres_win_votes }
-			}
+		else = {
 			set_country_flag = dp_pres_candidate_04_win
+			event_target:dp_pres_candidate_04 = { remove_leader_flag = dp_elec_issue_win }
 		}
-		
-		if = { # There is a clear winner
-			limit = {
-				OR = {
-					AND = {
-						has_country_flag = dp_pres_candidate_01_win
-						NOR = {
-							has_country_flag = dp_pres_candidate_02_win
-							has_country_flag = dp_pres_candidate_03_win
-							has_country_flag = dp_pres_candidate_04_win
-						}
-					}
-					AND = {
-						has_country_flag = dp_pres_candidate_02_win
-						NOR = {
-							has_country_flag = dp_pres_candidate_01_win
-							has_country_flag = dp_pres_candidate_03_win
-							has_country_flag = dp_pres_candidate_04_win
-						}
-					}
-					AND = {
-						has_country_flag = dp_pres_candidate_03_win
-						NOR = {
-							has_country_flag = dp_pres_candidate_01_win
-							has_country_flag = dp_pres_candidate_02_win
-							has_country_flag = dp_pres_candidate_04_win
-						}
-					}
-					AND = {
-						has_country_flag = dp_pres_candidate_04_win
-						NOR = {
-							has_country_flag = dp_pres_candidate_01_win
-							has_country_flag = dp_pres_candidate_02_win
-							has_country_flag = dp_pres_candidate_03_win
-						}
-					}
-				}
-			}
-			country_event = { id = dpelection.3004 }
-		}
-		else = { # Tied electorate
-			country_event = { id = dpelection.3005 }
-		}
+
+		country_event = { id = dpelection.3004 }
 	}
 }
 
@@ -1931,7 +541,7 @@ country_event = {
 	}
 	
 	option = { # Opposite ideology winner
-		trigger = {
+		trigger = { #FIXME
 			OR = {
 				AND = {
 					any_owned_leader = { 
@@ -2019,7 +629,7 @@ country_event = {
 		custom_tooltip = dpelection.3004.tooltip
 	}
 	option = { # Same ideology winner
-		trigger = {
+		trigger = { # FIXME
 			OR = {
 				AND = {
 					any_owned_leader = { 
@@ -2107,7 +717,7 @@ country_event = {
 		custom_tooltip = dpelection.3004.tooltip
 	}
 	option = { # Neutral winner
-		trigger = {
+		trigger = { # FIXME
 			AND = {
 				any_owned_leader = { 
 					NOR = {
@@ -2195,98 +805,6 @@ country_event = {
 	}
 }
 
-# Prompts a selection for winner (temporary)
-country_event = {
-	id = dpelection.3005
-	title = "dpelection.3005.name"
-	desc = "dpelection.3005.desc"
-	#picture = #FIXME
-	#show_sound = #FIXME
-	
-	is_triggered_only = yes
-	
-	option = {
-		trigger = {
-			has_country_flag = dp_pres_candidate_01_win
-		}
-		name = dpelection.3005.a
-		tooltip = {
-			assign_leader = event_target:dp_pres_candidate_01 # TODO: Implement as an heir?
-		}
-		hidden_effect = {
-			event_target:dp_pres_candidate_01 = { 
-				save_event_target_as = dp_pres_elect
-			}
-		}
-	}
-	option = {
-		trigger = {
-			has_country_flag = dp_pres_candidate_02_win
-		}
-		name = dpelection.3005.b
-		tooltip = {
-			assign_leader = event_target:dp_pres_candidate_02 # TODO: Implement as an heir?
-		}
-		hidden_effect = {
-			event_target:dp_pres_candidate_02 = { 
-				save_event_target_as = dp_pres_elect
-			}
-		}
-	}
-	option = {
-		trigger = {
-			has_country_flag = dp_pres_candidate_03_win
-		}
-		name = dpelection.3005.c
-		tooltip = {
-			assign_leader = event_target:dp_pres_candidate_03 # TODO: Implement as an heir?
-		}
-		hidden_effect = {
-			event_target:dp_pres_candidate_03 = { 
-				save_event_target_as = dp_pres_elect
-			}
-		}
-	}
-	option = {
-		trigger = {
-			has_country_flag = dp_pres_candidate_04_win
-		}
-		name = dpelection.3005.d
-		tooltip = {
-			assign_leader = event_target:dp_pres_candidate_04 # TODO: Implement as an heir?
-		}
-		hidden_effect = {
-			event_target:dp_pres_candidate_04 = { 
-				save_event_target_as = dp_pres_elect
-			}
-		}
-	}
-	#option = { # Defer the decision
-	#
-	#}
-	
-	after = { # Clears out all the flags to be ready for next cycle
-		remove_country_flag = dp_ongoing_presidential_election
-		remove_country_flag = dp_pres_candidate_01_win
-		remove_country_flag = dp_pres_candidate_02_win
-		remove_country_flag = dp_pres_candidate_03_win
-		remove_country_flag = dp_pres_candidate_04_win
-		
-		every_owned_leader = {
-			remove_leader_flag = dp_pres_candidate_01
-			remove_leader_flag = dp_pres_candidate_02
-			remove_leader_flag = dp_pres_candidate_03
-			remove_leader_flag = dp_pres_candidate_04
-			remove_leader_flag = dp_pres_not_candidate
-			remove_leader_flag = dp_pres_elect
-		}
-		
-		every_owned_pop = {
-			remove_pop_flag = dp_pop_is_voter
-		}
-	}
-}
-
 # Event to allow election process to begin (HIDDEN)
 country_event = {
 	id = dpelection.3100
@@ -2305,15 +823,15 @@ country_event = {
 		country_event = { id = dpelection.3101 }
 		
 		# Invisible Events
-		every_owned_pop = {
-			pop_event = { id = dpelection.1000 }
-		}
+#		every_owned_pop = {
+#			pop_event = { id = dpelection.1000 }
+#		}
 		country_event = { id = dpelection.2000 }
 	}
 	
 	after = {
 		every_owned_pop = {
-			limit = { has_pop_flag = dp_pop_is_voter }
+			limit = { dp_is_citizen_voter = yes }
 			pop_event = { id = dpelection.1001 }
 		}
 		change_variable = { which = dp_presidential_election_monthly_countdown value = 6 }
@@ -2343,50 +861,3 @@ country_event = {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
