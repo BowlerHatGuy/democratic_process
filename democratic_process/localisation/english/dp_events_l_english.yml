@@ -1,16 +1,32 @@
 ﻿l_english:
+ ## Debug
+ dpdebug.1000.name:0 "Debug Probe Event"
+ dpdebug.1000.text:0 "REPLACE_ME"
+ dpdebug.1000:0 "Debug option text"
+ 
+ 
+ ## Presidential Election Events
+ #FIXME
+ dpelectionpres.3004.name:0 "Presidential Winner"
+ dpelectionpres.3004.desc:0 "The winner of the presidential race is [event_target:dp_pres_elect.GetName]"
+ dpelectionpres.3004.opposite:0 "Oh no!"
+ dpelectionpres.3004.tooltip:0 "[event_target:dp_pres_elect.GetName] has won the election and will be installed as leader"
+ dpelectionpres.3004.same:0 "A glorious day!"
+ dpelectionpres.3004.neutral:0 "The people have spoken"
+ dpelectionpres.3101.name:0 "Presidential Election"
+ dpelectionpres.3101.desc:0 "An election has started"
+ dpelectionpres.3101.a:0 "To the campaign trail!"
+ dpelectionpres.3101.a.tooltip:0 "The good citizens now have some hard choices ahead of them"
+ 
+ 
+ ## Presidential Election Situation Log
+ dp_presidential_election_chain_title:0 "Presidential Election Polls"
+ dp_presidential_election_chain_desc:0 "The citizens will choose between [event_target:dp_pres_candidate_01.GetName], [event_target:dp_pres_candidate_02.GetName], [event_target:dp_pres_candidate_03.GetName], and [event_target:dp_pres_candidate_04.GetName]."
+ votes_candidate_01:0 "[event_target:dp_pres_candidate_01.GetName]"
+ votes_candidate_02:0 "[event_target:dp_pres_candidate_02.GetName]"
+ votes_candidate_03:0 "[event_target:dp_pres_candidate_03.GetName]"
+ votes_candidate_04:0 "[event_target:dp_pres_candidate_04.GetName]"
 
- # Events
 
- 
- 
- 
- # Triggered Localization
- dp_auth_platform:0 "stringent social order. Conservative and populist supporters flocked to [event_target:dp_pres_elect.GetHerHis] rallies to hear charged speeches about the dangers of 'fraudulent voters' and warnings against letting so-called 'second-class' citizens gain the vote."
- dp_egal_platform:0 "social equality. [event_target:dp_pres_elect.GetSheHe] was more-often-than-not found marching the streets with [event_target:dp_pres_elect.GetHerHis] supporters to protest the injustices of society. Great, impassioned speeches at the planetary capitals of [this.GetName] were attended by millions and regularly quoted for nightly news programs."
- dp_spir_platform:0 "moral enhancement. To [this.dpPresWinName] and [event_target:dp_pres_elect.GetHerHis] supporters, the greatest enemy of the state is moral weakness. [event_target:dp_pres_elect.GetHerHis] campaign was marked by fiery sermons admonishing the materialistic tendancies of the people and urging a moral resurgence before [this.GetName] falls to ruin."
- dp_mat_platform:0 "advancement of the economy and betterment through technology. Through sound fiscal policies and connections in the highest academic circles, [this.dpPresWinName] gained steady support from the masses to lead into the future."
- dp_pac_platform:0 "peaceful coexistence. During the campaign, [this.dpPresWinName]'s most frequent promise was to keep the peace and allow the economy to grow. Many citizens of [this.GetName] were taken in by [event_target:dp_pres_elect.GetHerHis] continuing activism during the campaign and will now look forward to future efforts toward peace."
- dp_mil_platform:0 "national self defense. [this.dpPresWinName] spent much of [event_target:dp_pres_elect.GetHerHis] campaign warning against the dangers of complacency and that pre-emptive action is preferable to being caught flat-footed."
- dp_phile_platform:0 "the benefits of an integrated society. Great speeches extolling the virtues of all species dotted [this.dpPresWinName]'s campaign. Regardless of species, all citizens of [this.GetName] have something to contribute and fearing the xeno is a weakness to be overcome."
- dp_phobe_platform:0 ""
+ ## Modular Presidential Election Results
+ # TODO

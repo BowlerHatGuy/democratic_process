@@ -1,0 +1,19 @@
+﻿l_english:
+ ## Ruler Traits
+ #FIXME
+ trait_dp_ruler_authoritarian:0 "Authoritarian Sympathies"
+ trait_dp_ruler_authoritarian_desc:0 "This leader is known to have strong authoritarian sympathies and regularly espouses them to their followers."
+ trait_dp_ruler_egalitarian:0 "Egalitarian Sympathies"
+ trait_dp_ruler_egalitarian_desc:0 "This leader is known to have strong egalitarian sympathies and regularly espouses them to their followers."
+ trait_dp_ruler_spiritualist:0 "Spiritualist Sympathies"
+ trait_dp_ruler_spiritualist_desc:0 "This leader is known to have strong spiritualist sympathies and regularly espouses them to their followers."
+ trait_dp_ruler_materialist:0 "Materialist Sympathies"
+ trait_dp_ruler_materialist_desc:0 "This leader is known to have strong materialist sympathies and regularly espouses them to their followers."
+ trait_dp_ruler_militarist:0 "Militarist Sympathies"
+ trait_dp_ruler_militarist_desc:0 "This leader is known to have strong militarist sympathies and regularly espouses them to their followers."
+ trait_dp_ruler_pacifist:0 "Pacifist Sympathies"
+ trait_dp_ruler_pacifist_desc:0 "This leader is known to have strong pacifist sympathies and regularly espouses them to their followers."
+ trait_dp_ruler_xenophile:0 "Xenophile Sympathies"
+ trait_dp_ruler_xenophile_desc:0 "This leader is known to have strong xenophile sympathies and regularly espouses them to their followers."
+ trait_dp_ruler_xenophobe:0 "Xenophobe Sympathies"
+ trait_dp_ruler_xenophobe_desc:0 "This leader is known to have strong xenophobe sympathies and regularly espouses them to their followers."

@@ -43,17 +43,19 @@ dp_straw_poll = { #FIXME
 		
 		random_list = {
 			0 = { # Pop votes for Issue 1
-				modifier = { # Does this even work?!
-					has_ethic = ethic_xenophile
-					add = event_target:dp_elec_issue_01.dp_leader_xenophile_attr
-				}
-				modifier = { # Pop Belongs to Leader Faction
-					event_target:dp_elec_issue_01 = {
-						dp_leader_of_pop_faction = yes
-					}
+				modifier = { # Checks same ethos
+					event_target:dp_elec_issue_01 = { dp_leader_is_pop_ethos = yes }
 					add = 20
 				}
-				# Add additional modifiers here, e.g. mandate/agenda based factors
+				modifier = { # Checks opposite ethos
+					event_target:dp_elec_issue_01 = { dp_leader_is_pop_opposite_ethos = yes }
+					add = -40
+				}
+				modifier = { # Pop Belongs to Leader Faction
+					event_target:dp_elec_issue_01 = { dp_leader_of_pop_faction = yes }
+					add = 20
+				}
+				# Add additional modifiers here, e.g. mandate/agenda based factors, species considerations, etc.
 				
 				
 				modifier = { # Catch-all for non-existant issue resolutions
@@ -78,7 +80,7 @@ dp_straw_poll = { #FIXME
 			}
 			0 = { # Pop votes for Issue 4
 			}
-			25 = { # Pop abstains from vote
+			25 = { # Pop abstains from vote #TODO
 				set_pop_flag = dp_issue_pop_novote
 			}
 		}
@@ -379,7 +381,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = totalitarian
-				has_trait = trait_dp_ruler_authoritarian
+				has_ruler_trait = trait_dp_ruler_authoritarian
 			}
 		}			
 		set_leader_flag = dp_authoritarian_leaning
@@ -388,7 +390,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = imperialist
-				has_trait = trait_dp_ruler_militarist
+				has_ruler_trait = trait_dp_ruler_militarist
 			}
 		}
 		set_leader_flag = dp_militarist_leaning
@@ -398,7 +400,7 @@ dp_set_leader_ethic_flag = {
 			OR = {
 				leader_of_faction = supremacist
 				leader_of_faction = isolationist
-				has_trait = trait_dp_ruler_xenophobe
+				has_ruler_trait = trait_dp_ruler_xenophobe
 			}
 		}
 		set_leader_flag = dp_xenophobe_leaning
@@ -407,7 +409,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = progressive
-				has_trait = trait_dp_ruler_egalitarian
+				has_ruler_trait = trait_dp_ruler_egalitarian
 			}
 		}
 		set_leader_flag = dp_egalitarian_leaning
@@ -416,7 +418,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = technologist
-				has_trait = trait_dp_ruler_materialist
+				has_ruler_trait = trait_dp_ruler_materialist
 			}
 		}
 		set_leader_flag = dp_materialist_leaning
@@ -425,7 +427,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = xenoist
-				has_trait = trait_dp_ruler_xenophile
+				has_ruler_trait = trait_dp_ruler_xenophile
 			}
 		}
 		set_leader_flag = dp_xenophile_leaning
@@ -434,7 +436,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = traditionalist
-				has_trait = trait_dp_ruler_spiritualist
+				has_ruler_trait = trait_dp_ruler_spiritualist
 			}
 		}
 		set_leader_flag = dp_spiritualist_leaning
@@ -443,7 +445,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = prosperity
-				has_trait = trait_dp_ruler_pacifist
+				has_ruler_trait = trait_dp_ruler_pacifist
 			}
 		}
 		set_leader_flag = dp_pacifist_leaning
@@ -689,7 +691,7 @@ dp_set_leader_ethic_flag_pop = {
 dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced with a better visualization system
 	if = {
 		limit = { has_leader_flag = dp_authoritarian_leaning }
-		add_trait = trait_dp_ruler_authoritarian
+		add_ruler_trait = trait_dp_ruler_authoritarian
 	}
 	else = {
 		remove_trait = trait_dp_ruler_authoritarian
@@ -697,7 +699,7 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 	
 	if = {
 		limit = { has_leader_flag = dp_egalitarian_leaning }
-		add_trait = trait_dp_ruler_egalitarian
+		add_ruler_trait = trait_dp_ruler_egalitarian
 	}
 	else = {
 		remove_trait = trait_dp_ruler_egalitarian
@@ -705,7 +707,7 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 	
 	if = {
 		limit = { has_leader_flag = dp_spiritualist_leaning }
-		add_trait = trait_dp_ruler_spiritualist
+		add_ruler_trait = trait_dp_ruler_spiritualist
 	}
 	else = {
 		remove_trait = trait_dp_ruler_spiritualist
@@ -713,7 +715,7 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 	
 	if = {
 		limit = { has_leader_flag = dp_materialist_leaning }
-		add_trait = trait_dp_ruler_materialist
+		add_ruler_trait = trait_dp_ruler_materialist
 	}
 	else = {
 		remove_trait = trait_dp_ruler_materialist
@@ -721,7 +723,7 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 	
 	if = {
 		limit = { has_leader_flag = dp_militarist_leaning }
-		add_trait = trait_dp_ruler_militarist
+		add_ruler_trait = trait_dp_ruler_militarist
 	}
 	else = {
 		remove_trait = trait_dp_ruler_militarist
@@ -729,7 +731,7 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 	
 	if = {
 		limit = { has_leader_flag = dp_pacifist_leaning }
-		add_trait = trait_dp_ruler_pacifist
+		add_ruler_trait = trait_dp_ruler_pacifist
 	}
 	else = {
 		remove_trait = trait_dp_ruler_pacifist
@@ -737,7 +739,7 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 	
 	if = {
 		limit = { has_leader_flag = dp_xenophile_leaning }
-		add_trait = trait_dp_ruler_xenophile
+		add_ruler_trait = trait_dp_ruler_xenophile
 	}
 	else = {
 		remove_trait = trait_dp_ruler_xenophile
@@ -745,144 +747,144 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 	
 	if = {
 		limit = { has_leader_flag = dp_xenophobe_leaning }
-		add_trait = trait_dp_ruler_xenophobe
+		add_ruler_trait = trait_dp_ruler_xenophobe
 	}
 	else = {
 		remove_trait = trait_dp_ruler_xenophobe
 	}
 }
 
-dp_calc_leader_ethic_value = {
-# Calculates a value for each ethic that will influence how pops of that ethic will vote for the leader
-	set_variable = { which = "dp_leader_xenophile_attr" value = 50 }
-	set_variable = { which = "dp_leader_xenophobe_attr" value = 50 }
-	set_variable = { which = "dp_leader_militarist_attr" value = 50 }
-	set_variable = { which = "dp_leader_pacifist_attr" value = 50 }
-	set_variable = { which = "dp_leader_egalitarian_attr" value = 50 }
-	set_variable = { which = "dp_leader_authoritarian_attr" value = 50 }
-	set_variable = { which = "dp_leader_spiritualist_attr" value = 50 }
-	set_variable = { which = "dp_leader_materialist_attr" value = 50 }
-	
-	# Xenophile
-	if = { # Same
-		limit = {
-			has_trait = trait_dp_ruler_xenophile
-		}
-		change_variable = { which = "dp_leader_xenophile_attr"  value = 20 }
-	}
-	if = { # Opposite
-		limit = {
-			has_trait = trait_dp_ruler_xenophobe
-		}
-		change_variable = { which = "dp_leader_xenophile_attr" value = -40 }
-	}
-	# Space reserved for trait-based weighting
-	
-	# Xenophobe
-	if = { # Same
-		limit = {
-			has_trait = trait_dp_ruler_xenophobe
-		}
-		change_variable = { which = "dp_leader_xenophobe_attr" value = 20 }
-	}
-	if = { # Opposite
-		limit = {
-			has_trait = trait_dp_ruler_xenophile
-		}
-		change_variable = { which = "dp_leader_xenophobe_attr" value = -40 }
-	}
-	# Space reserved for trait-based weighting
-	
-	# Militarist
-	if = { # Same
-		limit = {
-			has_trait = trait_dp_ruler_militarist
-		}
-		change_variable = { which = "dp_leader_militarist_attr" value = 20 }
-	}
-	if = { # Opposite
-		limit = {
-			has_trait = trait_dp_ruler_pacifist
-		}
-		change_variable = { which = "dp_leader_militarist_attr" value = -40 }
-	}
-	# Space reserved for trait-based weighting
-	
-	# Pacifist
-	if = { # Same
-		limit = {
-			has_trait = trait_dp_ruler_pacifist
-		}
-		change_variable = { which = "dp_leader_pacifist_attr" value = 20 }
-	}
-	if = { # Opposite
-		limit = {
-			has_trait = trait_dp_ruler_militarist
-		}
-		change_variable = { which = "dp_leader_pacifist_attr" value = -40 }
-	}
-	# Space reserved for trait-based weighting
-	
-	# Authoritarian
-	if = { # Same
-		limit = {
-			has_trait = trait_dp_ruler_authoritarian
-		}
-		change_variable = { which = "dp_leader_authoritarian_attr" value = 20 }
-	}
-	if = { # Opposite
-		limit = {
-			has_trait = trait_dp_ruler_egalitarian
-		}
-		change_variable = { which = "dp_leader_authoritarian_attr" value = -40 }
-	}
-	# Space reserved for trait-based weighting
-	
-	# Egalitarian
-	if = { # Same
-		limit = {
-			has_trait = trait_dp_ruler_egalitarian
-		}
-		change_variable = { which = "dp_leader_egalitarian_attr" value = 20 }
-	}
-	if = { # Opposite
-		limit = {
-			has_trait = trait_dp_ruler_authoritarian
-		}
-		change_variable = { which = "dp_leader_egalitarian_attr" value = -40 }
-	}
-	# Space reserved for trait-based weighting
-	
-	# Spiritualist
-	if = { # Same
-		limit = {
-			has_trait = trait_dp_ruler_spiritualist
-		}
-		change_variable = { which = "dp_leader_spiritualist_attr" value = 20 }
-	}
-	if = { # Opposite
-		limit = {
-			has_trait = trait_dp_ruler_materialist
-		}
-		change_variable = { which = "dp_leader_spiritualist_attr" value = -40 }
-	}
-	# Space reserved for trait-based weighting
-	
-	# Materialist
-	if = { # Same
-		limit = {
-			has_trait = trait_dp_ruler_materialist
-		}
-		change_variable = { which = "dp_leader_materialist_attr" value = 20 }
-	}
-	if = { # Opposite
-		limit = {
-			has_trait = trait_dp_ruler_spiritualist
-		}
-		change_variable = { which = "dp_leader_materialist_attr" value = -40 }
-	}
-	# Space reserved for trait-based weighting
-}
+#dp_calc_leader_ethic_value = { # Depreciated until such a time as it can be figured out if this can be used
+# # Calculates a value for each ethic that will influence how pops of that ethic will vote for the leader
+#	set_variable = { which = "dp_leader_xenophile_attr" value = 50 }
+#	set_variable = { which = "dp_leader_xenophobe_attr" value = 50 }
+#	set_variable = { which = "dp_leader_militarist_attr" value = 50 }
+#	set_variable = { which = "dp_leader_pacifist_attr" value = 50 }
+#	set_variable = { which = "dp_leader_egalitarian_attr" value = 50 }
+#	set_variable = { which = "dp_leader_authoritarian_attr" value = 50 }
+#	set_variable = { which = "dp_leader_spiritualist_attr" value = 50 }
+#	set_variable = { which = "dp_leader_materialist_attr" value = 50 }
+#	
+#	# Xenophile
+#	if = { # Same
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_xenophile
+#		}
+#		change_variable = { which = "dp_leader_xenophile_attr"  value = 20 }
+#	}
+#	if = { # Opposite
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_xenophobe
+#		}
+#		change_variable = { which = "dp_leader_xenophile_attr" value = -40 }
+#	}
+#	# Space reserved for trait-based weighting
+#	
+#	# Xenophobe
+#	if = { # Same
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_xenophobe
+#		}
+#		change_variable = { which = "dp_leader_xenophobe_attr" value = 20 }
+#	}
+#	if = { # Opposite
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_xenophile
+#		}
+#		change_variable = { which = "dp_leader_xenophobe_attr" value = -40 }
+#	}
+#	# Space reserved for trait-based weighting
+#	
+#	# Militarist
+#	if = { # Same
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_militarist
+#		}
+#		change_variable = { which = "dp_leader_militarist_attr" value = 20 }
+#	}
+#	if = { # Opposite
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_pacifist
+#		}
+#		change_variable = { which = "dp_leader_militarist_attr" value = -40 }
+#	}
+#	# Space reserved for trait-based weighting
+#	
+#	# Pacifist
+#	if = { # Same
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_pacifist
+#		}
+#		change_variable = { which = "dp_leader_pacifist_attr" value = 20 }
+#	}
+#	if = { # Opposite
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_militarist
+#		}
+#		change_variable = { which = "dp_leader_pacifist_attr" value = -40 }
+#	}
+#	# Space reserved for trait-based weighting
+#	
+#	# Authoritarian
+#	if = { # Same
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_authoritarian
+#		}
+#		change_variable = { which = "dp_leader_authoritarian_attr" value = 20 }
+#	}
+#	if = { # Opposite
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_egalitarian
+#		}
+#		change_variable = { which = "dp_leader_authoritarian_attr" value = -40 }
+#	}
+#	# Space reserved for trait-based weighting
+#	
+#	# Egalitarian
+#	if = { # Same
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_egalitarian
+#		}
+#		change_variable = { which = "dp_leader_egalitarian_attr" value = 20 }
+#	}
+#	if = { # Opposite
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_authoritarian
+#		}
+#		change_variable = { which = "dp_leader_egalitarian_attr" value = -40 }
+#	}
+#	# Space reserved for trait-based weighting
+#	
+#	# Spiritualist
+#	if = { # Same
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_spiritualist
+#		}
+#		change_variable = { which = "dp_leader_spiritualist_attr" value = 20 }
+#	}
+#	if = { # Opposite
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_materialist
+#		}
+#		change_variable = { which = "dp_leader_spiritualist_attr" value = -40 }
+#	}
+#	# Space reserved for trait-based weighting
+#	
+#	# Materialist
+#	if = { # Same
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_materialist
+#		}
+#		change_variable = { which = "dp_leader_materialist_attr" value = 20 }
+#	}
+#	if = { # Opposite
+#		limit = {
+#			has_ruler_trait = trait_dp_ruler_spiritualist
+#		}
+#		change_variable = { which = "dp_leader_materialist_attr" value = -40 }
+#	}
+#	# Space reserved for trait-based weighting
+#}
 
 # POP Scope
 dp_calc_pop_vote_chance = {

@@ -62,7 +62,6 @@ on_game_start = {
 		distar.252 # Phaseshifting Planet
 		distar.295 # Connect Ratling Systems to one another
 		distar.8000 # Randomize L-Cluster outcome
-		# dpelection.3001
 	}
 }
 

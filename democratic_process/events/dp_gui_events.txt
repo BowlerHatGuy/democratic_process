@@ -6,12 +6,12 @@
 namespace = dpgui
 
 ### GUI/Test Events
-country_event = { # NOTICE: Currently crashes game. Will need further investigation
-	id = dpgui.0001
-	title = "dpelection.test.name"
-	desc = "dpelection.test.desc"
-	is_triggered_only = yes
-	
-	diplomatic = yes
-	custom_gui = "dp_election_view"
-}
+#country_event = { # NOTICE: Currently crashes game. Will need further investigation
+#	id = dpgui.0001
+#	title = "dpelection.test.name"
+#	desc = "dpelection.test.desc"
+#	is_triggered_only = yes
+#	
+#	diplomatic = yes
+#	custom_gui = "dp_election_view"
+#}

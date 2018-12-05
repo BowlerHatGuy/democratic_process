@@ -1,0 +1,681 @@
+###############################
+# Events Related to Elections
+# Written by BowlerHatGuy
+###############################
+
+namespace = dpelectionpres
+
+### POP Events (dpelectionpres.1XXX)
+
+
+### Leader Events (dpelectionpres.2XXX)
+# Select a pool of leaders to enter election. Note: Current ruler and Chosen One gets priority (HIDDEN)
+country_event = { # To be called on initalization only, vacencies will be filled by a seperate event #TODO
+	id = dpelectionpres.2000
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		if = { # Checks the current ruler for re-electoral ambitions
+			limit = {
+				exists = ruler
+				ruler = {
+					dp_is_valid_candidate = yes
+				}
+			}
+			ruler = {
+				random_list = {
+					95 = {
+						set_leader_flag = dp_pres_candidate_01
+						save_event_target_as = dp_pres_candidate_01
+						dp_set_leader_ethic_flag = yes
+					}
+					5 = {
+						modifier = {
+							factor = 0
+							has_trait = leader_trait_ruler_chosen
+						}
+						set_leader_flag = dp_pres_not_candidate
+					}
+				}
+			}
+		}
+		if = { # Give priority to a Chosen One
+			limit = {
+				any_owned_leader = { 
+					OR = { # Potentially move to scripted trigger, because this may be cumbersome to carry forward
+						has_trait = leader_trait_admiral_chosen
+						has_trait = leader_trait_general_chosen
+						has_trait = leader_trait_governor_chosen
+						has_trait = leader_trait_scientist_chosen
+					}
+					dp_is_valid_candidate = yes
+				}
+			}
+			random_owned_leader = {
+				limit = { 
+					OR = {
+						has_trait = leader_trait_admiral_chosen
+						has_trait = leader_trait_general_chosen
+						has_trait = leader_trait_governor_chosen
+						has_trait = leader_trait_scientist_chosen
+					}
+					dp_is_valid_candidate = yes
+				}
+				random_list = {
+					95 = {
+						set_leader_flag = dp_pres_candidate_02
+						save_event_target_as = dp_pres_candidate_02
+						dp_set_leader_ethic_flag = yes
+					}
+					5 = {
+						set_leader_flag = dp_pres_not_candidate
+					}
+				}
+			}
+		}
+		
+		every_owned_leader = { # Prevents assignment of cadidacy to invalid leaders
+			limit = { 
+				dp_is_valid_candidate = no
+			}
+			set_leader_flag = dp_pres_not_candidate
+		}
+		
+		while = { # Picks leaders at random and gives them a choice to become a leader
+			limit = { 
+				any_owned_leader = { # May be changed to scripted trigger if dynamic candidate number is ever implemented #TODO
+					NOR = { 
+						has_leader_flag = dp_pres_candidate_01
+						has_leader_flag = dp_pres_candidate_02
+						has_leader_flag = dp_pres_candidate_03
+						has_leader_flag = dp_pres_candidate_04
+						has_leader_flag = dp_pres_not_candidate
+					}
+				}
+				NAND = {
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_01 }
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_02 }
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_03 }
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_04 }
+				}
+			}
+			random_owned_leader = {
+				limit = {
+					NOR = {
+						has_leader_flag = dp_pres_candidate_01
+						has_leader_flag = dp_pres_candidate_02
+						has_leader_flag = dp_pres_candidate_03
+						has_leader_flag = dp_pres_candidate_04
+						has_leader_flag = dp_pres_not_candidate
+					}
+				}
+				
+				# Fields to determine likelyhood of acceptance
+				random_list = {
+					50 = { # Yes
+						modifier = { # Military Leader in Militarist State
+							owner = {
+								OR = {
+									has_ethic = ethic_militarist
+									has_ethic = ethic_fanatic_militarist
+									has_civic = civic_police_state
+								}
+							}
+							OR = {
+								leader_class = general
+								leader_class = admiral
+							}
+							factor = 3
+						}
+						modifier = { # Military Leader in Pacifist State
+							owner = {
+								OR = {
+									has_ethic = ethic_pacifist
+									has_ethic = ethic_fanatic_pacifist
+								}
+							}
+							OR = {
+								leader_class = general
+								leader_class = admiral
+							}
+							factor = 0.5
+						}
+						modifier = { # Science Leader in Materialist State
+							owner = {
+								OR = {
+									has_ethic = ethic_materialist
+									has_ethic = ethic_fanatic_materialist
+								}
+							}
+							leader_class = scientist
+							factor = 1.5
+						}
+						modifier = { # Science Leader in Spiritualist State
+							owner = {
+								OR = {
+									has_ethic = ethic_spiritualist
+									has_ethic = ethic_fanatic_spiritualist
+								}
+							}
+							leader_class = scientist
+							factor = 0.5
+						}
+						dp_assign_candidate_number = yes
+						dp_set_leader_ethic_flag = yes
+						dp_set_leader_ethic_trait = yes
+					}
+					50 = { # No
+						set_leader_flag = dp_pres_not_candidate
+					}
+				}
+			}
+		}
+		
+		while = { # Creates temp leaders to fill empty slots
+			limit = {
+				NAND = {
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_01 }
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_02 }
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_03 }
+					any_owned_leader = { has_leader_flag = dp_pres_candidate_04 }
+				}
+			}
+			
+			random_owned_pop = { # Sets leader pop/species
+				limit = {
+					dp_is_citizen_voter = yes
+				}
+				species = { save_event_target_as = dp_random_pop_species }
+				save_event_target_as = dp_random_pop
+			}
+			
+			create_leader = {
+				type = governor	#FIXME
+				species = event_target:dp_random_pop_species # Probably non-functional
+				name = random
+				skill = 1
+				traits = {
+					trait = random_trait
+				}
+			}
+			
+			last_created_leader = { # Marks leader as disposible and sets ethical alignment
+				dp_assign_candidate_number = yes
+				dp_set_leader_ethic_flag_pop = yes
+				set_leader_flag = dp_temp_election_leader #FIXME
+			}
+			
+			country_leader_cap = 1 # Temporary cap increase to accomodate leader #FIXME
+		}
+	}
+}
+
+#country_event = { # Event to replace leader with filler leader (Vice President) in the event of presidential death
+#	
+#}
+
+### Country Events (dpelectionpres.3XXX)
+# Monthly Event to update poll numbers (HIDDEN)
+country_event = {
+	id = dpelectionpres.3002
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_event_chain = dp_presidential_election_chain
+		check_variable = { which = dp_presidential_election_monthly_countdown value > 0 }
+	}
+	
+	immediate = {
+		# Temporarily re-assign leaders as event targets
+		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
+		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
+		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
+		event_target:dp_pres_candidate_04 = { save_event_target_as = dp_elec_issue_04 }
+		dp_straw_poll = yes
+	}
+	
+	after = {
+		change_variable = { which = dp_presidential_election_monthly_countdown value = -1 } # Tick down monthly calandar
+		
+		dp_pres_election_update_situation_log = yes				
+	}
+}
+
+# Determines a winner and fires an event to inform the player and install them as ruler (HIDDEN)
+country_event = {
+	id = dpelectionpres.3003
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_event_chain = dp_presidential_election_chain
+		check_variable = { which = dp_presidential_election_monthly_countdown value = 0 }
+	}
+	
+	immediate = {
+		# Temporarily assign leaders as event targets
+		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
+		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
+		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
+		event_target:dp_pres_candidate_04 = { save_event_target_as = dp_elec_issue_04 }
+		dp_single_transferable_vote = yes
+	}
+	
+	after = {
+		# Sets country flags to cause some effects later
+		if = {
+			limit = {
+				event_target:dp_pres_candidate_01 = { has_leader_flag = dp_elec_issue_win }
+			}
+			set_country_flag = dp_pres_candidate_01_win
+			event_target:dp_pres_candidate_01 = { save_event_target_as = dp_pres_elect }
+		}
+		else_if = {
+			limit = {
+				event_target:dp_pres_candidate_02 = { has_leader_flag = dp_elec_issue_win }
+			}
+			set_country_flag = dp_pres_candidate_02_win
+			event_target:dp_pres_candidate_02 = { save_event_target_as = dp_pres_elect }
+		}
+		else_if = {
+			limit = {
+				event_target:dp_pres_candidate_03 = { has_leader_flag = dp_elec_issue_win }
+			}
+			set_country_flag = dp_pres_candidate_03_win
+			event_target:dp_pres_candidate_03 = { save_event_target_as = dp_pres_elect }
+		}
+		else = {
+			set_country_flag = dp_pres_candidate_04_win
+			event_target:dp_pres_candidate_04 = { save_event_target_as = dp_pres_elect }
+		}
+
+		event_target:dp_pres_candidate_01 = { remove_leader_flag = dp_defeated }
+		event_target:dp_pres_candidate_02 = { remove_leader_flag = dp_defeated }
+		event_target:dp_pres_candidate_03 = { remove_leader_flag = dp_defeated }
+		event_target:dp_pres_candidate_04 = { remove_leader_flag = dp_defeated }
+
+		country_event = { id = dpelectionpres.3004 }
+	}
+}
+
+# Declare a winner to the player installs them as ruler
+country_event = {
+	id = dpelectionpres.3004
+	title = "dpelectionpres.3004.name"
+	desc = "dpelectionpres.3004.desc"
+	#picture = #FIXME
+	#show_sound = #FIXME
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		event_target:dp_pres_elect = { 
+			if = {
+				limit = {
+					check_variable = { which = dp_ruler_terms_served value = 0 }
+				}
+				set_variable = { which = "dp_ruler_terms_served" value = 0 }
+			}
+			change_variable = { which = dp_ruler_terms_served value = 1 }
+
+			remove_leader_flag = dp_elec_issue_win
+		}
+		assign_leader = event_target:dp_pres_elect #TODO: Implement as an heir?
+	}
+	
+	# Imagine a world where you didn't spend 300 lines on button localization...
+	option = { # Opposite ideology winner
+		trigger = { #FIXME
+			OR = {
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_authoritarian_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_egalitarian_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_xenophile_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_xenophobe_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_pacifist_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_militarist_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_spiritualist_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_materialist_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+			}
+		}
+		name = dpelectionpres.3004.opposite
+		custom_tooltip = dpelectionpres.3004.tooltip
+	}
+	option = { # Same ideology winner
+		trigger = { #FIXME
+			OR = {
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_egalitarian_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_authoritarian_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_xenophile_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_xenophobe_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_pacifist_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_militarist_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_spiritualist_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				AND = {
+					any_owned_leader = { 
+						has_leader_flag = dp_materialist_leaning
+						has_leader_flag = dp_elec_issue_win
+					}
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+			}
+		}
+		name = dpelectionpres.3004.same
+		custom_tooltip = dpelectionpres.3004.tooltip
+	}
+	option = { # Neutral winner
+		trigger = { #FIXME
+			AND = {
+				any_owned_leader = { 
+					NOR = {
+						has_leader_flag = dp_egalitarian_leaning
+						has_leader_flag = dp_authoritarian_leaning
+					}
+					has_leader_flag = dp_elec_issue_win
+				}
+				OR = {
+					has_ethic = ethic_egalitarian
+					has_ethic = ethic_fanatic_egalitarian
+					has_ethic = ethic_authoritarian
+					has_ethic = ethic_fanatic_authoritarian
+				}
+			}
+			AND = {
+				any_owned_leader = { 
+					NOR = {
+						has_leader_flag = dp_xenophile_leaning
+						has_leader_flag = dp_xenophobe_leaning
+					}
+					has_leader_flag = dp_elec_issue_win
+				}
+				OR = {
+					has_ethic = ethic_xenophile
+					has_ethic = ethic_fanatic_xenophile
+					has_ethic = ethic_xenophobe
+					has_ethic = ethic_fanatic_xenophobe
+				}
+			}
+			AND = {
+				any_owned_leader = { 
+					NOR = {
+						has_leader_flag = dp_pacifist_leaning
+						has_leader_flag = dp_militarist_leaning
+					}
+					has_leader_flag = dp_elec_issue_win
+				}
+				OR = {
+					has_ethic = ethic_pacifist
+					has_ethic = ethic_fanatic_pacifist
+					has_ethic = ethic_militarist
+					has_ethic = ethic_fanatic_militarist
+				}
+			}
+			AND = {
+				any_owned_leader = { 
+					NOR = {
+						has_leader_flag = dp_spiritualist_leaning
+						has_leader_flag = dp_materialist_leaning
+					}
+					has_leader_flag = dp_elec_issue_win
+				}
+				OR = {
+					has_ethic = ethic_spiritualist
+					has_ethic = ethic_fanatic_spiritualist
+					has_ethic = ethic_materialist
+					has_ethic = ethic_fanatic_materialist
+				}
+			}
+		}
+		name = dpelectionpres.3004.neutral
+		custom_tooltip = dpelectionpres.3004.tooltip
+	}
+	
+	after = {
+		country_event = { id = dpelectionpres.3102 }
+	}
+}
+
+# Event to allow election process to begin (HIDDEN)
+country_event = {
+	id = dpelectionpres.3100
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_country_flag = dp_ongoing_presidential_election }
+	}
+	
+	immediate = { # Fill with events to initialize the electoral process
+		set_country_flag = dp_ongoing_presidential_election
+		
+		# Visible Event(s)
+		country_event = { id = dpelectionpres.3101 }
+		
+		# Invisible Events
+		country_event = { id = dpelectionpres.2000 }
+	}
+	
+	after = {
+		dp_straw_poll = yes
+		change_variable = { which = dp_presidential_election_monthly_countdown value = 6 }
+	}
+}
+
+# Alerts empire to the start of campaign
+country_event = {
+	id = dpelectionpres.3101
+	title = "dpelectionpres.3101.name"
+	desc = "dpelectionpres.3101.desc"
+	#picture = #FIXME
+	#show_sound = 
+	location = ROOT
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "dpelectionpres.3101.a"
+		custom_tooltip = dpelectionpres.3101.a.tooltip
+	}
+	
+	after = {
+		begin_event_chain = {
+			event_chain = "dp_presidential_election_chain"
+			target = this
+		}
+	}
+}
+
+# Presidential Election cleanup event (HIDDEN)
+# Note: This may have impact on gubernatorial elections which will need to be seperated out
+country_event = { 
+	id = dpelectionpres.3102
+	hide_window = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		remove_country_flag = dp_ongoing_presidential_election
+		remove_country_flag = dp_pres_candidate_01_win
+		remove_country_flag = dp_pres_candidate_02_win
+		remove_country_flag = dp_pres_candidate_03_win
+		remove_country_flag = dp_pres_candidate_04_win
+
+		every_owned_leader = {
+			remove_leader_flag = dp_pres_candidate_01
+			remove_leader_flag = dp_pres_candidate_02
+			remove_leader_flag = dp_pres_candidate_03
+			remove_leader_flag = dp_pres_candidate_04
+			remove_leader_flag = dp_pres_not_candidate
+			remove_leader_flag = dp_authoritarian_leaning
+			remove_leader_flag = dp_egalitarian_leaning
+			remove_leader_flag = dp_militarist_leaning
+			remove_leader_flag = dp_pacifist_leaning
+			remove_leader_flag = dp_materialist_leaning
+			remove_leader_flag = dp_spiritualist_leaning
+			remove_leader_flag = dp_xenophile_leaning
+			remove_leader_flag = dp_xenophobe_leaning
+		}
+
+		every_owned_leader = {
+			limit = {
+				has_leader_flag = dp_temp_election_leader
+				NOT = { leader_class = ruler }
+			}
+			kill_leader = {
+				show_notification = no
+			}
+			country_leader_cap = -1
+		}
+
+		every_owned_pop = {
+			remove_pop_flag = dp_issue_pop_vote_01
+			remove_pop_flag = dp_issue_pop_vote_02
+			remove_pop_flag = dp_issue_pop_vote_03
+			remove_pop_flag = dp_issue_pop_vote_04
+			remove_pop_flag = dp_issue_pop_novote
+		}
+	}
+}

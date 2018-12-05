@@ -1,0 +1,94 @@
+###############################
+# Events Related to Elections
+# Written by BowlerHatGuy
+###############################
+
+namespace = dpelection
+
+### POP Events (dpelection.1XXX)
+
+
+### Leader Events (dpelection.2XXX)
+
+
+### Country Events (dpelection.3XXX)
+# Initializing event to check whether a presidential election needs to occur (On Yearly) (HIDDEN)
+event = { 
+	id = dpelection.3000
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		every_country = { # Counts down to a presidential election and triggers one if the counter hits zero
+			limit = { 
+				has_authority = auth_democratic 
+				has_country_flag = dp_is_democracy
+				is_country_type = default
+			}
+			change_variable = { which = dp_presidential_election_yearly_countdown value = -1 }
+			if  = {
+				limit = { check_variable = { which = dp_presidential_election_yearly_countdown value <= 0 } }
+				country_event = { id = dpelectionpres.3100 days = 210 } #FIXME: 212? Note: need to end campaign some time that is not on yearly pulse, i.e. Start of December or end of January
+				change_variable = { which = dp_presidential_election_yearly_countdown value = 2 } # FIXME: Debug Value, should be term length + 1
+			}
+		}
+	}
+}
+
+# Calls all events that need to happen On_Monthly (HIDDEN)
+event = { # Note: this needs to be called at the beginning of the game and On_Monthly
+	id = dpelection.3001
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		every_country = { # Initializes countries who are newly democratic.
+			limit = {
+				has_authority = auth_democratic
+				NOT = { has_country_flag = dp_is_democracy }
+				is_country_type = default
+			}
+			set_variable = { which = "dp_presidential_election_yearly_countdown" value = 3 } # FIXME: DEBUG Value
+			set_variable = { which = "dp_presidential_election_monthly_countdown" value = 0 }
+			set_variable = { which = "dp_presidential_term_limit" value = 1 } # TODO: replace with term limit policy
+			#set_variable = { which = "dp_presidential_temp_leaders" value = 0 }
+			
+			set_variable = { which = "dp_elec_issue_01_votes" value = 0 }
+			set_variable = { which = "dp_elec_issue_02_votes" value = 0 }
+			set_variable = { which = "dp_elec_issue_03_votes" value = 0 }
+			set_variable = { which = "dp_elec_issue_04_votes" value = 0 }
+			
+			set_country_flag = dp_is_democracy
+			
+			random_owned_leader = {
+				limit = { leader_class = ruler }
+				set_variable = { which = "dp_ruler_terms_served" value = 1 }
+			}
+		}
+		
+		every_country = { # Clears democracy flag from authoritian scum
+			limit = {
+				NOT = { has_authority = auth_democratic }
+				has_country_flag = dp_is_democracy
+				is_country_type = default
+			}
+			remove_country_flag = dp_is_democracy
+			
+			# Event to let player know that they will no longer have elections
+			# Need event to cancel ongoing elections if auth changes.
+		}
+		
+		every_country = { # Monthly events to update Presidential election progress
+			limit = {
+				has_country_flag = dp_is_democracy
+				has_country_flag = dp_ongoing_presidential_election
+				is_country_type = default
+			}
+
+			country_event = { id = dpelectionpres.3002 } # Updates polling numbers
+			country_event = { id = dpelectionpres.3003 } # Finalizes election and declares a winner
+		}
+	}
+}
