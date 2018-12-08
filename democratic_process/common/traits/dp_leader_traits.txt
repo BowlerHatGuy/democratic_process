@@ -10,7 +10,7 @@ trait_dp_leader_authoritarian = {
 	modifier = {
 		pop_ethic_authoritarian_attraction_mult = 0.05
 	}
-	leader_trait = yes
+	leader_trait = all
 	initial = no
 	randomized = no
 }
@@ -22,7 +22,7 @@ trait_dp_leader_egalitarian = {
 	modifier = {
 		pop_ethic_egalitarian_attraction_mult = 0.05
 	}
-	leader_trait = yes
+	leader_trait = all
 	initial = no
 	randomized = no
 }
@@ -34,7 +34,7 @@ trait_dp_leader_spiritualist = {
 	modifier = {
 		pop_ethic_spiritualist_attraction_mult = 0.05
 	}
-	leader_trait = yes
+	leader_trait = all
 	initial = no
 	randomized = no
 }
@@ -46,7 +46,7 @@ trait_dp_leader_materialist = {
 	modifier = {
 		pop_ethic_materialist_attraction_mult = 0.05
 	}
-	leader_trait = yes
+	leader_trait = all
 	initial = no
 	randomized = no
 }
@@ -58,7 +58,7 @@ trait_dp_leader_militarist = {
 	modifier = {
 		pop_ethic_militarist_attraction_mult = 0.05
 	}
-	leader_trait = yes
+	leader_trait = all
 	initial = no
 	randomized = no
 }
@@ -70,7 +70,7 @@ trait_dp_leader_pacifist = {
 	modifier = {
 		pop_ethic_pacifist_attraction_mult = 0.05
 	}
-	leader_trait = yes
+	leader_trait = all
 	initial = no
 	randomized = no
 }
@@ -82,7 +82,7 @@ trait_dp_leader_xenophile = {
 	modifier = {
 		pop_ethic_spiritualist_attraction_mult = 0.05
 	}
-	leader_trait = yes
+	leader_trait = all
 	initial = no
 	randomized = no
 }
@@ -94,8 +94,17 @@ trait_dp_leader_xenophobe = {
 	modifier = {
 		pop_ethic_xenophobe_attraction_mult = 0.05
 	}
-	leader_trait = yes
+	leader_trait = all
 	initial = no
 	randomized = no
 }
 
+trait_dp_leader_political = {
+	cost = 0
+	modification = no
+	icon = "gfx/interface/icons/traits/leader_traits/trait_ruler_charismatic.dds" #FIXME
+	leader_trait = all
+	leader_class = { political_figure }
+	initial = no
+	randomized = no
+}

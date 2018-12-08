@@ -9,17 +9,23 @@
  dpdebug.1001:0 "Move Along"
 
  dpdebug.1003.name:0 "Strawpoll Results"
- dpdebug.1003.text:0 "Current Candidate 01 Votes: [this.dp_elec_issue_01_votes]\nCurrent Candidate 02 Votes: [this.dp_elec_issue_02_votes]\nCurrent Candidate 03 Votes: [this.dp_elec_issue_03_votes]\nCurrent Candidate 04 Votes: [this.dp_elec_issue_04_votes]"
+ dpdebug.1003.text:0 "Current Candidate 01 Votes: [ROOT.dp_elec_issue_01_votes]\nCurrent Candidate 02 Votes: [ROOT.dp_elec_issue_02_votes]\nCurrent Candidate 03 Votes: [ROOT.dp_elec_issue_03_votes]\nCurrent Candidate 04 Votes: [ROOT.dp_elec_issue_04_votes]"
  dpdebug.1003:0 "Move Along"
 
- dpdebug.1004.name:0 "STV Results"
- dpdebug.1004.text:0 "Winning Candidate: [dp_STV_debug_winner.GetName]\nWinner Votes: [dp_STV_debug_winner_votes]\nWinner Threshold Votes: [this.dp_elec_total_votes]"
- dpdebug.1004:0 "Move Along"
-
  dpdebug.9000.name:0 "Strawpoll Entered"
- dpdebug.9000.text:0 "Candidate 01: [dp_pres_candidate_01.GetName]\nCandidate 02: [dp_pres_candidate_02.GetName]\nCandidate 03: [dp_pres_candidate_03.GetName]\nCandidate 04: [dp_pres_candidate_04.GetName]\n"
+ dpdebug.9000.text:0 "Candidate 01: [dp_elec_issue_01.GetName]\nCandidate 02: [dp_elec_issue_02.GetName]\nCandidate 03: [dp_elec_issue_03.GetName]\nCandidate 04: [dp_elec_issue_04.GetName]\n"
  dpdebug.9000:0 "Move Along"
 
  dpdebug.9001.name:0 "Situation Log Update Entered"
- dpdebug.9001.text:0 "Current Candidate 01 Votes: [this.dp_elec_issue_01_votes]\nCurrent Candidate 02 Votes: [root.dp_elec_issue_02_votes]\nCurrent Candidate 03 Votes: [prev.dp_elec_issue_03_votes]\nCurrent Candidate 04 Votes: [from.dp_elec_issue_04_votes]"
+ dpdebug.9001.text:0 "Current Candidate 01 Votes: [ROOT.dp_elec_issue_01_votes]\nCurrent Candidate 02 Votes: [root.dp_elec_issue_02_votes]\nCurrent Candidate 03 Votes: [prev.dp_elec_issue_03_votes]\nCurrent Candidate 04 Votes: [from.dp_elec_issue_04_votes]"
  dpdebug.9001:0 "Move Along"
+
+ ## Traits
+ trait_vote_candidate_01:0 "Voted for Candidate 1"
+ trait_vote_candidate_01_desc:0 "This pop voted for candidate 01"
+ trait_vote_candidate_02:0 "Voted for Candidate 2"
+ trait_vote_candidate_02_desc:0 "This pop voted for candidate 02"
+ trait_vote_candidate_03:0 "Voted for Candidate 3"
+ trait_vote_candidate_03_desc:0 "This pop voted for candidate 03"
+ trait_vote_candidate_04:0 "Voted for Candidate 4"
+ trait_vote_candidate_04_desc:0 "This pop voted for candidate 04"

@@ -44,10 +44,10 @@ dp_straw_poll = { #FIXME
 		remove_pop_flag = dp_issue_pop_vote_04
 		
 		random_list = {
-			10 = { # Pop votes for Issue 1
+			50 = { # Pop votes for Issue 1
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_01 = { dp_leader_is_pop_ethos = yes }
-					add = -60 #DEBUG
+					add = 60 #DEBUG
 				}
 				modifier = { # Checks opposite ethos
 					event_target:dp_elec_issue_01 = { dp_leader_is_pop_opposite_ethos = yes }
@@ -74,7 +74,7 @@ dp_straw_poll = { #FIXME
 				}
 			}
 
-			10 = { # Pop votes for Issue 2
+			50 = { # Pop votes for Issue 2
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_02 = { dp_leader_is_pop_ethos = yes }
 					add = 60
@@ -104,7 +104,7 @@ dp_straw_poll = { #FIXME
 				}
 			}
 
-			10 = { # Pop votes for Issue 3
+			50 = { # Pop votes for Issue 3
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_03 = { dp_leader_is_pop_ethos = yes }
 					add =60
@@ -134,7 +134,7 @@ dp_straw_poll = { #FIXME
 				}
 			}
 
-			10 = { # Pop votes for Issue 4
+			50 = { # Pop votes for Issue 4
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_04 = { dp_leader_is_pop_ethos = yes }
 					add = 60

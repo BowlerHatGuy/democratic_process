@@ -20,19 +20,19 @@ country_event = { # To be called on initalization only, vacencies will be filled
 		if = { # Checks the current ruler for re-electoral ambitions
 			limit = {
 				exists = ruler
-				#ruler = { #DEBUG
-				#	dp_is_valid_candidate = yes
-				#}
+				ruler = {
+					dp_is_valid_candidate = yes
+				}
 			}
 			ruler = {
 				random_list = {
-					95 = {
+					0 = { #DEBUG
 						set_leader_flag = dp_pres_candidate_01
 						save_event_target_as = dp_pres_candidate_01
 						dp_set_leader_ethic_flag = yes
 						dp_set_leader_ethic_trait = yes
 					}
-					0 = { #DEBUG
+					5 = {
 						modifier = {
 							factor = 0
 							has_trait = leader_trait_ruler_chosen
@@ -116,7 +116,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 				
 				# Fields to determine likelyhood of acceptance
 				random_list = {
-					50 = { # Yes
+					0 = { # Yes #DEBUG
 						modifier = { # Military Leader in Militarist State
 							owner = {
 								OR = {
@@ -195,12 +195,13 @@ country_event = { # To be called on initalization only, vacencies will be filled
 			}
 			
 			create_leader = {
-				type = governor	#FIXME
+				class = political_figure	#FIXME
 				species = event_target:dp_random_pop_species # Probably non-functional
 				name = random
 				skill = 1
 				traits = {
 					trait = random_trait
+					trait = trait_dp_leader_political
 				}
 			}
 			
@@ -210,8 +211,6 @@ country_event = { # To be called on initalization only, vacencies will be filled
 				dp_set_leader_ethic_trait = yes
 				set_leader_flag = dp_temp_election_leader #FIXME
 			}
-			
-			#country_leader_cap = 1 # Temporary cap increase to accomodate leader #FIXME
 		}
 	}
 }
@@ -265,7 +264,7 @@ country_event = {
 	
 	trigger = {
 		has_event_chain = dp_presidential_election_chain
-		check_variable = { which = dp_presidential_election_monthly_countdown value = 0 }
+		check_variable = { which = dp_presidential_election_monthly_countdown value <= 0 }
 	}
 	
 	immediate = {
@@ -277,10 +276,10 @@ country_event = {
 			remove_pop_flag = dp_issue_pop_novote
 		}
 		# Temporarily assign leaders as event targets
-		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
-		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
-		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
-		event_target:dp_pres_candidate_04 = { save_event_target_as = dp_elec_issue_04 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_01 } save_event_target_as = dp_elec_issue_01 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_02 } save_event_target_as = dp_elec_issue_02 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_03 } save_event_target_as = dp_elec_issue_03 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_04 } save_event_target_as = dp_elec_issue_04 }
 		dp_single_transferable_vote = yes
 	}
 	
@@ -288,34 +287,34 @@ country_event = {
 		# Sets country flags to cause some effects later
 		if = {
 			limit = {
-				event_target:dp_pres_candidate_01 = { has_leader_flag = dp_elec_issue_win }
+				event_target:dp_elec_issue_01 = { has_leader_flag = dp_elec_issue_win }
 			}
 			set_country_flag = dp_pres_candidate_01_win
-			event_target:dp_pres_candidate_01 = { save_event_target_as = dp_pres_elect }
+			event_target:dp_elec_issue_01 = { save_event_target_as = dp_pres_elect }
 		}
 		else_if = {
 			limit = {
-				event_target:dp_pres_candidate_02 = { has_leader_flag = dp_elec_issue_win }
+				event_target:dp_elec_issue_02 = { has_leader_flag = dp_elec_issue_win }
 			}
 			set_country_flag = dp_pres_candidate_02_win
-			event_target:dp_pres_candidate_02 = { save_event_target_as = dp_pres_elect }
+			event_target:dp_elec_issue_02 = { save_event_target_as = dp_pres_elect }
 		}
 		else_if = {
 			limit = {
-				event_target:dp_pres_candidate_03 = { has_leader_flag = dp_elec_issue_win }
+				event_target:dp_elec_issue_03 = { has_leader_flag = dp_elec_issue_win }
 			}
 			set_country_flag = dp_pres_candidate_03_win
-			event_target:dp_pres_candidate_03 = { save_event_target_as = dp_pres_elect }
+			event_target:dp_elec_issue_03 = { save_event_target_as = dp_pres_elect }
 		}
 		else = {
 			set_country_flag = dp_pres_candidate_04_win
-			event_target:dp_pres_candidate_04 = { save_event_target_as = dp_pres_elect }
+			event_target:dp_elec_issue_04 = { save_event_target_as = dp_pres_elect }
 		}
 
-		event_target:dp_pres_candidate_01 = { remove_leader_flag = dp_defeated }
-		event_target:dp_pres_candidate_02 = { remove_leader_flag = dp_defeated }
-		event_target:dp_pres_candidate_03 = { remove_leader_flag = dp_defeated }
-		event_target:dp_pres_candidate_04 = { remove_leader_flag = dp_defeated }
+		event_target:dp_elec_issue_01 = { remove_leader_flag = dp_defeated }
+		event_target:dp_elec_issue_02 = { remove_leader_flag = dp_defeated }
+		event_target:dp_elec_issue_03 = { remove_leader_flag = dp_defeated }
+		event_target:dp_elec_issue_04 = { remove_leader_flag = dp_defeated }
 
 		country_event = { id = dpelectionpres.3004 }
 	}
@@ -612,10 +611,10 @@ country_event = {
 		# Invisible Events
 		country_event = { id = dpelectionpres.2000 }
 
-		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
-		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
-		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
-		event_target:dp_pres_candidate_04 = { save_event_target_as = dp_elec_issue_04 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_01 } save_event_target_as = dp_elec_issue_01 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_02 } save_event_target_as = dp_elec_issue_02 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_03 } save_event_target_as = dp_elec_issue_03 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_04 } save_event_target_as = dp_elec_issue_04 }
 		dp_straw_poll = yes
 	}
 	
@@ -694,7 +693,6 @@ country_event = {
 			kill_leader = {
 				show_notification = no
 			}
-			#country_leader_cap = -1
 		}
 
 		every_owned_pop = {

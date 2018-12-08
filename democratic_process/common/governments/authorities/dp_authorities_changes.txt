@@ -1,0 +1,24 @@
+#####################################################
+# Overwritten Authorities for Democratic Process Mod
+#####################################################
+
+auth_democratic = {
+	has_heir = yes # For vice-presidential system
+
+	uses_mandates = yes
+	has_agendas = yes
+
+	possible = {
+		ethics = {
+			NOR = {
+				value = ethic_gestalt_consciousness
+				value = ethic_authoritarian
+				value = ethic_fanatic_authoritarian
+			}
+		}
+	}
+	
+	tags = {
+		AUTHORITY_ELECTION_DEMOCRATIC
+	}
+}

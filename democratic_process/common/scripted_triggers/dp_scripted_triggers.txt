@@ -6,18 +6,9 @@
 ### Utility Triggers
 ## POP Scope
 dp_is_citizen_voter = { # Checks if a pop is eligible to vote. Adequate, probably needs expansion
-	OR = {
-		AND = {
-			has_trait = trait_robotic_3
-			owner = { has_policy_flag = ai_full_rights }
-		}
-		is_robot_pop = no
-	}
-	
 	OR = { # Precludes those who have less than full citizenship
 		has_citizenship_type = { type = citizenship_full }
 		has_citizenship_type = { type = citizenship_full_machine }
-		has_citizenship_type = { type = citizenship_caste_system }
 	}
 	
 	is_enslaved = no
@@ -40,11 +31,10 @@ dp_is_valid_candidate = { # Checks whether leader is a valid candidate for offic
 	OR = { # Precludes those who have less than full citizenship (Need Species scope?)
 		has_citizenship_type = { type = citizenship_full }
 		has_citizenship_type = { type = citizenship_full_machine }
-		has_citizenship_type = { type = citizenship_caste_system }
 	}
 	
 	# Checks for term limits
-	check_variable = { which = "dp_ruler_terms_served" value <= 1 } # TODO: Replace when term limits implemented
+	check_variable = { which = "dp_ruler_terms_served" value <= 1 } #TODO: Replace when term limits implemented
 }
 
 

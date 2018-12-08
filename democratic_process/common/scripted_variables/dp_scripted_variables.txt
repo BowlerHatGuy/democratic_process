@@ -4,13 +4,13 @@
 
 ## Presidential Policies
 # Length of time between elections
-#@dptermlengthpres1 = 4
-#@dptermlengthpres2 = 6
-#@dptermlengthpres3 = 8
-#@dptermlengthpres4 = 10
+@dptermlengthpres1 = 5
+@dptermlengthpres2 = 10
+@dptermlengthpres3 = 15
+@dptermlengthpres4 = 20
 
 # Number of terms a leader can serve as president
-#@dptermlimitpres1 = 1
-#@dptermlimitpres2 = 2
-#@dptermlimitpres3 = 4
-#@dptermlimitpres4 = 9999
+@dptermlimitpres1 = 1
+@dptermlimitpres2 = 2
+@dptermlimitpres3 = 4
+@dptermlimitpres4 = 9999

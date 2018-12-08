@@ -17,3 +17,6 @@
  trait_dp_leader_xenophile_desc:0 "This leader is known to have strong xenophile sympathies and regularly espouses them to their followers."
  trait_dp_leader_xenophobe:0 "Xenophobe Sympathies"
  trait_dp_leader_xenophobe_desc:0 "This leader is known to have strong xenophobe sympathies and regularly espouses them to their followers."
+
+ trait_dp_leader_political:0 "Prominent Political Figure"
+ trait_dp_leader_political_desc:0 "Whether a past political actor or a current hopeful, this leader is at the forefront of their nation's politics."
