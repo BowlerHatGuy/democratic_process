@@ -34,6 +34,13 @@ event = {
 			}
 		}
 	}
+
+	after = {
+		#DEBUG
+		every_country = {
+			country_event = { id = dpdebug.1000 }
+		}
+	}
 }
 
 # Calls all events that need to happen On_Monthly (HIDDEN)
@@ -59,6 +66,10 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 			set_variable = { which = "dp_elec_issue_02_votes" value = 0 }
 			set_variable = { which = "dp_elec_issue_03_votes" value = 0 }
 			set_variable = { which = "dp_elec_issue_04_votes" value = 0 }
+			set_variable = { which = "dp_elec_issue_01_votes_pv" value = 0 }
+			set_variable = { which = "dp_elec_issue_02_votes_pv" value = 0 }
+			set_variable = { which = "dp_elec_issue_03_votes_pv" value = 0 }
+			set_variable = { which = "dp_elec_issue_04_votes_pv" value = 0 }
 			
 			set_country_flag = dp_is_democracy
 			
@@ -89,6 +100,12 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 
 			country_event = { id = dpelectionpres.3002 } # Updates polling numbers
 			country_event = { id = dpelectionpres.3003 } # Finalizes election and declares a winner
+		}
+	}
+
+	after = {
+		every_country = {
+	#		country_event = { id = dpdebug.1001 }
 		}
 	}
 }

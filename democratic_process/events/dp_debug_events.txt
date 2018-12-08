@@ -18,3 +18,72 @@ country_event = {
 		name = "dpdebug.1000"
 	}
 }
+
+country_event = {
+	id = dpdebug.1001
+	title = "dpdebug.1001.name"
+	desc = "dpdebug.1001.text"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "dpdebug.1001"
+	}
+}
+
+# Debugging straw poll
+country_event = {
+	id = dpdebug.1002
+	hide_window = yes
+	
+	is_triggered_only = yes
+
+	immediate = {
+		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
+		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
+		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
+		event_target:dp_pres_candidate_04 = { save_event_target_as = dp_elec_issue_04 }
+		dp_straw_poll = yes
+	}
+
+	after = {
+		dp_pres_election_update_situation_log = yes
+		country_event = { id = dpdebug.1003 }
+	}
+}
+
+country_event = { # Displayed whenever a strawpoll is entered
+	id = dpdebug.1003
+	title = "dpdebug.1003.name"
+	desc = "dpdebug.1003.text"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "dpdebug.1003"
+	}
+}
+
+country_event = { # Displayed whenever a strawpoll is entered
+	id = dpdebug.9000
+	title = "dpdebug.9000.name"
+	desc = "dpdebug.9000.text"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "dpdebug.9000"
+	}
+}
+
+country_event = { # Displayed whenever a strawpoll is entered
+	id = dpdebug.9001
+	title = "dpdebug.9001.name"
+	desc = "dpdebug.9001.text"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "dpdebug.9001"
+	}
+}

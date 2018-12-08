@@ -1,16 +1,10 @@
 ﻿l_english:
- ## Debug
- dpdebug.1000.name:0 "Debug Probe Event"
- dpdebug.1000.text:0 "REPLACE_ME"
- dpdebug.1000:0 "Debug option text"
- 
- 
  ## Presidential Election Events
  #FIXME
  dpelectionpres.3004.name:0 "Presidential Winner"
- dpelectionpres.3004.desc:0 "The winner of the presidential race is [event_target:dp_pres_elect.GetName]"
+ dpelectionpres.3004.desc:0 "The winner of the presidential race is [dp_pres_elect.GetName]"
  dpelectionpres.3004.opposite:0 "Oh no!"
- dpelectionpres.3004.tooltip:0 "[event_target:dp_pres_elect.GetName] has won the election and will be installed as leader"
+ dpelectionpres.3004.tooltip:0 "[dp_pres_elect.GetName] has won the election and will be installed as leader"
  dpelectionpres.3004.same:0 "A glorious day!"
  dpelectionpres.3004.neutral:0 "The people have spoken"
  dpelectionpres.3101.name:0 "Presidential Election"
@@ -21,11 +15,11 @@
  
  ## Presidential Election Situation Log
  dp_presidential_election_chain_title:0 "Presidential Election Polls"
- dp_presidential_election_chain_desc:0 "The citizens will choose between [event_target:dp_pres_candidate_01.GetName], [event_target:dp_pres_candidate_02.GetName], [event_target:dp_pres_candidate_03.GetName], and [event_target:dp_pres_candidate_04.GetName]."
- votes_candidate_01:0 "[event_target:dp_pres_candidate_01.GetName]"
- votes_candidate_02:0 "[event_target:dp_pres_candidate_02.GetName]"
- votes_candidate_03:0 "[event_target:dp_pres_candidate_03.GetName]"
- votes_candidate_04:0 "[event_target:dp_pres_candidate_04.GetName]"
+ dp_presidential_election_chain_desc:0 "The citizens will choose between [dp_elec_issue_01.GetName], [dp_elec_issue_02.GetName], [dp_elec_issue_03.GetName], and [dp_elec_issue_04.GetName]."
+ votes_candidate_01:0 "Votes for [dp_elec_issue_01.GetName]"
+ votes_candidate_02:0 "Votes for [dp_elec_issue_02.GetName]"
+ votes_candidate_03:0 "Votes for [dp_elec_issue_03.GetName]"
+ votes_candidate_04:0 "Votes for [dp_elec_issue_04.GetName]"
 
 
  ## Modular Presidential Election Results

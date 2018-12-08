@@ -20,9 +20,9 @@ country_event = { # To be called on initalization only, vacencies will be filled
 		if = { # Checks the current ruler for re-electoral ambitions
 			limit = {
 				exists = ruler
-				ruler = {
-					dp_is_valid_candidate = yes
-				}
+				#ruler = { #DEBUG
+				#	dp_is_valid_candidate = yes
+				#}
 			}
 			ruler = {
 				random_list = {
@@ -30,8 +30,9 @@ country_event = { # To be called on initalization only, vacencies will be filled
 						set_leader_flag = dp_pres_candidate_01
 						save_event_target_as = dp_pres_candidate_01
 						dp_set_leader_ethic_flag = yes
+						dp_set_leader_ethic_trait = yes
 					}
-					5 = {
+					0 = { #DEBUG
 						modifier = {
 							factor = 0
 							has_trait = leader_trait_ruler_chosen
@@ -68,6 +69,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 						set_leader_flag = dp_pres_candidate_02
 						save_event_target_as = dp_pres_candidate_02
 						dp_set_leader_ethic_flag = yes
+						dp_set_leader_ethic_trait = yes
 					}
 					5 = {
 						set_leader_flag = dp_pres_not_candidate
@@ -162,6 +164,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 							leader_class = scientist
 							factor = 0.5
 						}
+						
 						dp_assign_candidate_number = yes
 						dp_set_leader_ethic_flag = yes
 						dp_set_leader_ethic_trait = yes
@@ -204,15 +207,16 @@ country_event = { # To be called on initalization only, vacencies will be filled
 			last_created_leader = { # Marks leader as disposible and sets ethical alignment
 				dp_assign_candidate_number = yes
 				dp_set_leader_ethic_flag_pop = yes
+				dp_set_leader_ethic_trait = yes
 				set_leader_flag = dp_temp_election_leader #FIXME
 			}
 			
-			country_leader_cap = 1 # Temporary cap increase to accomodate leader #FIXME
+			#country_leader_cap = 1 # Temporary cap increase to accomodate leader #FIXME
 		}
 	}
 }
 
-#country_event = { # Event to replace leader with filler leader (Vice President) in the event of presidential death
+#country_event = { # Event to create a vice-president upon election
 #	
 #}
 
@@ -230,11 +234,18 @@ country_event = {
 	}
 	
 	immediate = {
+		every_owned_pop = {
+			remove_pop_flag = dp_issue_pop_vote_01
+			remove_pop_flag = dp_issue_pop_vote_02
+			remove_pop_flag = dp_issue_pop_vote_03
+			remove_pop_flag = dp_issue_pop_vote_04
+			remove_pop_flag = dp_issue_pop_novote
+		}
 		# Temporarily re-assign leaders as event targets
-		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
-		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
-		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
-		event_target:dp_pres_candidate_04 = { save_event_target_as = dp_elec_issue_04 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_01 } save_event_target_as = dp_elec_issue_01 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_02 } save_event_target_as = dp_elec_issue_02 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_03 } save_event_target_as = dp_elec_issue_03 }
+		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_04 } save_event_target_as = dp_elec_issue_04 }
 		dp_straw_poll = yes
 	}
 	
@@ -258,6 +269,13 @@ country_event = {
 	}
 	
 	immediate = {
+		every_owned_pop = {
+			remove_pop_flag = dp_issue_pop_vote_01
+			remove_pop_flag = dp_issue_pop_vote_02
+			remove_pop_flag = dp_issue_pop_vote_03
+			remove_pop_flag = dp_issue_pop_vote_04
+			remove_pop_flag = dp_issue_pop_novote
+		}
 		# Temporarily assign leaders as event targets
 		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
 		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
@@ -591,15 +609,20 @@ country_event = {
 	immediate = { # Fill with events to initialize the electoral process
 		set_country_flag = dp_ongoing_presidential_election
 		
-		# Visible Event(s)
-		country_event = { id = dpelectionpres.3101 }
-		
 		# Invisible Events
 		country_event = { id = dpelectionpres.2000 }
+
+		event_target:dp_pres_candidate_01 = { save_event_target_as = dp_elec_issue_01 }
+		event_target:dp_pres_candidate_02 = { save_event_target_as = dp_elec_issue_02 }
+		event_target:dp_pres_candidate_03 = { save_event_target_as = dp_elec_issue_03 }
+		event_target:dp_pres_candidate_04 = { save_event_target_as = dp_elec_issue_04 }
+		dp_straw_poll = yes
 	}
 	
 	after = {
-		dp_straw_poll = yes
+		# Visible Event(s)
+		country_event = { id = dpelectionpres.3101 }
+		
 		change_variable = { which = dp_presidential_election_monthly_countdown value = 6 }
 	}
 }
@@ -621,9 +644,13 @@ country_event = {
 	}
 	
 	after = {
-		begin_event_chain = {
-			event_chain = "dp_presidential_election_chain"
-			target = this
+		hidden_effect = {
+			begin_event_chain = {
+				event_chain = "dp_presidential_election_chain"
+				target = this
+			}
+			#dp_straw_poll = yes
+			dp_pres_election_update_situation_log = yes
 		}
 	}
 }
@@ -667,7 +694,7 @@ country_event = {
 			kill_leader = {
 				show_notification = no
 			}
-			country_leader_cap = -1
+			#country_leader_cap = -1
 		}
 
 		every_owned_pop = {

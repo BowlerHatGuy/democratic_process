@@ -2,9 +2,11 @@
 # Scripted Effects for Democratic Process
 ##########################################
 
+## Utility Effects
 # Country Scope
 dp_straw_poll = { #FIXME
  # Aggregates votes in a simple fashion and writes them to country-wide var
+	country_event = { id = dpdebug.9000 }
 	every_owned_pop = { # Collects pop vote
 		limit = {
 			dp_is_citizen_voter = yes
@@ -16,7 +18,7 @@ dp_straw_poll = { #FIXME
 					has_pop_flag = dp_issue_pop_vote_04
 					has_pop_flag = dp_issue_pop_novote
 				}
-				# Pop lost last round
+			# Pop lost last round
 				AND = {
 					event_target:dp_elec_issue_01 = { has_leader_flag = dp_defeated }
 					has_pop_flag = dp_issue_pop_vote_01
@@ -42,25 +44,24 @@ dp_straw_poll = { #FIXME
 		remove_pop_flag = dp_issue_pop_vote_04
 		
 		random_list = {
-			0 = { # Pop votes for Issue 1
+			10 = { # Pop votes for Issue 1
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_01 = { dp_leader_is_pop_ethos = yes }
-					add = 20
+					add = -60 #DEBUG
 				}
 				modifier = { # Checks opposite ethos
 					event_target:dp_elec_issue_01 = { dp_leader_is_pop_opposite_ethos = yes }
-					add = -40
+					add = -120
 				}
 				modifier = { # Pop Belongs to Leader Faction
 					event_target:dp_elec_issue_01 = { dp_leader_of_pop_faction = yes }
-					add = 20
+					add = 60
 				}
 				# Add additional modifiers here, e.g. mandate/agenda based factors, species considerations, etc.
 				
-				
 				modifier = { # Catch-all for non-existant issue resolutions
-					NOR = { 
-						exists = event_target:dp_elec_issue_01 
+					OR = { 
+						NOT = { exists = event_target:dp_elec_issue_01 }
 						event_target:dp_elec_issue_01 = {
 							has_leader_flag = dp_defeated
 						}
@@ -68,18 +69,101 @@ dp_straw_poll = { #FIXME
 					add = -1000
 				}
 				set_pop_flag = dp_issue_pop_vote_01
-				owner = { #TODO
+				prev = { #TODO
 					change_variable = { which = dp_elec_issue_01_votes value = 1 }
 				}
 			}
-			0 = { # Pop votes for Issue 2
+
+			10 = { # Pop votes for Issue 2
+				modifier = { # Checks same ethos
+					event_target:dp_elec_issue_02 = { dp_leader_is_pop_ethos = yes }
+					add = 60
+				}
+				modifier = { # Checks opposite ethos
+					event_target:dp_elec_issue_02 = { dp_leader_is_pop_opposite_ethos = yes }
+					add = -120
+				}
+				modifier = { # Pop Belongs to Leader Faction
+					event_target:dp_elec_issue_02 = { dp_leader_of_pop_faction = yes }
+					add = 60
+				}
+				# Add additional modifiers here, e.g. mandate/agenda based factors, species considerations, etc.
 				
+				modifier = { # Catch-all for non-existant issue resolutions
+					OR = { 
+						NOT = { exists = event_target:dp_elec_issue_02 }
+						event_target:dp_elec_issue_02 = {
+							has_leader_flag = dp_defeated
+						}
+					}
+					add = -1000
+				}
+				set_pop_flag = dp_issue_pop_vote_02
+				prev = { #TODO
+					change_variable = { which = dp_elec_issue_02_votes value = 1 }
+				}
 			}
-			0 = { # Pop votes for Issue 3
-		
+
+			10 = { # Pop votes for Issue 3
+				modifier = { # Checks same ethos
+					event_target:dp_elec_issue_03 = { dp_leader_is_pop_ethos = yes }
+					add =60
+				}
+				modifier = { # Checks opposite ethos
+					event_target:dp_elec_issue_03 = { dp_leader_is_pop_opposite_ethos = yes }
+					add = -120
+				}
+				modifier = { # Pop Belongs to Leader Faction
+					event_target:dp_elec_issue_03 = { dp_leader_of_pop_faction = yes }
+					add = 60
+				}
+				# Add additional modifiers here, e.g. mandate/agenda based factors, species considerations, etc.
+				
+				modifier = { # Catch-all for non-existant issue resolutions
+					OR = { 
+						NOT = { exists = event_target:dp_elec_issue_03 }
+						event_target:dp_elec_issue_03 = {
+							has_leader_flag = dp_defeated
+						}
+					}
+					add = -1000
+				}
+				set_pop_flag = dp_issue_pop_vote_03
+				prev = { #TODO
+					change_variable = { which = dp_elec_issue_03_votes value = 1 }
+				}
 			}
-			0 = { # Pop votes for Issue 4
+
+			10 = { # Pop votes for Issue 4
+				modifier = { # Checks same ethos
+					event_target:dp_elec_issue_04 = { dp_leader_is_pop_ethos = yes }
+					add = 60
+				}
+				modifier = { # Checks opposite ethos
+					event_target:dp_elec_issue_04 = { dp_leader_is_pop_opposite_ethos = yes }
+					add = -120
+				}
+				modifier = { # Pop Belongs to Leader Faction
+					event_target:dp_elec_issue_04 = { dp_leader_of_pop_faction = yes }
+					add = 60
+				}
+				# Add additional modifiers here, e.g. mandate/agenda based factors, species considerations, etc.
+				
+				modifier = { # Catch-all for non-existant issue resolutions
+					OR = { 
+						NOT = { exists = event_target:dp_elec_issue_04 }
+						event_target:dp_elec_issue_04 = {
+							has_leader_flag = dp_defeated
+						}
+					}
+					add = -1000
+				}
+				set_pop_flag = dp_issue_pop_vote_04
+				prev = { #TODO
+					change_variable = { which = dp_elec_issue_04_votes value = 1 }
+				}
 			}
+
 			25 = { # Pop abstains from vote #TODO
 				set_pop_flag = dp_issue_pop_novote
 			}
@@ -274,22 +358,36 @@ dp_single_transferable_vote = {
 }
 
 dp_pres_election_update_situation_log = {
-	if = { # Kills and re-inits chain to spam situation log updated aural message
-		limit = {
-			has_event_chain = dp_presidential_election_chain
-		}
-		end_event_chain = dp_presidential_election_chain
-	}
-	begin_event_chain = {
-		event_chain = "dp_presidential_election_chain"
-		target = this
-	}
+	country_event = { id = dpdebug.9001 }
+	#if = { # Kills and re-inits chain to reset situation log counters
+	#	limit = {
+	#		has_event_chain = dp_presidential_election_chain
+	#	}
+	#	end_event_chain = dp_presidential_election_chain
+	#}
+	#begin_event_chain = {
+	#	event_chain = "dp_presidential_election_chain"
+	#	target = this
+	#}
 
+	while = { # Resets situation log votes for candidate 1
+		limit = {
+			check_variable = { which = dp_elec_issue_01_votes_pv value > 0 }
+		}
+		change_variable = { which = dp_elec_issue_01_votes_pv value = -1 }
+		
+		add_event_chain_counter = {
+			event_chain = dp_presidential_election_chain
+			counter = votes_candidate_01
+			amount = -1
+		}
+	}
 	while = { # Tallies votes for candidate 1
 		limit = {
 			check_variable = { which = dp_elec_issue_01_votes value > 0 }
 		}
 		change_variable = { which = dp_elec_issue_01_votes value = -1 }
+		change_variable = { which = dp_elec_issue_01_votes_pv value = 1 }
 		
 		add_event_chain_counter = {
 			event_chain = dp_presidential_election_chain
@@ -297,11 +395,25 @@ dp_pres_election_update_situation_log = {
 			amount = 1
 		}
 	}
+
+	while = { # Resets situation log votes for candidate 2
+		limit = {
+			check_variable = { which = dp_elec_issue_02_votes_pv value > 0 }
+		}
+		change_variable = { which = dp_elec_issue_02_votes_pv value = -1 }
+		
+		add_event_chain_counter = {
+			event_chain = dp_presidential_election_chain
+			counter = votes_candidate_02
+			amount = -1
+		}
+	}
 	while = { # Tallies votes for candidate 2
 		limit = {
 			check_variable = { which = dp_elec_issue_02_votes value > 0 }
 		}
 		change_variable = { which = dp_elec_issue_02_votes value = -1 }
+		change_variable = { which = dp_elec_issue_02_votes_pv value = 1 }
 		
 		add_event_chain_counter = {
 			event_chain = dp_presidential_election_chain
@@ -309,11 +421,25 @@ dp_pres_election_update_situation_log = {
 			amount = 1
 		}
 	}
+
+	while = { # Resets situation log votes for candidate 3
+		limit = {
+			check_variable = { which = dp_elec_issue_03_votes_pv value > 0 }
+		}
+		change_variable = { which = dp_elec_issue_03_votes_pv value = -1 }
+		
+		add_event_chain_counter = {
+			event_chain = dp_presidential_election_chain
+			counter = votes_candidate_03
+			amount = -1
+		}
+	}
 	while = { # Tallies votes for candidate 3
 		limit = {
 			check_variable = { which = dp_elec_issue_03_votes value > 0 }
 		}
 		change_variable = { which = dp_elec_issue_03_votes value = -1 }
+		change_variable = { which = dp_elec_issue_03_votes_pv value = 1 }
 		
 		add_event_chain_counter = {
 			event_chain = dp_presidential_election_chain
@@ -321,11 +447,25 @@ dp_pres_election_update_situation_log = {
 			amount = 1
 		}
 	}
+
+	while = { # Resets situation log votes for candidate 4
+		limit = {
+			check_variable = { which = dp_elec_issue_04_votes_pv value > 0 }
+		}
+		change_variable = { which = dp_elec_issue_04_votes_pv value = -1 }
+		
+		add_event_chain_counter = {
+			event_chain = dp_presidential_election_chain
+			counter = votes_candidate_04
+			amount = -1
+		}
+	}
 	while = { # Tallies votes for candidate 4
 		limit = {
 			check_variable = { which = dp_elec_issue_04_votes value > 0 }
 		}
 		change_variable = { which = dp_elec_issue_04_votes value = -1 }
+		change_variable = { which = dp_elec_issue_04_votes_pv value = 1 }
 		
 		add_event_chain_counter = {
 			event_chain = dp_presidential_election_chain
@@ -381,7 +521,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = totalitarian
-				has_ruler_trait = trait_dp_ruler_authoritarian
+				has_trait = trait_dp_leader_authoritarian
 			}
 		}			
 		set_leader_flag = dp_authoritarian_leaning
@@ -390,7 +530,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = imperialist
-				has_ruler_trait = trait_dp_ruler_militarist
+				has_trait = trait_dp_leader_militarist
 			}
 		}
 		set_leader_flag = dp_militarist_leaning
@@ -400,7 +540,7 @@ dp_set_leader_ethic_flag = {
 			OR = {
 				leader_of_faction = supremacist
 				leader_of_faction = isolationist
-				has_ruler_trait = trait_dp_ruler_xenophobe
+				has_trait = trait_dp_leader_xenophobe
 			}
 		}
 		set_leader_flag = dp_xenophobe_leaning
@@ -409,7 +549,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = progressive
-				has_ruler_trait = trait_dp_ruler_egalitarian
+				has_trait = trait_dp_leader_egalitarian
 			}
 		}
 		set_leader_flag = dp_egalitarian_leaning
@@ -418,7 +558,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = technologist
-				has_ruler_trait = trait_dp_ruler_materialist
+				has_trait = trait_dp_leader_materialist
 			}
 		}
 		set_leader_flag = dp_materialist_leaning
@@ -427,7 +567,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = xenoist
-				has_ruler_trait = trait_dp_ruler_xenophile
+				has_trait = trait_dp_leader_xenophile
 			}
 		}
 		set_leader_flag = dp_xenophile_leaning
@@ -436,7 +576,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = traditionalist
-				has_ruler_trait = trait_dp_ruler_spiritualist
+				has_trait = trait_dp_leader_spiritualist
 			}
 		}
 		set_leader_flag = dp_spiritualist_leaning
@@ -445,7 +585,7 @@ dp_set_leader_ethic_flag = {
 		limit = { 
 			OR = {
 				leader_of_faction = prosperity
-				has_ruler_trait = trait_dp_ruler_pacifist
+				has_trait = trait_dp_leader_pacifist
 			}
 		}
 		set_leader_flag = dp_pacifist_leaning
@@ -468,7 +608,7 @@ dp_set_leader_ethic_flag = {
 			0 = { # Authoritarian
 				modifier = {
 					OR = {
-						owner = { has_ethic = ethic_authoritarian }
+						owner = { has_ethic = ethic_authoritarian } #FIXME: Make species based
 						owner = { has_ethic = ethic_fanatic_authoritarian }
 						has_trait = leader_trait_unyielding
 						has_trait = leader_trait_glory_seeker
@@ -691,66 +831,66 @@ dp_set_leader_ethic_flag_pop = {
 dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced with a better visualization system
 	if = {
 		limit = { has_leader_flag = dp_authoritarian_leaning }
-		add_ruler_trait = trait_dp_ruler_authoritarian
+		add_trait = trait_dp_leader_authoritarian
 	}
 	else = {
-		remove_trait = trait_dp_ruler_authoritarian
+		remove_trait = trait_dp_leader_authoritarian
 	}
 	
 	if = {
 		limit = { has_leader_flag = dp_egalitarian_leaning }
-		add_ruler_trait = trait_dp_ruler_egalitarian
+		add_trait = trait_dp_leader_egalitarian
 	}
 	else = {
-		remove_trait = trait_dp_ruler_egalitarian
+		remove_trait = trait_dp_leader_egalitarian
 	}
 	
 	if = {
 		limit = { has_leader_flag = dp_spiritualist_leaning }
-		add_ruler_trait = trait_dp_ruler_spiritualist
+		add_trait = trait_dp_leader_spiritualist
 	}
 	else = {
-		remove_trait = trait_dp_ruler_spiritualist
+		remove_trait = trait_dp_leader_spiritualist
 	}
 	
 	if = {
 		limit = { has_leader_flag = dp_materialist_leaning }
-		add_ruler_trait = trait_dp_ruler_materialist
+		add_trait = trait_dp_leader_materialist
 	}
 	else = {
-		remove_trait = trait_dp_ruler_materialist
+		remove_trait = trait_dp_leader_materialist
 	}
 	
 	if = {
 		limit = { has_leader_flag = dp_militarist_leaning }
-		add_ruler_trait = trait_dp_ruler_militarist
+		add_trait = trait_dp_leader_militarist
 	}
 	else = {
-		remove_trait = trait_dp_ruler_militarist
+		remove_trait = trait_dp_leader_militarist
 	}
 	
 	if = {
 		limit = { has_leader_flag = dp_pacifist_leaning }
-		add_ruler_trait = trait_dp_ruler_pacifist
+		add_trait = trait_dp_leader_pacifist
 	}
 	else = {
-		remove_trait = trait_dp_ruler_pacifist
+		remove_trait = trait_dp_leader_pacifist
 	}
 	
 	if = {
 		limit = { has_leader_flag = dp_xenophile_leaning }
-		add_ruler_trait = trait_dp_ruler_xenophile
+		add_trait = trait_dp_leader_xenophile
 	}
 	else = {
-		remove_trait = trait_dp_ruler_xenophile
+		remove_trait = trait_dp_leader_xenophile
 	}
 	
 	if = {
 		limit = { has_leader_flag = dp_xenophobe_leaning }
-		add_ruler_trait = trait_dp_ruler_xenophobe
+		add_trait = trait_dp_leader_xenophobe
 	}
 	else = {
-		remove_trait = trait_dp_ruler_xenophobe
+		remove_trait = trait_dp_leader_xenophobe
 	}
 }
 
@@ -768,13 +908,13 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 #	# Xenophile
 #	if = { # Same
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_xenophile
+#			has_trait = trait_dp_leader_xenophile
 #		}
 #		change_variable = { which = "dp_leader_xenophile_attr"  value = 20 }
 #	}
 #	if = { # Opposite
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_xenophobe
+#			has_trait = trait_dp_leader_xenophobe
 #		}
 #		change_variable = { which = "dp_leader_xenophile_attr" value = -40 }
 #	}
@@ -783,13 +923,13 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 #	# Xenophobe
 #	if = { # Same
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_xenophobe
+#			has_trait = trait_dp_leader_xenophobe
 #		}
 #		change_variable = { which = "dp_leader_xenophobe_attr" value = 20 }
 #	}
 #	if = { # Opposite
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_xenophile
+#			has_trait = trait_dp_leader_xenophile
 #		}
 #		change_variable = { which = "dp_leader_xenophobe_attr" value = -40 }
 #	}
@@ -798,13 +938,13 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 #	# Militarist
 #	if = { # Same
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_militarist
+#			has_trait = trait_dp_leader_militarist
 #		}
 #		change_variable = { which = "dp_leader_militarist_attr" value = 20 }
 #	}
 #	if = { # Opposite
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_pacifist
+#			has_trait = trait_dp_leader_pacifist
 #		}
 #		change_variable = { which = "dp_leader_militarist_attr" value = -40 }
 #	}
@@ -813,13 +953,13 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 #	# Pacifist
 #	if = { # Same
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_pacifist
+#			has_trait = trait_dp_leader_pacifist
 #		}
 #		change_variable = { which = "dp_leader_pacifist_attr" value = 20 }
 #	}
 #	if = { # Opposite
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_militarist
+#			has_trait = trait_dp_leader_militarist
 #		}
 #		change_variable = { which = "dp_leader_pacifist_attr" value = -40 }
 #	}
@@ -828,13 +968,13 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 #	# Authoritarian
 #	if = { # Same
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_authoritarian
+#			has_trait = trait_dp_leader_authoritarian
 #		}
 #		change_variable = { which = "dp_leader_authoritarian_attr" value = 20 }
 #	}
 #	if = { # Opposite
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_egalitarian
+#			has_trait = trait_dp_leader_egalitarian
 #		}
 #		change_variable = { which = "dp_leader_authoritarian_attr" value = -40 }
 #	}
@@ -843,13 +983,13 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 #	# Egalitarian
 #	if = { # Same
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_egalitarian
+#			has_trait = trait_dp_leader_egalitarian
 #		}
 #		change_variable = { which = "dp_leader_egalitarian_attr" value = 20 }
 #	}
 #	if = { # Opposite
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_authoritarian
+#			has_trait = trait_dp_leader_authoritarian
 #		}
 #		change_variable = { which = "dp_leader_egalitarian_attr" value = -40 }
 #	}
@@ -858,13 +998,13 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 #	# Spiritualist
 #	if = { # Same
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_spiritualist
+#			has_trait = trait_dp_leader_spiritualist
 #		}
 #		change_variable = { which = "dp_leader_spiritualist_attr" value = 20 }
 #	}
 #	if = { # Opposite
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_materialist
+#			has_trait = trait_dp_leader_materialist
 #		}
 #		change_variable = { which = "dp_leader_spiritualist_attr" value = -40 }
 #	}
@@ -873,13 +1013,13 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 #	# Materialist
 #	if = { # Same
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_materialist
+#			has_trait = trait_dp_leader_materialist
 #		}
 #		change_variable = { which = "dp_leader_materialist_attr" value = 20 }
 #	}
 #	if = { # Opposite
 #		limit = {
-#			has_ruler_trait = trait_dp_ruler_spiritualist
+#			has_trait = trait_dp_leader_spiritualist
 #		}
 #		change_variable = { which = "dp_leader_materialist_attr" value = -40 }
 #	}
