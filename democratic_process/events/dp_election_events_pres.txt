@@ -31,6 +31,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 						save_event_target_as = dp_pres_candidate_01
 						dp_set_leader_ethic_flag = yes
 						dp_set_leader_ethic_trait = yes
+						log = "[this.GetName] has been selected as a candidate. They have the following traits: [this.GetLeaderType], [this.GetLeaderEthic]"
 					}
 					5 = {
 						modifier = {
@@ -70,6 +71,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 						save_event_target_as = dp_pres_candidate_02
 						dp_set_leader_ethic_flag = yes
 						dp_set_leader_ethic_trait = yes
+						log = "[this.GetName] has been selected as a candidate. They have the following traits: [this.GetLeaderType], [this.GetLeaderEthic]"
 					}
 					5 = {
 						set_leader_flag = dp_pres_not_candidate
@@ -168,6 +170,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 						dp_assign_candidate_number = yes
 						dp_set_leader_ethic_flag = yes
 						dp_set_leader_ethic_trait = yes
+						log = "[this.GetName] has been selected as a candidate. They have the following traits: [this.GetLeaderType], [this.GetLeaderEthic]"
 					}
 					50 = { # No
 						set_leader_flag = dp_pres_not_candidate
@@ -195,8 +198,8 @@ country_event = { # To be called on initalization only, vacencies will be filled
 			}
 			
 			create_leader = {
-				class = political_figure	#FIXME
-				species = event_target:dp_random_pop_species # Probably non-functional
+				class = political_figure	
+				species = event_target:dp_random_pop_species # Probably non-functional #TODO
 				name = random
 				skill = 1
 				traits = {
@@ -210,6 +213,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 				dp_set_leader_ethic_flag_pop = yes
 				dp_set_leader_ethic_trait = yes
 				set_leader_flag = dp_temp_election_leader #FIXME
+				log = "[this.GetName] has been selected as a candidate. They have the following traits: [this.GetLeaderType], [this.GetLeaderEthic]"
 			}
 		}
 	}
@@ -245,6 +249,12 @@ country_event = {
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_02 } save_event_target_as = dp_elec_issue_02 }
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_03 } save_event_target_as = dp_elec_issue_03 }
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_04 } save_event_target_as = dp_elec_issue_04 }
+
+		# DEBUG: Reinit vars
+		set_variable = { which = "dp_elec_issue_01_votes" value = 0 }
+		set_variable = { which = "dp_elec_issue_02_votes" value = 0 }
+		set_variable = { which = "dp_elec_issue_03_votes" value = 0 }
+		set_variable = { which = "dp_elec_issue_04_votes" value = 0 }
 		dp_straw_poll = yes
 	}
 	
@@ -280,6 +290,12 @@ country_event = {
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_02 } save_event_target_as = dp_elec_issue_02 }
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_03 } save_event_target_as = dp_elec_issue_03 }
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_04 } save_event_target_as = dp_elec_issue_04 }
+
+		# DEBUG: Reinit vars
+		set_variable = { which = "dp_elec_issue_01_votes" value = 0 }
+		set_variable = { which = "dp_elec_issue_02_votes" value = 0 }
+		set_variable = { which = "dp_elec_issue_03_votes" value = 0 }
+		set_variable = { which = "dp_elec_issue_04_votes" value = 0 }
 		dp_single_transferable_vote = yes
 	}
 	
@@ -648,7 +664,6 @@ country_event = {
 				event_chain = "dp_presidential_election_chain"
 				target = this
 			}
-			#dp_straw_poll = yes
 			dp_pres_election_update_situation_log = yes
 		}
 	}

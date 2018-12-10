@@ -16,8 +16,8 @@
  dpdebug.9000.text:0 "Candidate 01: [dp_elec_issue_01.GetName]\nCandidate 02: [dp_elec_issue_02.GetName]\nCandidate 03: [dp_elec_issue_03.GetName]\nCandidate 04: [dp_elec_issue_04.GetName]\n"
  dpdebug.9000:0 "Move Along"
 
- dpdebug.9001.name:0 "Situation Log Update Entered"
- dpdebug.9001.text:0 "Current Candidate 01 Votes: [ROOT.dp_elec_issue_01_votes]\nCurrent Candidate 02 Votes: [root.dp_elec_issue_02_votes]\nCurrent Candidate 03 Votes: [prev.dp_elec_issue_03_votes]\nCurrent Candidate 04 Votes: [from.dp_elec_issue_04_votes]"
+ dpdebug.9001.name:0 "Strawpoll Exited"
+ dpdebug.9001.text:0 "Current Candidate 01 Votes: [Root.dp_elec_issue_01_votes]\nCurrent Candidate 02 Votes: [Root.dp_elec_issue_02_votes]\nCurrent Candidate 03 Votes: [Root.dp_elec_issue_03_votes]\nCurrent Candidate 04 Votes: [Root.dp_elec_issue_04_votes]"
  dpdebug.9001:0 "Move Along"
 
  ## Traits
@@ -29,3 +29,15 @@
  trait_vote_candidate_03_desc:0 "This pop voted for candidate 03"
  trait_vote_candidate_04:0 "Voted for Candidate 4"
  trait_vote_candidate_04_desc:0 "This pop voted for candidate 04"
+
+ ## Scripted
+ dp_debug_materialist:0 "materialist"
+ dp_debug_spiritualist:0 "spiritualist"
+ dp_debug_militarist:0 "militarist"
+ dp_debug_pacifist:0 "pacifist"
+ dp_debug_xenophile:0 "xenophile"
+ dp_debug_xenophobe:0 "xenophobe"
+ dp_debug_egalitarian:0 "egalitarian"
+ dp_debug_authoritarian:0 "authoritarian"
+ dp_debug_ethic_fallback:0 "unknown ethic"
+ dp_debug_political_figure:0 "Political Figure"

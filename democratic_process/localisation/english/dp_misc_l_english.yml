@@ -1,0 +1,9 @@
+﻿l_english:
+ ## Leaders
+ political_figure:0 "Political Figure"
+ POLITICAL_FIGURES:0 "Political Figures"
+ default_political_figure:0 "Political Figure"
+ faction_political_figure:0 "Faction Leader"
+ adversary_political_figure:0 "Political Figure"
+ fallen_empire_political_figure:0 "Political Figure"
+ awakened_fallen_empire_political_figure:0 "Political Figure"

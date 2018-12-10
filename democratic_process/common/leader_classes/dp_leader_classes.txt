@@ -1,0 +1,4 @@
+political_figure = {
+	max_trait_points = 1
+	default_category = governor
+}

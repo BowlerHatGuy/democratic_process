@@ -60,7 +60,6 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 			set_variable = { which = "dp_presidential_election_yearly_countdown" value = 3 } # FIXME: DEBUG Value
 			set_variable = { which = "dp_presidential_election_monthly_countdown" value = 0 }
 			set_variable = { which = "dp_presidential_term_limit" value = 1 } # TODO: replace with term limit policy
-			#set_variable = { which = "dp_presidential_temp_leaders" value = 0 }
 			
 			set_variable = { which = "dp_elec_issue_01_votes" value = 0 }
 			set_variable = { which = "dp_elec_issue_02_votes" value = 0 }

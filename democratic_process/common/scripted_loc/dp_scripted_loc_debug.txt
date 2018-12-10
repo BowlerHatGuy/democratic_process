@@ -1,0 +1,150 @@
+###############################################
+# Scripted Localization for Democratic Process
+###############################################
+
+defined_text = {
+	name = GetPopEthic
+	text = {
+		trigger = {
+			has_ethic = ethic_materialist
+		}
+		localization_key = dp_debug_materialist
+	}
+	text = {
+		trigger = {
+			has_ethic = ethic_spiritualist
+		}
+		localization_key = dp_debug_spiritualist
+	}
+	text = {
+		trigger = {
+			has_ethic = ethic_militarist
+		}
+		localization_key = dp_debug_militarist
+	}
+	text = {
+		trigger = {
+			has_ethic = ethic_pacifist
+		}
+		localization_key = dp_debug_pacifist
+	}
+	text = {
+		trigger = {
+			has_ethic = ethic_xenophile
+		}
+		localization_key = dp_debug_xenophile
+	}
+	text = {
+		trigger = {
+			has_ethic = ethic_xenophobe
+		}
+		localization_key = dp_debug_xenophobe
+	}
+	text = {
+		trigger = {
+			has_ethic = ethic_egalitarian
+		}
+		localization_key = dp_debug_egalitarian
+	}
+	text = {
+		trigger = {
+			has_ethic = ethic_authoritarian
+		}
+		localization_key = dp_debug_authoritarian
+	}
+	text = {
+		localization_key = dp_debug_ethic_fallback
+	}
+}
+
+defined_text = {
+	name = GetLeaderEthic
+	text = {
+		trigger = {
+			has_trait = trait_dp_leader_materialist
+		}
+		localization_key = dp_debug_materialist
+	}
+	text = {
+		trigger = {
+			has_trait = trait_dp_leader_spiritualist
+		}
+		localization_key = dp_debug_spiritualist
+	}
+	text = {
+		trigger = {
+			has_trait = trait_dp_leader_militarist
+		}
+		localization_key = dp_debug_militarist
+	}
+	text = {
+		trigger = {
+			has_trait = trait_dp_leader_pacifist
+		}
+		localization_key = dp_debug_pacifist
+	}
+	text = {
+		trigger = {
+			has_trait = trait_dp_leader_xenophile
+		}
+		localization_key = dp_debug_xenophile
+	}
+	text = {
+		trigger = {
+			has_trait = trait_dp_leader_xenophobe
+		}
+		localization_key = dp_debug_xenophobe
+	}
+	text = {
+		trigger = {
+			has_trait = trait_dp_leader_egalitarian
+		}
+		localization_key = dp_debug_egalitarian
+	}
+	text = {
+		trigger = {
+			has_trait = trait_dp_leader_authoritarian
+		}
+		localization_key = dp_debug_authoritarian
+	}
+	text = {
+		localization_key = dp_debug_ethic_fallback
+	}
+}
+
+defined_text = {
+	name = GetLeaderType
+	text = {
+		trigger = {
+			leader_class = scientist
+		}
+		localization_key = scientist
+	}
+	text = {
+		trigger = {
+			leader_class = governor
+		}
+		localization_key = governor
+	}
+	text = {
+		trigger = {
+			leader_class = ruler
+		}
+		localization_key = ruler
+	}
+	text = {
+		trigger = {
+			leader_class = general
+		}
+		localization_key = general
+	}
+	text = {
+		trigger = {
+			leader_class = admiral
+		}
+		localization_key = admiral
+	}
+	text = {
+		localization_key = dp_debug_political_figure
+	}
+}

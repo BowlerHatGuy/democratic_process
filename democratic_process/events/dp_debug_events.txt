@@ -76,7 +76,7 @@ country_event = { # Displayed whenever a strawpoll is entered
 	}
 }
 
-country_event = { # Displayed whenever a strawpoll is entered
+country_event = { # Displayed whenever a strawpoll is exited
 	id = dpdebug.9001
 	title = "dpdebug.9001.name"
 	desc = "dpdebug.9001.text"

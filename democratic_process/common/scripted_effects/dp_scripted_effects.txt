@@ -6,7 +6,8 @@
 # Country Scope
 dp_straw_poll = { #FIXME
  # Aggregates votes in a simple fashion and writes them to country-wide var
-	country_event = { id = dpdebug.9000 }
+	log = "Strawpoll Entered"
+
 	every_owned_pop = { # Collects pop vote
 		limit = {
 			dp_is_citizen_voter = yes
@@ -69,6 +70,8 @@ dp_straw_poll = { #FIXME
 					add = -1000
 				}
 				set_pop_flag = dp_issue_pop_vote_01
+				log = "A pop with the following traits has voted for candidate 01: [This.GetSpeciesName], [This.GetPopEthic]"
+
 				prev = { #TODO
 					change_variable = { which = dp_elec_issue_01_votes value = 1 }
 				}
@@ -99,6 +102,8 @@ dp_straw_poll = { #FIXME
 					add = -1000
 				}
 				set_pop_flag = dp_issue_pop_vote_02
+				log = "A pop with the following traits has voted for candidate 02: [This.GetSpeciesName], [This.GetPopEthic]"
+
 				prev = { #TODO
 					change_variable = { which = dp_elec_issue_02_votes value = 1 }
 				}
@@ -107,7 +112,7 @@ dp_straw_poll = { #FIXME
 			50 = { # Pop votes for Issue 3
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_03 = { dp_leader_is_pop_ethos = yes }
-					add =60
+					add = 60
 				}
 				modifier = { # Checks opposite ethos
 					event_target:dp_elec_issue_03 = { dp_leader_is_pop_opposite_ethos = yes }
@@ -129,6 +134,8 @@ dp_straw_poll = { #FIXME
 					add = -1000
 				}
 				set_pop_flag = dp_issue_pop_vote_03
+				log = "A pop with the following traits has voted for candidate 03: [This.GetSpeciesName], [This.GetPopEthic]"
+
 				prev = { #TODO
 					change_variable = { which = dp_elec_issue_03_votes value = 1 }
 				}
@@ -159,6 +166,8 @@ dp_straw_poll = { #FIXME
 					add = -1000
 				}
 				set_pop_flag = dp_issue_pop_vote_04
+				log = "A pop with the following traits has voted for candidate 04: [This.GetSpeciesName], [This.GetPopEthic]"
+
 				prev = { #TODO
 					change_variable = { which = dp_elec_issue_04_votes value = 1 }
 				}
@@ -166,15 +175,17 @@ dp_straw_poll = { #FIXME
 
 			25 = { # Pop abstains from vote #TODO
 				set_pop_flag = dp_issue_pop_novote
+				log = "A pop with the following traits has chosen not to vote: [This.GetSpeciesName], [This.GetPopEthic]"
 			}
 		}
 	}
+	log = "Strawpoll Exited."
 }
 
 dp_single_transferable_vote = {
  # Calls a straw-poll, checks if the largest is greater than 50% of total. 
  # If not, eliminate option with smallest total and allow pops with null-votes to vote again, continuing until one option is >50% or there is only one valid option.
-
+	log = "STV Entered."
 	dp_straw_poll = yes
 	
 	# Generate a sum of all voters and divide by 2. This will remain fixed in all iterations of the vote.
@@ -183,6 +194,8 @@ dp_single_transferable_vote = {
 	change_variable = { which = dp_elec_total_votes value = dp_elec_issue_03_votes }
 	change_variable = { which = dp_elec_total_votes value = dp_elec_issue_04_votes }
 	divide_variable = { which = dp_elec_total_votes value = 2 }
+
+	log = "Votes required to win are: [Root.dp_elec_total_votes]"
 
 	while = {
 		limit = {
@@ -193,6 +206,8 @@ dp_single_transferable_vote = {
 				event_target:dp_elec_issue_04 = { has_leader_flag = dp_elec_issue_win }
 			}
 		}
+
+		log = "Current vote totals are: [Root.dp_elec_issue_01_votes] | [Root.dp_elec_issue_02_votes] | [Root.dp_elec_issue_03_votes] | [Root.dp_elec_issue_04_votes]"
 		
 		# Declares a winner if one choice has > 50% of the vote or all other choices are defeated
 		if = { 
@@ -205,9 +220,16 @@ dp_single_transferable_vote = {
 						event_target:dp_elec_issue_04 = { has_leader_flag = dp_defeated }
 					}
 				}
+				NOR = {
+					event_target:dp_elec_issue_02 = { has_leader_flag = dp_elec_issue_win }
+					event_target:dp_elec_issue_03 = { has_leader_flag = dp_elec_issue_win }
+					event_target:dp_elec_issue_04 = { has_leader_flag = dp_elec_issue_win }
+				}
 			}
 			event_target:dp_elec_issue_01 = {
 				set_leader_flag = dp_elec_issue_win
+
+				log = "[this.GetName] has been chosen as the winner"
 			}
 		}
 		else_if = {
@@ -220,9 +242,16 @@ dp_single_transferable_vote = {
 						event_target:dp_elec_issue_04 = { has_leader_flag = dp_defeated }
 					}
 				}
+				NOR = {
+					event_target:dp_elec_issue_01 = { has_leader_flag = dp_elec_issue_win }
+					event_target:dp_elec_issue_03 = { has_leader_flag = dp_elec_issue_win }
+					event_target:dp_elec_issue_04 = { has_leader_flag = dp_elec_issue_win }
+				}
 			}
 			event_target:dp_elec_issue_02 = {
 				set_leader_flag = dp_elec_issue_win
+				
+				log = "[this.GetName] has been chosen as the winner"
 			}
 		}
 		else_if = {
@@ -235,9 +264,16 @@ dp_single_transferable_vote = {
 						event_target:dp_elec_issue_04 = { has_leader_flag = dp_defeated }
 					}
 				}
+				NOR = {
+					event_target:dp_elec_issue_01 = { has_leader_flag = dp_elec_issue_win }
+					event_target:dp_elec_issue_02 = { has_leader_flag = dp_elec_issue_win }
+					event_target:dp_elec_issue_04 = { has_leader_flag = dp_elec_issue_win }
+				}
 			}
 			event_target:dp_elec_issue_03 = {
 				set_leader_flag = dp_elec_issue_win
+				
+				log = "[this.GetName] has been chosen as the winner"
 			}
 		}
 		else_if = {
@@ -250,9 +286,16 @@ dp_single_transferable_vote = {
 						event_target:dp_elec_issue_03 = { has_leader_flag = dp_defeated }
 					}
 				}
+				NOR = {
+					event_target:dp_elec_issue_01 = { has_leader_flag = dp_elec_issue_win }
+					event_target:dp_elec_issue_02 = { has_leader_flag = dp_elec_issue_win }
+					event_target:dp_elec_issue_03 = { has_leader_flag = dp_elec_issue_win }
+				}
 			}
 			event_target:dp_elec_issue_04 = {
 				set_leader_flag = dp_elec_issue_win
+				
+				log = "[this.GetName] has been chosen as the winner"
 			}
 		}
 		
@@ -305,6 +348,8 @@ dp_single_transferable_vote = {
 			}
 			set_variable = { which = "dp_issue_lose_votes" value = dp_elec_issue_04_votes }
 		}
+
+		log = "Losing vote count is: [Root.dp_issue_lose_votes]"
 		
 		# Prevents lowest from being voted on in the next cycle
 		if = {
@@ -316,6 +361,8 @@ dp_single_transferable_vote = {
 			}
 			event_target:dp_elec_issue_04 = {
 				set_leader_flag = dp_defeated
+				
+				log = "[This.GetName] has lost the vote."
 			}
 		}
 		else_if = {
@@ -327,6 +374,8 @@ dp_single_transferable_vote = {
 			}
 			event_target:dp_elec_issue_03 = {
 				set_leader_flag = dp_defeated
+				
+				log = "[This.GetName] has lost the vote."
 			}
 		}
 		else_if = {
@@ -338,6 +387,8 @@ dp_single_transferable_vote = {
 			}
 			event_target:dp_elec_issue_02 = {
 				set_leader_flag = dp_defeated
+				
+				log = "[This.GetName] has lost the vote."
 			}
 		}
 		else_if = {
@@ -349,6 +400,8 @@ dp_single_transferable_vote = {
 			}
 			event_target:dp_elec_issue_01 = {
 				set_leader_flag = dp_defeated
+				
+				log = "[This.GetName] has lost the vote."
 			}
 		}
 		
@@ -358,7 +411,6 @@ dp_single_transferable_vote = {
 }
 
 dp_pres_election_update_situation_log = {
-	country_event = { id = dpdebug.9001 }
 	#if = { # Kills and re-inits chain to reset situation log counters
 	#	limit = {
 	#		has_event_chain = dp_presidential_election_chain
@@ -487,6 +539,8 @@ dp_assign_candidate_number = {
 		}
 		set_leader_flag = dp_pres_candidate_01
 		save_event_target_as = dp_pres_candidate_01
+
+		log = "[This.GetName] has been assigned as candidate 01"
 	}
 	else_if = {
 		limit = {
@@ -498,6 +552,8 @@ dp_assign_candidate_number = {
 		}
 		set_leader_flag = dp_pres_candidate_02
 		save_event_target_as = dp_pres_candidate_02
+
+		log = "[This.GetName] has been assigned as candidate 02"
 	}
 	else_if = {
 		limit = {
@@ -509,10 +565,14 @@ dp_assign_candidate_number = {
 		}
 		set_leader_flag = dp_pres_candidate_03
 		save_event_target_as = dp_pres_candidate_03
+
+		log = "[This.GetName] has been assigned as candidate 03"
 	}
 	else = {
 		set_leader_flag = dp_pres_candidate_04
 		save_event_target_as = dp_pres_candidate_04
+
+		log = "[This.GetName] has been assigned as candidate 04"
 	}
 }
 

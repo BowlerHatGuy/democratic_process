@@ -2,31 +2,3 @@
 # Leader Traits for Democratic Process
 ######################################
 
-# Debug Traits #FIXME: Traits may become permanent, need to update icons in that case.
-trait_vote_candidate_01 = {
-	cost = 0
-	initial = no
-	modification = no
-	icon = "gfx/interface/icons/traits/leader_traits/trait_ruler_charismatic.dds"
-}
-
-trait_vote_candidate_02 = {
-	cost = 0
-	initial = no
-	modification = no
-	icon = "gfx/interface/icons/traits/leader_traits/trait_ruler_charismatic.dds"
-}
-
-trait_vote_candidate_03 = {
-	cost = 0
-	initial = no
-	modification = no
-	icon = "gfx/interface/icons/traits/leader_traits/trait_ruler_charismatic.dds"
-}
-
-trait_vote_candidate_04 = {
-	cost = 0
-	initial = no
-	modification = no
-	icon = "gfx/interface/icons/traits/leader_traits/trait_ruler_charismatic.dds"
-}
