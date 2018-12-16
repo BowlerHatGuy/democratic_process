@@ -19,6 +19,6 @@ auth_democratic = {
 	}
 	
 	tags = {
-		AUTHORITY_ELECTION_DEMOCRATIC
+		AUTHORITY_ELECTION_DEMOCRATIC #FIXME
 	}
 }

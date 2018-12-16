@@ -26,7 +26,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 			}
 			ruler = {
 				random_list = {
-					0 = { #DEBUG
+					95 = {
 						set_leader_flag = dp_pres_candidate_01
 						save_event_target_as = dp_pres_candidate_01
 						dp_set_leader_ethic_flag = yes
@@ -118,7 +118,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 				
 				# Fields to determine likelyhood of acceptance
 				random_list = {
-					0 = { # Yes #DEBUG
+					50 = { # Yes
 						modifier = { # Military Leader in Militarist State
 							owner = {
 								OR = {
@@ -179,7 +179,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 			}
 		}
 		
-		while = { # Creates temp leaders to fill empty slots
+		while = { # Creates temp leaders to fill empty slots #TODO: Consider replacing with saved leaders after GUI is implemented to reduce clutter
 			limit = {
 				NAND = {
 					any_owned_leader = { has_leader_flag = dp_pres_candidate_01 }
@@ -199,7 +199,7 @@ country_event = { # To be called on initalization only, vacencies will be filled
 			
 			create_leader = {
 				class = political_figure	
-				species = event_target:dp_random_pop_species # Probably non-functional #TODO
+				species = event_target:dp_random_pop_species # Probably non-functional #FIXME
 				name = random
 				skill = 1
 				traits = {
@@ -218,10 +218,6 @@ country_event = { # To be called on initalization only, vacencies will be filled
 		}
 	}
 }
-
-#country_event = { # Event to create a vice-president upon election
-#	
-#}
 
 ### Country Events (dpelectionpres.3XXX)
 # Monthly Event to update poll numbers (HIDDEN)
@@ -250,16 +246,11 @@ country_event = {
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_03 } save_event_target_as = dp_elec_issue_03 }
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_04 } save_event_target_as = dp_elec_issue_04 }
 
-		# DEBUG: Reinit vars
-		set_variable = { which = "dp_elec_issue_01_votes" value = 0 }
-		set_variable = { which = "dp_elec_issue_02_votes" value = 0 }
-		set_variable = { which = "dp_elec_issue_03_votes" value = 0 }
-		set_variable = { which = "dp_elec_issue_04_votes" value = 0 }
 		dp_straw_poll = yes
 	}
 	
 	after = {
-		change_variable = { which = dp_presidential_election_monthly_countdown value = -1 } # Tick down monthly calandar
+		change_variable = { which = dp_presidential_election_monthly_countdown value = -1 } # Tick down monthly calendar
 		
 		dp_pres_election_update_situation_log = yes				
 	}
@@ -291,11 +282,6 @@ country_event = {
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_03 } save_event_target_as = dp_elec_issue_03 }
 		random_owned_leader = { limit = { has_leader_flag = dp_pres_candidate_04 } save_event_target_as = dp_elec_issue_04 }
 
-		# DEBUG: Reinit vars
-		set_variable = { which = "dp_elec_issue_01_votes" value = 0 }
-		set_variable = { which = "dp_elec_issue_02_votes" value = 0 }
-		set_variable = { which = "dp_elec_issue_03_votes" value = 0 }
-		set_variable = { which = "dp_elec_issue_04_votes" value = 0 }
 		dp_single_transferable_vote = yes
 	}
 	
@@ -347,21 +333,36 @@ country_event = {
 	is_triggered_only = yes
 	
 	immediate = {
-		event_target:dp_pres_elect = { 
-			if = {
-				limit = {
-					check_variable = { which = dp_ruler_terms_served value = 0 }
+		hidden_effect = {
+			event_target:dp_pres_elect = { 
+				if = {
+					limit = {
+						check_variable = { which = dp_ruler_terms_served value = 0 }
+					}
+					set_variable = { which = "dp_ruler_terms_served" value = 0 }
 				}
-				set_variable = { which = "dp_ruler_terms_served" value = 0 }
+				change_variable = { which = dp_ruler_terms_served value = 1 }
 			}
-			change_variable = { which = dp_ruler_terms_served value = 1 }
+			
+			if = { #FIXME: Does this even work?
+				limit = { event_target:dp_pres_elect = { leader_class = ruler } }
+				set_heir = event_target:dp_pres_elect
+			}
+			dp_vice_pres_set = yes # This assumes that the president-elect is not already in office unless they are the incumbant
 
-			remove_leader_flag = dp_elec_issue_win
+			assign_leader = event_target:dp_pres_elect
+			event_target:dp_pres_elect = { # This assumes that the president-elect is already in charge
+				if = {
+					limit = {
+						has_leader_flag = dp_temp_election_leader
+					}
+					dp_set_leader_ruler_trait = yes 
+				} 
+			}
 		}
-		assign_leader = event_target:dp_pres_elect #TODO: Implement as an heir?
 	}
 	
-	# Imagine a world where you didn't spend 300 lines on button localization...
+	# Imagine a world where you didn't spend 300 lines on button localization... And it even worked.
 	option = { # Opposite ideology winner
 		trigger = { #FIXME
 			OR = {
@@ -606,7 +607,12 @@ country_event = {
 	}
 	
 	after = {
-		country_event = { id = dpelectionpres.3102 }
+		hidden_effect = {
+			event_target:dp_pres_elect = { remove_leader_flag = dp_elec_issue_win }
+			country_event = { id = dpelectionpres.3102 }
+		}
+
+		end_event_chain = dp_presidential_election_chain
 	}
 }
 
@@ -685,6 +691,16 @@ country_event = {
 		remove_country_flag = dp_pres_candidate_04_win
 
 		every_owned_leader = {
+			limit = {
+				has_leader_flag = dp_temp_election_leader
+				NOT = { leader_class = ruler }
+			}
+			kill_leader = {
+				show_notification = no
+			}
+		}
+
+		every_owned_leader = {
 			remove_leader_flag = dp_pres_candidate_01
 			remove_leader_flag = dp_pres_candidate_02
 			remove_leader_flag = dp_pres_candidate_03
@@ -698,16 +714,7 @@ country_event = {
 			remove_leader_flag = dp_spiritualist_leaning
 			remove_leader_flag = dp_xenophile_leaning
 			remove_leader_flag = dp_xenophobe_leaning
-		}
-
-		every_owned_leader = {
-			limit = {
-				has_leader_flag = dp_temp_election_leader
-				NOT = { leader_class = ruler }
-			}
-			kill_leader = {
-				show_notification = no
-			}
+			remove_leader_flag = dp_temp_election_leader
 		}
 
 		every_owned_pop = {

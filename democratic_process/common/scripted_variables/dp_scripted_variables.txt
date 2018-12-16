@@ -3,7 +3,7 @@
 ##############################################
 
 ## Presidential Policies
-# Length of time between elections
+# Length of time between elections #DEBUG: Term length
 @dptermlengthpres1 = 5
 @dptermlengthpres2 = 10
 @dptermlengthpres3 = 15
@@ -14,3 +14,13 @@
 @dptermlimitpres2 = 2
 @dptermlimitpres3 = 4
 @dptermlimitpres4 = 9999
+
+# Policy Modifiers #TODO: Balance
+@dptermlengthpres1unity = -0.1
+@dptermlengthpres1influence = 1
+@dptermlengthpres2unity = 0
+@dptermlengthpres2influence = 0.5
+@dptermlengthpres3unity = 0.2
+@dptermlengthpres3influence = -0.5
+@dptermlengthpres4unity = 0.4
+@dptermlengthpres4influence = -1

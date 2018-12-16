@@ -1,0 +1,350 @@
+##############################################
+# Government Types for Democratic Process Mod
+##############################################
+
+#gov_example = {
+#	possible = {}							# Determines if a government name can be chosen. AND trigger, scope: country; valid triggers: has_ethic, has_authority, has_valid_civic; everything else is undefined behavior!
+#	weight = {								# scriptable value, scope: country; the (possible) government type with the biggest weight is assigned to the country
+#		base = 100
+#	}
+#
+#	ruler_title = RT_KING					# translation tag for male ruler's title
+#	ruler_title_female = RT_QUEEN			# translation tag for female ruler's title
+#	heir_title = HT_CROWN_PRINCE			# translation tag for male heir's title
+#	heir_title_female = HT_CROWN_PRINCESS	# translation tag for female heir's title
+#	use_regnal_names = yes / no				# default: no
+#	dynastic_last_names = yes / no			# default: no
+#	should_force_rename = yes / no			# default: no - if set to yes, empires changing to or from this government will be renamed even if authority type does not change
+#	
+#	election_candidates = {					# scriptable value to weight election candidates for oligarchic elections, scope: leader
+#		modifier = {
+#			add = 100
+#			leader_class = ruler
+#		}
+#	}
+#}
+
+### Overwriten Governments
+
+# Representative Democracy
+gov_representative_democracy = {
+	ruler_title = RT_PRESIDENT
+	ruler_title_female = RT_PRESIDENT_FEMALE
+	heir_title = DP_VICE_PRESIDENT
+	heir_title_female = DP_VICE_PRESIDENT_FEMALE
+
+	possible = {
+		has_authority = auth_democratic
+	}
+
+	weight = {
+		base = 1
+	}
+}
+
+# Theocratic Republic
+gov_theocratic_republic = {
+	ruler_title = RT_REVERED_ELDER
+	ruler_title_female = RT_REVERED_ELDER_FEMALE
+	heir_title = DP_ELDER
+	heir_title_female = DP_ELDER_FEMALE
+
+	possible = {
+		has_authority = auth_democratic
+		OR = {
+			has_ethic = ethic_spiritualist
+			has_ethic = ethic_fanatic_spiritualist			
+		}
+	}
+
+	weight = {
+		base = 5
+	}
+}
+
+# Military Commissariat
+gov_military_commissariat = {
+	ruler_title = RT_COMMISSARY_GENERAL
+	ruler_title_female = RT_COMMISSARY_GENERAL_FEMALE
+	heir_title = DP_COMMISSAR
+	heir_title_female = DP_COMMISSAR_FEMALE
+
+	#election_candidates = {
+	#	modifier = {
+	#		add = 100
+	#		leader_class = ruler
+	#	}
+	#	modifier = {
+	#		add = 10
+	#		OR = {
+	#			leader_class = admiral
+	#			leader_class = general
+	#			leader_class = governor
+	#		}
+	#	}
+	#	modifier = {
+	#		factor = 0
+	#		leader_class = scientist
+	#	}
+	#}
+
+	possible = {
+		has_authority = auth_democratic
+		OR = {
+			has_ethic = ethic_militarist
+			has_ethic = ethic_fanatic_militarist
+		}
+	}
+
+	weight = {
+		base = 5
+		modifier = {
+			factor = 2
+			has_ethic = ethic_fanatic_militarist
+		}
+		modifier = {
+			factor = 1.10
+			OR = {			
+				has_valid_civic = civic_distinguished_admiralty
+				has_valid_civic = civic_nationalistic_zeal
+			}
+		}
+	}
+}
+
+# Assembly of Clans
+gov_assembly_of_clans = {
+	ruler_title = RT_CLAN_SPEAKER
+	ruler_title_female = RT_CLAN_SPEAKER_FEMALE
+	heir_title = DP_CLAN_ELDER
+	heir_title_female = DP_CLAN_ELDER_FEMALE
+	
+	should_force_rename = yes
+	
+	leader_class = admiral 	# Initial ruler will become this if elected out of office
+
+	#election_candidates = {
+	#	modifier = {
+	#		add = 100
+	#		leader_class = ruler
+	#	}
+	#	modifier = {
+	#		add = 10
+	#		OR = {
+	#			leader_class = admiral
+	#			leader_class = general
+	#		}
+	#	}
+	#}
+
+	possible = {
+		has_authority = auth_democratic
+		has_valid_civic = civic_warrior_culture
+	}
+
+	weight = {
+		base = 800
+	}
+}
+
+# Citizen Republic
+gov_citizen_republic = {
+	ruler_title = RT_CONSUL
+	ruler_title_female = RT_CONSUL_FEMALE
+	heir_title = DP_SKYMARSHAL
+	heir_title_female = DP_SKYMARSHAL_FEMALE
+	
+	should_force_rename = yes
+
+	#election_candidates = {
+	#	modifier = {
+	#		add = 100
+	#		leader_class = ruler
+	#	}
+	#	modifier = {
+	#		add = 10
+	#		OR = {
+	#			leader_class = admiral
+	#			leader_class = general
+	#			leader_class = governor
+	#		}
+	#	}
+	#	modifier = {
+	#		factor = 0
+	#		leader_class = scientist
+	#	}
+	#}
+
+	possible = {
+		has_authority = auth_democratic
+		has_valid_civic = civic_citizen_service
+	}
+
+	weight = {
+		base = 900
+	}
+}
+
+# Moral Democracy
+gov_moral_democracy = {
+	ruler_title = RT_PRIME_MINISTER
+	ruler_title_female = RT_PRIME_MINISTER_FEMALE
+	heir_title = DP_SPEAKER
+	heir_title_female = DP_SPEAKER_FEMALE
+
+	#election_candidates = {
+	#	modifier = {
+	#		add = 100
+	#		leader_class = ruler
+	#	}
+	#	modifier = {
+	#		add = 10
+	#		OR = {
+	#			leader_class = scientist
+	#			leader_class = governor
+	#		}
+	#	}
+	#	modifier = {
+	#		factor = 0
+	#		leader_class = admiral
+	#		leader_class = general
+	#	}
+	#}
+
+	possible = {
+		has_authority = auth_democratic
+		OR = {
+			has_ethic = ethic_pacifist
+			has_ethic = ethic_fanatic_pacifist
+		}
+	}
+
+	weight = {
+		base = 5
+		modifier = {
+			factor = 2
+			has_ethic = ethic_fanatic_pacifist
+		}
+		modifier = {
+			factor = 1.5
+			has_valid_civic = civic_agrarian_idyll
+		}
+	}
+}
+
+# Direct Democracy
+gov_direct_democracy = {
+	ruler_title = RT_CHANCELLOR
+	ruler_title_female = RT_CHANCELLOR_FEMALE
+	heir_title = DP_VICE_CHANCELLOR
+	heir_title_female = DP_VICE_CHANCELLOR_FEMALE
+
+	possible = {
+		has_authority = auth_democratic
+		OR = {
+			has_ethic = ethic_materialist
+			has_ethic = ethic_fanatic_materialist
+		}
+	}
+
+	weight = {
+		base = 5
+		modifier = {
+			factor = 2
+			has_ethic = ethic_fanatic_materialist
+		}
+		modifier = {
+			factor = 1.5
+			has_valid_civic = civic_mechanists
+		}
+	}
+}
+
+# Rational Consensus
+gov_rational_consensus = {
+	ruler_title = RT_FIRST_SPEAKER
+	ruler_title_female = RT_FIRST_SPEAKER_FEMALE
+	heir_title = DP_SECRETARY_OF_STATE
+	heir_title_female = DP_SECRETARY_OF_STATE_FEMALE
+	
+	should_force_rename = yes
+	
+	leader_class = scientist 	# Initial ruler will become this if elected out of office
+
+	#election_candidates = {
+	#	modifier = {
+	#		add = 100
+	#		leader_class = ruler
+	#	}
+	#	modifier = {
+	#		add = 10
+	#		leader_class = scientist
+	#	}
+	#}
+
+	possible = {
+		has_authority = auth_democratic
+		has_valid_civic = civic_technocracy
+	}
+
+	weight = {
+		base = 900
+	}
+}
+
+# Purity Assembly
+gov_purity_assembly = {
+	ruler_title = RT_PRIME_JUSTICIAR
+	ruler_title_female = RT_PRIME_JUSTICIAR_FEMALE
+	heir_title = DP_INQUISITOR_GENERAL
+	heir_title_female = DP_INQUISITOR_GENERAL_FEMALE
+	
+	should_force_rename = yes
+
+	possible = {
+		has_authority = auth_democratic
+		has_valid_civic = civic_fanatic_purifiers
+	}
+
+	weight = {
+		base = 2000
+	}
+}
+
+# Communal Parity
+gov_communal_parity = {
+	ruler_title = RT_PRESIDING_SPEAKING
+	heir_title = DP_VICE_CHAIRMAN
+	heir_title_female = DP_VICE_CHAIRMAN_FEMALE
+	
+	should_force_rename = yes
+
+	possible = {
+		has_valid_civic = civic_shared_burden
+	}
+
+	weight = {
+		base = 10000
+	}
+}
+
+# Bandit Commune
+gov_bandit_commune = {
+	ruler_title = RT_WARLORD
+	heir_title = DP_WARPRINCE
+	heir_title_female = DP_WARPRINCE_FEMALE
+	
+	should_force_rename = yes
+
+	possible = {
+		OR = {
+			has_authority = auth_oligarchic
+			has_authority = auth_democratic
+		}
+		has_valid_civic = civic_barbaric_despoilers
+	}
+
+	weight = {
+		base = 10000
+	}
+}

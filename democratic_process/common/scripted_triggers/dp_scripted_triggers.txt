@@ -22,7 +22,7 @@ dp_is_citizen_voter = { # Checks if a pop is eligible to vote. Adequate, probabl
 }
 
 ## Leader Scope
-dp_is_valid_candidate = { # Checks whether leader is a valid candidate for office,i.e. is an allowed species
+dp_is_valid_candidate = { # Checks whether leader is a valid candidate for office
 	# Undesirable flags, some are undoubtably missing
 	NOT = { has_leader_flag = marauder_merc_leader }
 	NOT = { has_leader_flag = captured_queen }
@@ -34,7 +34,24 @@ dp_is_valid_candidate = { # Checks whether leader is a valid candidate for offic
 	}
 	
 	# Checks for term limits
-	check_variable = { which = "dp_ruler_terms_served" value <= 1 } #TODO: Replace when term limits implemented
+	OR = {
+		AND = {
+			owner = { has_policy_flag = dp_single_term_limit }
+			check_variable = { which = "dp_ruler_terms_served" value <= @dptermlimitpres1 }
+		}
+		AND = {
+			owner = { has_policy_flag = dp_two_term_limit }
+			check_variable = { which = "dp_ruler_terms_served" value <= @dptermlimitpres2 }
+		}
+		AND = {
+			owner = { has_policy_flag = dp_four_term_limit }
+			check_variable = { which = "dp_ruler_terms_served" value <= @dptermlimitpres3 }
+		}
+		AND = {
+			owner = { has_policy_flag = dp_unlimited_term_limit }
+			check_variable = { which = "dp_ruler_terms_served" value <= @dptermlimitpres4 }
+		}
+	}
 }
 
 

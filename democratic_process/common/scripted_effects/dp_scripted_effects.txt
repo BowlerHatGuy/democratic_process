@@ -5,7 +5,7 @@
 ## Utility Effects
 # Country Scope
 dp_straw_poll = { #FIXME
- # Aggregates votes in a simple fashion and writes them to country-wide var
+ # Aggregates votes in a simple fashion and writes them to country-wide var. This function is the core of the mod; do NOT commit changes without extensive testing
 	log = "Strawpoll Entered"
 
 	every_owned_pop = { # Collects pop vote
@@ -77,7 +77,7 @@ dp_straw_poll = { #FIXME
 				}
 			}
 
-			50 = { # Pop votes for Issue 2
+			-50 = { # Pop votes for Issue 2 #DEBUG
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_02 = { dp_leader_is_pop_ethos = yes }
 					add = 60
@@ -109,7 +109,7 @@ dp_straw_poll = { #FIXME
 				}
 			}
 
-			50 = { # Pop votes for Issue 3
+			-50 = { # Pop votes for Issue 3 #DEBUG
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_03 = { dp_leader_is_pop_ethos = yes }
 					add = 60
@@ -141,7 +141,7 @@ dp_straw_poll = { #FIXME
 				}
 			}
 
-			50 = { # Pop votes for Issue 4
+			-50 = { # Pop votes for Issue 4 #DEBUG
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_04 = { dp_leader_is_pop_ethos = yes }
 					add = 60
@@ -527,6 +527,69 @@ dp_pres_election_update_situation_log = {
 	}
 }
 
+dp_vice_pres_set = {
+	if = {
+		limit = {
+			NOT = { event_target:dp_pres_elect = { leader_class = ruler } }
+		}
+
+		ruler = { #FIXME: Currently just 'disposes of' the VP if the current president does not win reelection. Need to eventually find a way to spare them.
+			kill_leader = { 
+				show_notification = no
+				heir = yes
+			} 
+		}
+
+		create_leader = {
+			class = ruler
+			species = event_target:dp_pres_elect
+			name = random
+			skill = 1
+			traits = {}
+		}
+
+		last_created_leader  ={
+			dp_add_random_ruler_trait = yes
+			dp_add_random_ruler_trait = yes
+		}
+
+		set_heir = last_created_leader
+		#last_created_leader = { dp_set_leader_ruler_trait = yes }
+	}
+}
+
+dp_set_election_length = {
+	if = {
+		limit = {
+			has_policy_flag = dp_short_term_length
+		}
+		set_variable = { which = "dp_presidential_election_yearly_countdown" value = @dptermlengthpres1 }
+	}
+	else_if = {
+		limit = {
+			has_policy_flag = dp_normal_term_length
+		}
+		set_variable = { which = "dp_presidential_election_yearly_countdown" value = @dptermlengthpres2 }
+	}
+	else_if = {
+		limit = {
+			has_policy_flag = dp_long_term_length
+		}
+		set_variable = { which = "dp_presidential_election_yearly_countdown" value = @dptermlengthpres3 }
+	}
+	else_if = {
+		limit = {
+			has_policy_flag = dp_longer_term_length
+		}
+		set_variable = { which = "dp_presidential_election_yearly_countdown" value = @dptermlengthpres4 }
+	}
+	else = {
+		set_variable = { which = "dp_presidential_election_yearly_countdown" value = 5 }
+		log = "[this.GetName] does not have a term length policy set!"
+	}
+}
+
+## Leader Effects
 # Leader Scope
 dp_assign_candidate_number = {
 	if = {
@@ -954,150 +1017,240 @@ dp_set_leader_ethic_trait = { # This is a good foundation but may be replaced wi
 	}
 }
 
-#dp_calc_leader_ethic_value = { # Depreciated until such a time as it can be figured out if this can be used
-# # Calculates a value for each ethic that will influence how pops of that ethic will vote for the leader
-#	set_variable = { which = "dp_leader_xenophile_attr" value = 50 }
-#	set_variable = { which = "dp_leader_xenophobe_attr" value = 50 }
-#	set_variable = { which = "dp_leader_militarist_attr" value = 50 }
-#	set_variable = { which = "dp_leader_pacifist_attr" value = 50 }
-#	set_variable = { which = "dp_leader_egalitarian_attr" value = 50 }
-#	set_variable = { which = "dp_leader_authoritarian_attr" value = 50 }
-#	set_variable = { which = "dp_leader_spiritualist_attr" value = 50 }
-#	set_variable = { which = "dp_leader_materialist_attr" value = 50 }
-#	
-#	# Xenophile
-#	if = { # Same
-#		limit = {
-#			has_trait = trait_dp_leader_xenophile
-#		}
-#		change_variable = { which = "dp_leader_xenophile_attr"  value = 20 }
-#	}
-#	if = { # Opposite
-#		limit = {
-#			has_trait = trait_dp_leader_xenophobe
-#		}
-#		change_variable = { which = "dp_leader_xenophile_attr" value = -40 }
-#	}
-#	# Space reserved for trait-based weighting
-#	
-#	# Xenophobe
-#	if = { # Same
-#		limit = {
-#			has_trait = trait_dp_leader_xenophobe
-#		}
-#		change_variable = { which = "dp_leader_xenophobe_attr" value = 20 }
-#	}
-#	if = { # Opposite
-#		limit = {
-#			has_trait = trait_dp_leader_xenophile
-#		}
-#		change_variable = { which = "dp_leader_xenophobe_attr" value = -40 }
-#	}
-#	# Space reserved for trait-based weighting
-#	
-#	# Militarist
-#	if = { # Same
-#		limit = {
-#			has_trait = trait_dp_leader_militarist
-#		}
-#		change_variable = { which = "dp_leader_militarist_attr" value = 20 }
-#	}
-#	if = { # Opposite
-#		limit = {
-#			has_trait = trait_dp_leader_pacifist
-#		}
-#		change_variable = { which = "dp_leader_militarist_attr" value = -40 }
-#	}
-#	# Space reserved for trait-based weighting
-#	
-#	# Pacifist
-#	if = { # Same
-#		limit = {
-#			has_trait = trait_dp_leader_pacifist
-#		}
-#		change_variable = { which = "dp_leader_pacifist_attr" value = 20 }
-#	}
-#	if = { # Opposite
-#		limit = {
-#			has_trait = trait_dp_leader_militarist
-#		}
-#		change_variable = { which = "dp_leader_pacifist_attr" value = -40 }
-#	}
-#	# Space reserved for trait-based weighting
-#	
-#	# Authoritarian
-#	if = { # Same
-#		limit = {
-#			has_trait = trait_dp_leader_authoritarian
-#		}
-#		change_variable = { which = "dp_leader_authoritarian_attr" value = 20 }
-#	}
-#	if = { # Opposite
-#		limit = {
-#			has_trait = trait_dp_leader_egalitarian
-#		}
-#		change_variable = { which = "dp_leader_authoritarian_attr" value = -40 }
-#	}
-#	# Space reserved for trait-based weighting
-#	
-#	# Egalitarian
-#	if = { # Same
-#		limit = {
-#			has_trait = trait_dp_leader_egalitarian
-#		}
-#		change_variable = { which = "dp_leader_egalitarian_attr" value = 20 }
-#	}
-#	if = { # Opposite
-#		limit = {
-#			has_trait = trait_dp_leader_authoritarian
-#		}
-#		change_variable = { which = "dp_leader_egalitarian_attr" value = -40 }
-#	}
-#	# Space reserved for trait-based weighting
-#	
-#	# Spiritualist
-#	if = { # Same
-#		limit = {
-#			has_trait = trait_dp_leader_spiritualist
-#		}
-#		change_variable = { which = "dp_leader_spiritualist_attr" value = 20 }
-#	}
-#	if = { # Opposite
-#		limit = {
-#			has_trait = trait_dp_leader_materialist
-#		}
-#		change_variable = { which = "dp_leader_spiritualist_attr" value = -40 }
-#	}
-#	# Space reserved for trait-based weighting
-#	
-#	# Materialist
-#	if = { # Same
-#		limit = {
-#			has_trait = trait_dp_leader_materialist
-#		}
-#		change_variable = { which = "dp_leader_materialist_attr" value = 20 }
-#	}
-#	if = { # Opposite
-#		limit = {
-#			has_trait = trait_dp_leader_spiritualist
-#		}
-#		change_variable = { which = "dp_leader_materialist_attr" value = -40 }
-#	}
-#	# Space reserved for trait-based weighting
-#}
-
-# POP Scope
-dp_calc_pop_vote_chance = {
-# Calculates the chance that a POP will vote for a given issue based on traits, ethics, etc.
-	
+dp_add_random_ruler_trait = { #FIXME: Change ifs to modifiers and add conditionals
+	random_list = {
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = leader_trait_adaptable }
+				}
+				add_trait = leader_trait_adaptable
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = leader_trait_resilient }
+				}
+				add_trait = leader_trait_resilient
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = leader_trait_stubborn }
+				}
+				add_trait = leader_trait_stubborn
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOR = { 
+						has_trait = trait_ruler_corvette_focus
+						has_trait = trait_ruler_destroyer_focus
+						has_trait = trait_ruler_cruiser_focus
+						has_trait = trait_ruler_battleship_focus 
+					}
+					owner = { has_technology = "tech_destroyers" }
+				}
+				add_ruler_trait = trait_ruler_corvette_focus
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOR = { 
+						has_trait = trait_ruler_corvette_focus
+						has_trait = trait_ruler_destroyer_focus
+						has_trait = trait_ruler_cruiser_focus
+						has_trait = trait_ruler_battleship_focus 
+					}
+					owner = { has_technology = "tech_destroyers" }
+				}
+				add_ruler_trait = trait_ruler_destroyer_focus
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOR = { 
+						has_trait = trait_ruler_corvette_focus
+						has_trait = trait_ruler_destroyer_focus
+						has_trait = trait_ruler_cruiser_focus
+						has_trait = trait_ruler_battleship_focus 
+					}
+					owner = { has_technology = "tech_cruisers" }
+				}
+				add_ruler_trait = trait_ruler_cruiser_focus
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOR = { 
+						has_trait = trait_ruler_corvette_focus
+						has_trait = trait_ruler_destroyer_focus
+						has_trait = trait_ruler_cruiser_focus
+						has_trait = trait_ruler_battleship_focus 
+					}
+					owner = { has_technology = "tech_battleships" }
+				}
+				add_ruler_trait = trait_ruler_battleship_focus
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_recruiter }
+				}
+				add_ruler_trait = trait_ruler_recruiter
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_fortifier }
+				}
+				add_ruler_trait = trait_ruler_fortifier
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_logistic_understanding }
+				}
+				add_ruler_trait = trait_ruler_logistic_understanding
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_military_pioneer }
+				}
+				add_ruler_trait = trait_ruler_military_pioneer
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_warlike }
+				}
+				add_ruler_trait = trait_ruler_warlike
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_architectural_sense }
+				}
+				add_ruler_trait = trait_ruler_architectural_sense
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_frontier_spirit }
+				}
+				add_ruler_trait = trait_ruler_frontier_spirit
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_world_shaper }
+				}
+				add_ruler_trait = trait_ruler_world_shaper
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_home_in_the_sky }
+				}
+				add_ruler_trait = trait_ruler_home_in_the_sky
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_industrialist }
+				}
+				add_ruler_trait = trait_ruler_industrialist
+			}
+		}
+		100 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_eye_for_talent }
+				}
+				add_ruler_trait = trait_ruler_eye_for_talent
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_deep_connections }
+				}
+				add_ruler_trait = trait_ruler_deep_connections
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_champion_of_the_people }
+				}
+				add_ruler_trait = trait_ruler_champion_of_the_people
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_expansionist }
+				}
+				add_ruler_trait = trait_ruler_expansionist
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_fertility_preacher }
+				}
+				add_ruler_trait = trait_ruler_fertility_preacher
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_investor }
+				}
+				add_ruler_trait = trait_ruler_investor
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = trait_ruler_explorer }
+				}
+				add_ruler_trait = trait_ruler_explorer
+			}
+		}
+		5 = {
+			if = {
+				limit = {
+					NOT = { has_trait = leader_trait_fleet_organizer }
+				}
+				add_ruler_trait = leader_trait_fleet_organizer
+			}
+		}
+	}
 }
 
-dp_calc_pop_vote_amount = {
-# Determines how much a given POP's vote is worth based on political power, civics, etc.
-
+dp_set_leader_ruler_trait = { #DEBUG: This may be necessary as a result of a bug; check at later date to see if necessary. 11-Dec-2018
+	remove_trait = leader_trait_resilient
+	dp_add_random_ruler_trait = yes
+	dp_add_random_ruler_trait = yes
 }
-
-
 
 #########
 # Issues 

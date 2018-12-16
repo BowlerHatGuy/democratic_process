@@ -1,0 +1,336 @@
+##########################################################################
+# Democratic Process Empire Policies
+#
+# #####
+#
+# AI:
+# Base AI-weight is 100, if unchanged
+# AI will grab whatever policy-option has the highest weight
+#
+# #####
+#
+##########################################################################
+
+dp_term_length = {
+	potential = {
+		OR = {
+			is_country_type = default
+			is_country_type = fallen_empire
+			is_country_type = awakened_fallen_empire
+		}
+		has_authority = auth_democratic
+	}
+	
+	option = {
+		name = "dp_short_term_length"
+		
+		policy_flags = {
+			dp_short_term_length
+		}
+		
+		valid = { #TODO
+			OR = {
+				has_ethic = ethic_fanatic_egalitarian
+			}
+		}
+
+		modifier = { #TODO
+			planet_jobs_unity_produces_mult = @dptermlengthpres1unity
+			country_base_influence_produces_add = @dptermlengthpres1influence
+		}
+		
+		AI_weight = { #TODO
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+				has_ethic = ethic_fanatic_egalitarian
+			}
+			modifier = {
+				factor = 10
+				has_valid_ai_personality = yes
+				is_ai = yes
+				OR = {
+					has_ai_personality_behaviour = liberator
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = ethic_authoritarian
+					has_ethic = ethic_fanatic_authoritarian
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "dp_normal_term_length"
+		
+		policy_flags = {
+			dp_normal_term_length
+		}
+		
+		valid = { #TODO
+			has_authority = auth_democratic
+		}
+
+		modifier = { #TODO
+			planet_jobs_unity_produces_mult = @dptermlengthpres2unity
+			country_base_influence_produces_add = @dptermlengthpres2influence
+		}
+		
+		AI_weight = { #TODO
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+				OR = {
+					has_ethic = ethic_egalitarian
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = ethic_authoritarian
+					has_ethic = ethic_fanatic_authoritarian
+				}
+			}
+		}
+	}
+
+	option = {
+		name = "dp_long_term_length"
+		
+		policy_flags = {
+			dp_long_term_length
+		}
+		
+		valid = { #TODO
+			has_authority = auth_democratic
+		}
+
+		modifier = { #TODO
+			planet_jobs_unity_produces_mult = @dptermlengthpres3unity
+			country_base_influence_produces_add = @dptermlengthpres3influence
+		}
+		
+		AI_weight = { #TODO
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+				OR = {
+					has_ethic = ethic_authoritarian
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = ethic_fanatic_egalitarian
+					has_ethic = ethic_fanatic_authoritarian
+				}
+			}
+		}
+	}
+
+	option = {
+		name = "dp_longer_term_length"
+		
+		policy_flags = {
+			dp_longer_term_length
+		}
+		
+		valid = { #TODO
+			has_authority = auth_democratic
+		}
+
+		modifier = { #TODO
+			planet_jobs_unity_produces_mult = @dptermlengthpres4unity
+			country_base_influence_produces_add = @dptermlengthpres4influence
+		}
+		
+		AI_weight = { #TODO
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+				OR = {
+					has_ethic = ethic_authoritarian
+					has_ethic = ethic_fanatic_authoritarian
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = ethic_fanatic_egalitarian
+					has_ethic = ethic_egalitarian
+				}
+			}
+		}
+	}
+}
+
+dp_term_limit = {
+	potential = {
+		OR = {
+			is_country_type = default
+			is_country_type = fallen_empire
+			is_country_type = awakened_fallen_empire
+		}
+		has_authority = auth_democratic
+	}
+	
+	option = {
+		name = "dp_single_term_limit"
+		
+		policy_flags = {
+			dp_single_term_limit
+		}
+		
+		valid = { #TODO
+			OR = {
+				has_ethic = ethic_fanatic_egalitarian
+			}
+		}
+
+		modifier = { #TODO
+
+		}
+		
+		AI_weight = { #TODO
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+				has_ethic = ethic_fanatic_egalitarian
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = ethic_authoritarian
+					has_ethic = ethic_fanatic_authoritarian
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "dp_two_term_limit"
+		
+		policy_flags = {
+			dp_two_term_limit
+		}
+		
+		valid = { #TODO
+			has_authority = auth_democratic
+		}
+
+		modifier = { #TODO
+
+		}
+		
+		AI_weight = { #TODO
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+				OR = {
+					has_ethic = ethic_egalitarian
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = ethic_authoritarian
+					has_ethic = ethic_fanatic_authoritarian
+				}
+			}
+		}
+	}
+
+	option = {
+		name = "dp_four_term_limit"
+		
+		policy_flags = {
+			dp_four_term_limit
+		}
+		
+		valid = { #TODO
+			has_authority = auth_democratic
+		}
+
+		modifier = { #TODO
+
+		}
+		
+		AI_weight = { #TODO
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+				OR = {
+					has_ethic = ethic_authoritarian
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = ethic_fanatic_egalitarian
+					has_ethic = ethic_fanatic_authoritarian
+				}
+			}
+		}
+	}
+
+	option = {
+		name = "dp_unlimited_term_limit"
+		
+		policy_flags = {
+			dp_unlimited_term_limit
+		}
+		
+		valid = { #TODO
+			has_authority = auth_democratic
+		}
+
+		modifier = { #TODO
+
+		}
+		
+		AI_weight = { #TODO
+			modifier = {
+				factor = 10
+				OR = {
+					has_valid_ai_personality = no
+					is_ai = no
+				}
+				OR = {
+					has_ethic = ethic_authoritarian
+					has_ethic = ethic_fanatic_authoritarian
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					has_ethic = ethic_fanatic_egalitarian
+					has_ethic = ethic_egalitarian
+				}
+			}
+		}
+	}
+}

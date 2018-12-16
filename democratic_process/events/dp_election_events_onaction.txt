@@ -29,8 +29,9 @@ event = {
 			change_variable = { which = dp_presidential_election_yearly_countdown value = -1 }
 			if  = {
 				limit = { check_variable = { which = dp_presidential_election_yearly_countdown value <= 0 } }
-				country_event = { id = dpelectionpres.3100 days = 210 } #FIXME: 212? Note: need to end campaign some time that is not on yearly pulse, i.e. Start of December or end of January
-				change_variable = { which = dp_presidential_election_yearly_countdown value = 2 } # FIXME: Debug Value, should be term length + 1
+				country_event = { id = dpelectionpres.3100 days = 120 } # Note: need to end campaign some time that is not on yearly pulse, i.e. Start of December or end of January
+				
+				dp_set_election_length = yes
 			}
 		}
 	}
@@ -57,7 +58,9 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 				NOT = { has_country_flag = dp_is_democracy }
 				is_country_type = default
 			}
-			set_variable = { which = "dp_presidential_election_yearly_countdown" value = 3 } # FIXME: DEBUG Value
+
+			# Init vars
+			dp_set_election_length = yes
 			set_variable = { which = "dp_presidential_election_monthly_countdown" value = 0 }
 			set_variable = { which = "dp_presidential_term_limit" value = 1 } # TODO: replace with term limit policy
 			
@@ -69,9 +72,12 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 			set_variable = { which = "dp_elec_issue_02_votes_pv" value = 0 }
 			set_variable = { which = "dp_elec_issue_03_votes_pv" value = 0 }
 			set_variable = { which = "dp_elec_issue_04_votes_pv" value = 0 }
+
 			
+			# Flag to prevent re-init
 			set_country_flag = dp_is_democracy
 			
+			# Add a served term to the first leader of a new democracy
 			random_owned_leader = {
 				limit = { leader_class = ruler }
 				set_variable = { which = "dp_ruler_terms_served" value = 1 }
@@ -99,12 +105,6 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 
 			country_event = { id = dpelectionpres.3002 } # Updates polling numbers
 			country_event = { id = dpelectionpres.3003 } # Finalizes election and declares a winner
-		}
-	}
-
-	after = {
-		every_country = {
-	#		country_event = { id = dpdebug.1001 }
 		}
 	}
 }

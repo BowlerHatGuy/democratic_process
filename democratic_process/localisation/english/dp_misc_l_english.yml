@@ -7,3 +7,58 @@
  adversary_political_figure:0 "Political Figure"
  fallen_empire_political_figure:0 "Political Figure"
  awakened_fallen_empire_political_figure:0 "Political Figure"
+
+ ## Democratic Heirs
+ DP_VICE_PRESIDENT:0 "Vice President"
+ DP_VICE_PRESIDENT_FEMALE:0 "$DP_VICE_PRESIDENT$"
+ DP_ELDER:0 "Elder"
+ DP_ELDER_FEMALE:0 "$DP_ELDER$"
+ DP_COMMISSAR:0 "Commissar"
+ DP_COMMISSAR_FEMALE:0 "$DP_COMMISSAR$"
+ DP_CLAN_ELDER:0 "Clan Elder"
+ DP_CLAN_ELDER_FEMALE:0 "$DP_CLAN_ELDER$"
+ DP_SKYMARSHAL:0 "Sky Marshal"
+ DP_SKYMARSHAL_FEMALE:0 "$DP_SKYMARSHAL$"
+ DP_SPEAKER:0 "Speaker"
+ DP_SPEAKER_FEMALE:0 "$DP_SPEAKER$"
+ DP_VICE_CHANCELLOR:0 "Vice Chancellor"
+ DP_VICE_CHANCELLOR_FEMALE:0 "$DP_VICE_CHANCELLOR$"
+ DP_SECRETARY_OF_STATE:0 "Secretary of State"
+ DP_SECRETARY_OF_STATE_FEMALE:0 "$DP_SECRETARY_OF_STATE$"
+ DP_INQUISITOR_GENERAL:0 "Inquisitor General"
+ DP_INQUISITOR_GENERAL_FEMALE:0 "$DP_INQUISITOR_GENERAL$"
+ DP_VICE_CHAIRMAN:0 "Vice Chairman"
+ DP_VICE_CHAIRMAN_FEMALE:0 "Vice Chairwoman"
+ DP_WARPRINCE:0 "Warprince"
+ DP_WARPRINCE_FEMALE:0 "Warprincess"
+
+ ## Policies
+ policy_dp_term_length:0 "Presidential Term Length" #FIXME
+ policy_dp_term_length_desc:0 "We can decide how long our ruler may lead before rulership is put to a referendum by the people. Rulers that are in power for longer can foster greater unity amongst the peoples of our empire whereas rulers elected for shorter periods must be more efficient in their political pursuits."
+ dp_short_term_length_name:0 "Short Term Length"
+ dp_short_term_length:0 "Short Terms"
+ dp_short_term_length_desc:0 "Elected leaders are accountable to the people and the people must have their say regularly.\n\n§ERulers are elected only for [Root.dptermlengthpres1] year terms§!\n"
+ dp_normal_term_length_name:0 "Normal Term Length"
+ dp_normal_term_length:0 "Normal Terms"
+ dp_normal_term_length_desc:0 "Elections are held for the executive position at regular intervals; short enough to remain accountable for their actions but long enough to maintain a stable power base.\n\n§ERulers are elected for 10 year terms§!\n"
+ dp_long_term_length_name:0 "Long Term Length"
+ dp_long_term_length:0 "Long Terms"
+ dp_long_term_length_desc:0 "In order for the executive office to get anything done, they must remain in office for long enough to build their power base. How can a ruler fulfill their campaign promises if they do not have time to do so?\n\n§ERulers are elected for 15 year terms§!\n"
+ dp_longer_term_length_name:0 "Very Long Term Length"
+ dp_longer_term_length:0 "Lengthy Terms"
+ dp_longer_term_length_desc:0 "Elected leaders are accountable to the people and the people must have their say regularly.\n\n§ERulers are elected for 20 year terms§!\n"
+
+ policy_dp_term_limit:0 "Presidential Term Limit" #FIXME
+ policy_dp_term_limit_desc:0 "We can decide how many times a leader can serve the people as ruler of our empire. TBD\n" #FIXME
+ dp_single_term_limit_name:0 "Single Term"
+ dp_single_term_limit:0 "Single Term"
+ dp_single_term_limit_desc:0 "Popular or no, serving more than one term curbs corruption at the highest levels of government and prevents any one faction becoming too entrenched.\n\n TBD\n" #FIXME
+ dp_two_term_limit_name:0 "Two Terms"
+ dp_two_term_limit:0 "Two Terms"
+ dp_two_term_limit_desc:0 "Every leader should be entitled to serve again if they have done well for our empire.\n\n TBD\n" #FIXME
+ dp_four_term_limit_name:0 "Four Terms"
+ dp_four_term_limit:0 "Four Terms"
+ dp_four_term_limit_desc:0 "Rulers are permitted great lattitude when deciding whether they want to run for re-election.\n\n TBD\n" #FIXME
+ dp_unlimited_term_limit_name:0 "Unlimited Terms"
+ dp_unlimited_term_limit:0 "No Limit"
+ dp_unlimited_term_limit_desc:0 "If the people of our empire decide that our ruler should rule again, then who are we to stop them? The people's will be done!\n\n TBD\n" #FIXME
