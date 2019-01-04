@@ -5,7 +5,7 @@
 
 namespace = dpelectionpres
 
-### POP Events (dpelectionpres.1XXX)
+### Radiant Events (dpelectionpres.1XXX)
 
 
 ### Leader Events (dpelectionpres.2XXX)
@@ -220,6 +220,99 @@ country_event = { # To be called on initalization only, vacencies will be filled
 }
 
 ### Country Events (dpelectionpres.3XXX)
+# Monthly event to change influence level of candidates
+country_event = {
+	id = dpelectionpres.3001
+	hide_window = Yes
+
+	is_triggered_only = Yes
+
+	trigger = {
+		has_event_chain = dp_presidential_election_chain
+	}
+
+	immediate = {
+		# Deducts the monthly influence cost to run a campaign
+		if = {
+			limit = {
+				OR = {
+					is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_01
+					is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_02
+					is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_03
+					is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_04
+				}
+			}
+			if = {
+				limit = { 
+					has_civic = civic_shadow_council 
+				}
+				add_resource = { influence = @dpmonthlyinfluencecostpresshadow }
+				log = "Deducted monthly influence: Shadow Council"
+			}
+			else = {
+				add_resource = { influence = @dpmonthlyinfluencecostpres }
+				log = "Deducted monthly influence"
+			}
+		}
+
+		# Increments influence value every month that a campaign is run
+		if = {
+			limit = { is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_01 }
+			change_variable = { which = dp_pres_elec_cand_01_influence value = 1 }
+			log = "Incremented Candidate 01 influence value: [this.dp_pres_elec_cand_01_influence]"
+		}
+		else_if = {
+			limit = { is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_02 }
+			change_variable = { which = dp_pres_elec_cand_02_influence value = 1 }
+			log = "Incremented Candidate 02 influence value: [this.dp_pres_elec_cand_02_influence]"
+		}
+		else_if = {
+			limit = { is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_03 }
+			change_variable = { which = dp_pres_elec_cand_03_influence value = 1 }
+			log = "Incremented Candidate 03 influence value: [this.dp_pres_elec_cand_03_influence]"
+		}
+		else_if = {
+			limit = { is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_04 }
+			change_variable = { which = dp_pres_elec_cand_04_influence value = 1 }
+			log = "Incremented Candidate 04 influence value: [this.dp_pres_elec_cand_04_influence]"
+		}
+
+		# Decrements influence value for every month for candidates who do not have active government campaigns
+		if = {
+			limit = { 
+				NOT = { is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_01 } 
+				check_variable = { which = dp_pres_elec_cand_01_influence value > 0 }
+			}
+			change_variable = { which = dp_pres_elec_cand_01_influence value = -1 }
+			log = "Decremented Candidate 01 influence value: [this.dp_pres_elec_cand_01_influence]"
+		}
+		if = {
+			limit = { 
+				NOT = { is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_02 } 
+				check_variable = { which = dp_pres_elec_cand_02_influence value > 0 }
+			}
+			change_variable = { which = dp_pres_elec_cand_02_influence value = -1 }
+			log = "Decremented Candidate 02 influence value: [this.dp_pres_elec_cand_02_influence]"
+		}
+		if = {
+			limit = { 
+				NOT = { is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_03 } 
+				check_variable = { which = dp_pres_elec_cand_03_influence value > 0 }
+			}
+			change_variable = { which = dp_pres_elec_cand_03_influence value = -1 }
+			log = "Decremented Candidate 03 influence value: [this.dp_pres_elec_cand_03_influence]"
+		}
+		if = {
+			limit = { 
+				NOT = { is_researching_special_project = DP_PRES_ELECT_INFLUENCE_CANDIDATE_04 } 
+				check_variable = { which = dp_pres_elec_cand_04_influence value > 0 }
+			}
+			change_variable = { which = dp_pres_elec_cand_04_influence value = -1 }
+			log = "Decremented Candidate 04 influence value: [this.dp_pres_elec_cand_04_influence]"
+		}
+	}
+}
+
 # Monthly Event to update poll numbers (HIDDEN)
 country_event = {
 	id = dpelectionpres.3002
@@ -344,8 +437,11 @@ country_event = {
 				change_variable = { which = dp_ruler_terms_served value = 1 }
 			}
 			
-			if = { #FIXME: Does this even work?
+			if = { 
 				limit = { event_target:dp_pres_elect = { leader_class = ruler } }
+
+				
+
 				set_heir = event_target:dp_pres_elect
 			}
 			dp_vice_pres_set = yes # This assumes that the president-elect is not already in office unless they are the incumbant
@@ -670,6 +766,28 @@ country_event = {
 				event_chain = "dp_presidential_election_chain"
 				target = this
 			}
+			capital_scope = {
+				enable_special_project = {
+					name = "DP_PRES_ELECT_INFLUENCE_CANDIDATE_01"
+					location = this
+					owner = prev
+				}
+				enable_special_project = {
+					name = "DP_PRES_ELECT_INFLUENCE_CANDIDATE_02"
+					location = this
+					owner = prev
+				}
+				enable_special_project = {
+					name = "DP_PRES_ELECT_INFLUENCE_CANDIDATE_03"
+					location = this
+					owner = prev
+				}
+				enable_special_project = {
+					name = "DP_PRES_ELECT_INFLUENCE_CANDIDATE_04"
+					location = this
+					owner = prev
+				}
+			}
 			dp_pres_election_update_situation_log = yes
 		}
 	}
@@ -717,11 +835,15 @@ country_event = {
 			remove_leader_flag = dp_temp_election_leader
 		}
 
-		every_owned_pop = {
+		every_owned_pop = { #FIXME: This can interfere with other electoral events occurring during the same period
 			remove_pop_flag = dp_issue_pop_vote_01
+			remove_pop_flag = dp_issue_pop_vote_01_prev
 			remove_pop_flag = dp_issue_pop_vote_02
+			remove_pop_flag = dp_issue_pop_vote_02_prev
 			remove_pop_flag = dp_issue_pop_vote_03
+			remove_pop_flag = dp_issue_pop_vote_03_prev
 			remove_pop_flag = dp_issue_pop_vote_04
+			remove_pop_flag = dp_issue_pop_vote_04_prev
 			remove_pop_flag = dp_issue_pop_novote
 		}
 	}

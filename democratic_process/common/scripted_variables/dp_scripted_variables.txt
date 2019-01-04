@@ -3,7 +3,7 @@
 ##############################################
 
 ## Presidential Policies
-# Length of time between elections #DEBUG: Term length
+# Length of time between elections
 @dptermlengthpres1 = 5
 @dptermlengthpres2 = 10
 @dptermlengthpres3 = 15
@@ -24,3 +24,7 @@
 @dptermlengthpres3influence = -0.5
 @dptermlengthpres4unity = 0.4
 @dptermlengthpres4influence = -1
+
+# Cost in Influence monthly to affect elections
+@dpmonthlyinfluencecostpres = -20
+@dpmonthlyinfluencecostpresshadow = -5

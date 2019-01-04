@@ -38,11 +38,6 @@ dp_straw_poll = { #FIXME
 				}
 			}
 		}
-
-		remove_pop_flag = dp_issue_pop_vote_01
-		remove_pop_flag = dp_issue_pop_vote_02
-		remove_pop_flag = dp_issue_pop_vote_03
-		remove_pop_flag = dp_issue_pop_vote_04
 		
 		random_list = {
 			50 = { # Pop votes for Issue 1
@@ -58,6 +53,32 @@ dp_straw_poll = { #FIXME
 					event_target:dp_elec_issue_01 = { dp_leader_of_pop_faction = yes }
 					add = 60
 				}
+				modifier = {
+					has_pop_flag = dp_issue_pop_vote_01_prev
+					add = 50
+				}
+
+				# Influence Modifiers #FIXME: Need to double check that this does not interfere with non-presidential issues
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_01_influence value = 1 } }
+					add = 10
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_01_influence value = 2 } }
+					add = 20
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_01_influence value = 3 } }
+					add = 40
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_01_influence value = 4 } }
+					add = 80
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_01_influence value >= 5 } }
+					add = 160
+				}
 				# Add additional modifiers here, e.g. mandate/agenda based factors, species considerations, etc.
 				
 				modifier = { # Catch-all for non-existant issue resolutions
@@ -70,14 +91,19 @@ dp_straw_poll = { #FIXME
 					add = -1000
 				}
 				set_pop_flag = dp_issue_pop_vote_01
-				log = "A pop with the following traits has voted for candidate 01: [This.GetSpeciesName], [This.GetPopEthic]"
+
+				# Vote consistency		#FIXME: This works around the existing interaction with STV, not ideal to set multiple flags
+				set_pop_flag = dp_issue_pop_vote_01_prev
+				remove_pop_flag = dp_issue_pop_vote_02_prev
+				remove_pop_flag = dp_issue_pop_vote_03_prev
+				remove_pop_flag = dp_issue_pop_vote_04_prev
 
 				prev = { #TODO
 					change_variable = { which = dp_elec_issue_01_votes value = 1 }
 				}
 			}
 
-			-50 = { # Pop votes for Issue 2 #DEBUG
+			50 = { # Pop votes for Issue 2
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_02 = { dp_leader_is_pop_ethos = yes }
 					add = 60
@@ -89,6 +115,32 @@ dp_straw_poll = { #FIXME
 				modifier = { # Pop Belongs to Leader Faction
 					event_target:dp_elec_issue_02 = { dp_leader_of_pop_faction = yes }
 					add = 60
+				}
+				modifier = {
+					has_pop_flag = dp_issue_pop_vote_02_prev
+					add = 50
+				}
+
+				# Influence Modifiers
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_02_influence value = 1 } }
+					add = 10
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_02_influence value = 2 } }
+					add = 20
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_02_influence value = 3 } }
+					add = 40
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_02_influence value = 4 } }
+					add = 80
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_02_influence value >= 5 } }
+					add = 160
 				}
 				# Add additional modifiers here, e.g. mandate/agenda based factors, species considerations, etc.
 				
@@ -102,14 +154,19 @@ dp_straw_poll = { #FIXME
 					add = -1000
 				}
 				set_pop_flag = dp_issue_pop_vote_02
-				log = "A pop with the following traits has voted for candidate 02: [This.GetSpeciesName], [This.GetPopEthic]"
+
+				# Vote consistency		#FIXME: This works around the existing interaction with STV, not ideal to set multiple flags
+				set_pop_flag = dp_issue_pop_vote_02_prev
+				remove_pop_flag = dp_issue_pop_vote_01_prev
+				remove_pop_flag = dp_issue_pop_vote_03_prev
+				remove_pop_flag = dp_issue_pop_vote_04_prev
 
 				prev = { #TODO
 					change_variable = { which = dp_elec_issue_02_votes value = 1 }
 				}
 			}
 
-			-50 = { # Pop votes for Issue 3 #DEBUG
+			50 = { # Pop votes for Issue 3
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_03 = { dp_leader_is_pop_ethos = yes }
 					add = 60
@@ -121,6 +178,32 @@ dp_straw_poll = { #FIXME
 				modifier = { # Pop Belongs to Leader Faction
 					event_target:dp_elec_issue_03 = { dp_leader_of_pop_faction = yes }
 					add = 60
+				}
+				modifier = {
+					has_pop_flag = dp_issue_pop_vote_03_prev
+					add = 50
+				}
+
+				# Influence Modifiers
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_03_influence value = 1 } }
+					add = 10
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_03_influence value = 2 } }
+					add = 20
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_03_influence value = 3 } }
+					add = 40
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_03_influence value = 4 } }
+					add = 80
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_03_influence value >= 5 } }
+					add = 160
 				}
 				# Add additional modifiers here, e.g. mandate/agenda based factors, species considerations, etc.
 				
@@ -134,14 +217,19 @@ dp_straw_poll = { #FIXME
 					add = -1000
 				}
 				set_pop_flag = dp_issue_pop_vote_03
-				log = "A pop with the following traits has voted for candidate 03: [This.GetSpeciesName], [This.GetPopEthic]"
+
+				# Vote consistency		#FIXME: This works around the existing interaction with STV, not ideal to set multiple flags
+				set_pop_flag = dp_issue_pop_vote_03_prev
+				remove_pop_flag = dp_issue_pop_vote_01_prev
+				remove_pop_flag = dp_issue_pop_vote_02_prev
+				remove_pop_flag = dp_issue_pop_vote_04_prev
 
 				prev = { #TODO
 					change_variable = { which = dp_elec_issue_03_votes value = 1 }
 				}
 			}
 
-			-50 = { # Pop votes for Issue 4 #DEBUG
+			50 = { # Pop votes for Issue 4
 				modifier = { # Checks same ethos
 					event_target:dp_elec_issue_04 = { dp_leader_is_pop_ethos = yes }
 					add = 60
@@ -153,6 +241,32 @@ dp_straw_poll = { #FIXME
 				modifier = { # Pop Belongs to Leader Faction
 					event_target:dp_elec_issue_04 = { dp_leader_of_pop_faction = yes }
 					add = 60
+				}
+				modifier = {
+					has_pop_flag = dp_issue_pop_vote_04_prev
+					add = 50
+				}
+
+				# Influence Modifiers
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_04_influence value = 1 } }
+					add = 10
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_04_influence value = 2 } }
+					add = 20
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_04_influence value = 3 } }
+					add = 40
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_04_influence value = 4 } }
+					add = 80
+				}
+				modifier = {
+					owner = { check_variable = { which = dp_pres_elec_cand_04_influence value >= 5 } }
+					add = 160
 				}
 				# Add additional modifiers here, e.g. mandate/agenda based factors, species considerations, etc.
 				
@@ -166,7 +280,12 @@ dp_straw_poll = { #FIXME
 					add = -1000
 				}
 				set_pop_flag = dp_issue_pop_vote_04
-				log = "A pop with the following traits has voted for candidate 04: [This.GetSpeciesName], [This.GetPopEthic]"
+
+				# Vote consistency		#FIXME: This works around the existing interaction with STV, not ideal to set multiple flags
+				set_pop_flag = dp_issue_pop_vote_02_prev
+				remove_pop_flag = dp_issue_pop_vote_01_prev
+				remove_pop_flag = dp_issue_pop_vote_03_prev
+				remove_pop_flag = dp_issue_pop_vote_04_prev
 
 				prev = { #TODO
 					change_variable = { which = dp_elec_issue_04_votes value = 1 }
@@ -422,6 +541,7 @@ dp_pres_election_update_situation_log = {
 	#	target = this
 	#}
 
+	#FIXME: There are some rather nasty work-arounds here that I would like to smooth out in the future
 	while = { # Resets situation log votes for candidate 1
 		limit = {
 			check_variable = { which = dp_elec_issue_01_votes_pv value > 0 }
@@ -549,8 +669,7 @@ dp_vice_pres_set = {
 		}
 
 		last_created_leader  ={
-			dp_add_random_ruler_trait = yes
-			dp_add_random_ruler_trait = yes
+			dp_set_leader_ruler_trait = yes
 		}
 
 		set_heir = last_created_leader

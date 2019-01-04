@@ -73,6 +73,10 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 			set_variable = { which = "dp_elec_issue_03_votes_pv" value = 0 }
 			set_variable = { which = "dp_elec_issue_04_votes_pv" value = 0 }
 
+			set_variable = { which = "dp_pres_elec_cand_01_influence" value = 0 }
+			set_variable = { which = "dp_pres_elec_cand_02_influence" value = 0 }
+			set_variable = { which = "dp_pres_elec_cand_03_influence" value = 0 }
+			set_variable = { which = "dp_pres_elec_cand_04_influence" value = 0 }
 			
 			# Flag to prevent re-init
 			set_country_flag = dp_is_democracy
@@ -103,6 +107,7 @@ event = { # Note: this needs to be called at the beginning of the game and On_Mo
 				is_country_type = default
 			}
 
+			country_event = { id = dpelectionpres.3001 } # Checks for government influcence on elections
 			country_event = { id = dpelectionpres.3002 } # Updates polling numbers
 			country_event = { id = dpelectionpres.3003 } # Finalizes election and declares a winner
 		}
